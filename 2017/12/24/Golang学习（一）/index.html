@@ -190,6 +190,7 @@
 <p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_011428.png" alt=""></p>
 <h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><!-- ![](/images/snipaste_20171224_011006.png) -->
 <p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_011006.png" alt=""></p>
+<h2 id="遗留BUG"><a href="#遗留BUG" class="headerlink" title="遗留BUG"></a>遗留BUG</h2><p>但是在阿里云的测试中发现了程序的BUG，df看磁盘剩余空间还有很多，但是df -i查看发现磁盘Inode被耗尽了导致无法复制文件，可是是程序并没有停止复制，异常退出，这个BUG以后再修改：<br><!-- ![](/images/snipaste_20171224_134323.png) --><br><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_134323.png" alt=""></p>
 <h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>因为还没学到Golang的并发，所以这个demo只是简单的循环执行，后续学会了并发再来更新T_T</p>
 <hr>
 <p>2017年12月24日 于 南京<br><a href="toddlerya@qq.com">Email</a><br><a href="https://github.com/toddlerya" target="_blank" rel="noopener">GitHub</a></p>
@@ -197,6 +198,13 @@
     </article>
     <!-- 前后页  -->
     <ul class="post-pager">
+        
+            <li class="next">
+                <a href= "/2017/12/24/Inode耗尽导致的no-space-left-on-device报错/" title= 探究inode耗尽导致的no space left on device报错原因 >
+                    <span>Next Post</span>
+                    <span>探究inode耗尽导致的no space left on device报错原因</span>
+                </a>
+            </li>
         
         
             <li class="previous">
@@ -266,7 +274,7 @@
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#闲扯"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x95F2;&#x626F;" class="headerlink" title="&#x95F2;&#x626F;"></a>&#x95F2;&#x626F;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正文"><span class="toc-number">2.</span> <span class="toc-text"><a href="#&#x6B63;&#x6587;" class="headerlink" title="&#x6B63;&#x6587;"></a>&#x6B63;&#x6587;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text"><a href="#&#x4EE3;&#x7801;" class="headerlink" title="&#x4EE3;&#x7801;"></a>&#x4EE3;&#x7801;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用效果如下"><span class="toc-number">4.</span> <span class="toc-text"><a href="#&#x4F7F;&#x7528;&#x6548;&#x679C;&#x5982;&#x4E0B;" class="headerlink" title="&#x4F7F;&#x7528;&#x6548;&#x679C;&#x5982;&#x4E0B;"></a>&#x4F7F;&#x7528;&#x6548;&#x679C;&#x5982;&#x4E0B;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#测试运行"><span class="toc-number">4.1.</span> <span class="toc-text"><a href="#&#x6D4B;&#x8BD5;&#x8FD0;&#x884C;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x8FD0;&#x884C;"></a>&#x6D4B;&#x8BD5;&#x8FD0;&#x884C;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理"><span class="toc-number">4.2.</span> <span class="toc-text"><a href="#&#x5F02;&#x5E38;&#x5904;&#x7406;" class="headerlink" title="&#x5F02;&#x5E38;&#x5904;&#x7406;"></a>&#x5F02;&#x5E38;&#x5904;&#x7406;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后续"><span class="toc-number">5.</span> <span class="toc-text"><a href="#&#x540E;&#x7EED;" class="headerlink" title="&#x540E;&#x7EED;"></a>&#x540E;&#x7EED;</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#闲扯"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x95F2;&#x626F;" class="headerlink" title="&#x95F2;&#x626F;"></a>&#x95F2;&#x626F;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正文"><span class="toc-number">2.</span> <span class="toc-text"><a href="#&#x6B63;&#x6587;" class="headerlink" title="&#x6B63;&#x6587;"></a>&#x6B63;&#x6587;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text"><a href="#&#x4EE3;&#x7801;" class="headerlink" title="&#x4EE3;&#x7801;"></a>&#x4EE3;&#x7801;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用效果如下"><span class="toc-number">4.</span> <span class="toc-text"><a href="#&#x4F7F;&#x7528;&#x6548;&#x679C;&#x5982;&#x4E0B;" class="headerlink" title="&#x4F7F;&#x7528;&#x6548;&#x679C;&#x5982;&#x4E0B;"></a>&#x4F7F;&#x7528;&#x6548;&#x679C;&#x5982;&#x4E0B;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#测试运行"><span class="toc-number">4.1.</span> <span class="toc-text"><a href="#&#x6D4B;&#x8BD5;&#x8FD0;&#x884C;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x8FD0;&#x884C;"></a>&#x6D4B;&#x8BD5;&#x8FD0;&#x884C;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理"><span class="toc-number">4.2.</span> <span class="toc-text"><a href="#&#x5F02;&#x5E38;&#x5904;&#x7406;" class="headerlink" title="&#x5F02;&#x5E38;&#x5904;&#x7406;"></a>&#x5F02;&#x5E38;&#x5904;&#x7406;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遗留BUG"><span class="toc-number">4.3.</span> <span class="toc-text"><a href="#&#x9057;&#x7559;BUG" class="headerlink" title="&#x9057;&#x7559;BUG"></a>&#x9057;&#x7559;BUG</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后续"><span class="toc-number">5.</span> <span class="toc-text"><a href="#&#x540E;&#x7EED;" class="headerlink" title="&#x540E;&#x7EED;"></a>&#x540E;&#x7EED;</span></a></li></ol>
     </div>
     
     <div class="back-top">&#xe639;</div>
@@ -334,7 +342,16 @@
     
     
     
-    <div class="total-archive"> Total : 6 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 7 </div>
     
     <div class="post-archive">
     
@@ -343,6 +360,11 @@
     
     <div class="archive-year"> 2017 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/24</span><a class="archive-post-title" href= "/2017/12/24/Inode耗尽导致的no-space-left-on-device报错/" >探究inode耗尽导致的no space left on device报错原因</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -386,6 +408,10 @@
         <span class="sidebar-tag-name"><a href= "#">Golang</a></span>
     
         <span class="sidebar-tag-name"><a href= "#">工具</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Linux</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">问题排查</a></span>
     
         <span class="sidebar-tag-name"><a href= "#">vim</a></span>
     

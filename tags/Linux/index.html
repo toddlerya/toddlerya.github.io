@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <title>
         
-        关于NebulaSolarDash · 小明挖坑的地方
+        小明挖坑的地方
         
     </title>
     <link rel="icon" href= /assests/favicon.ico>
@@ -50,22 +50,11 @@
     
 </head>
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >小明挖坑的地方</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">关于NebulaSolarDash</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>小明挖坑的地方</a>
 </header>
@@ -73,47 +62,21 @@
         <div class="site-intro">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(http://oumn0o088.bkt.clouddn.com/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            关于NebulaSolarDash
-            <!-- 404 -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <!-- 文章页标签  -->
-            
-                <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-href = Python>Python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href = 工具>工具</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href = 资源监控>资源监控</a>
-    
-</div>
-            
-            <div class="post-intro-meta">
-                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2017/05/10</span>
-            </div>
         
     </div>
 </div>
@@ -181,40 +144,41 @@
             }
         </script>
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h3 id="2017年的5月1日，三天假期，闭门造了个轮子"><a href="#2017年的5月1日，三天假期，闭门造了个轮子" class="headerlink" title="2017年的5月1日，三天假期，闭门造了个轮子"></a>2017年的5月1日，三天假期，闭门造了个轮子</h3><p>写这个工具的目的是为了解决工作问题。 个人工作生产环境无法连接互联网，也没有自建的yum源等，手头又有很多服务器需要进行监控，使用现有的开源方案安装部署是个问题， 各种依赖组件包需要挨个安装，很麻烦，所以想找一款依赖较少部署简单的分布式服务器资源监控工具，找来找去没找到，索性自己动手写一个。 我的本职工作是测试，所以就用最熟悉的Python来写吧，第一次写web应用，先做出来再边学边优化吧。</p>
-<p>工具分为客户端和服务端两部分： 服务端使用了bottle来作为web框架，echarts来渲染生成图表； 客户端使用Python原生类库采集服务器资源，客户端采集数据部分代码参考了pyDash</p>
-<h5 id="效果如下"><a href="#效果如下" class="headerlink" title="效果如下"></a>效果如下</h5><!-- ![](/images/NebulaSolarDash2.0.gif) -->
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/NebulaSolarDash2.0.gif" alt="">  </p>
-<h5 id="项目链接链接"><a href="#项目链接链接" class="headerlink" title="项目链接链接"></a>项目链接链接</h5><p><a href="https://github.com/toddlerya/NebulaSolarDash" target="_blank" rel="noopener">NebulaSolarDash</a></p>
-<hr>
-<p>2017年05月10日 于 南京<br><a href="toddlerya@qq.com">Email</a><br><a href="https://github.com/toddlerya" target="_blank" rel="noopener">GitHub</a></p>
-
-    </article>
-    <!-- 前后页  -->
-    <ul class="post-pager">
-        
-            <li class="next">
-                <a href= "/2017/09/08/Pythoner的vim/" title= Pythoner的vim >
-                    <span>Next Post</span>
-                    <span>Pythoner的vim</span>
-                </a>
-            </li>
-        
-        
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+            <main class="main index-page">
     
     
-    <!--PC版-->
+    
+        <article class="index-post">
+            <a class="content-show-full" href = "/2017/12/24/Inode耗尽导致的no-space-left-on-device报错/" >
+                    <h2 class="abstract-title">
+                        
+                        <span>探究inode耗尽导致的no space left on device报错原因</span>
+                    </h2>
+                <div class="abstract-content">
+                    在《Golang学习（一）》那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。
 
-    <!--PC版-->
-
-
+什么是inode？理解inode，要从文件储存说起。文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存512字节（相当于0.5KB）。操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个”块”（block）。这种由多个扇区组成的”块”，是文件存取的最小单位。”块”的大小，最常见的是4KB，即连续八个 sector组成一个 block。文件数据都储存在”块”中，那么很显然，我...
+                </div>
+            </a>
+            <div class="abstract-post-meta">
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = Linux>Linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = 问题排查>问题排查</a>
+    
+</div>
+                
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/12/24</span>
+                </div>
+            </div>
+        </article>
+    
+    <!-- paginator  -->
     
 </main>
             <!-- profile -->
@@ -258,13 +222,6 @@
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper">
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#2017年的5月1日，三天假期，闭门造了个轮子"><span class="toc-number">1.</span> <span class="toc-text"><a href="#2017&#x5E74;&#x7684;5&#x6708;1&#x65E5;&#xFF0C;&#x4E09;&#x5929;&#x5047;&#x671F;&#xFF0C;&#x95ED;&#x95E8;&#x9020;&#x4E86;&#x4E2A;&#x8F6E;&#x5B50;" class="headerlink" title="2017&#x5E74;&#x7684;5&#x6708;1&#x65E5;&#xFF0C;&#x4E09;&#x5929;&#x5047;&#x671F;&#xFF0C;&#x95ED;&#x95E8;&#x9020;&#x4E86;&#x4E2A;&#x8F6E;&#x5B50;"></a>2017&#x5E74;&#x7684;5&#x6708;1&#x65E5;&#xFF0C;&#x4E09;&#x5929;&#x5047;&#x671F;&#xFF0C;&#x95ED;&#x95E8;&#x9020;&#x4E86;&#x4E2A;&#x8F6E;&#x5B50;</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#效果如下"><span class="toc-number">1.0.1.</span> <span class="toc-text"><a href="#&#x6548;&#x679C;&#x5982;&#x4E0B;" class="headerlink" title="&#x6548;&#x679C;&#x5982;&#x4E0B;"></a>&#x6548;&#x679C;&#x5982;&#x4E0B;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#项目链接链接"><span class="toc-number">1.0.2.</span> <span class="toc-text"><a href="#&#x9879;&#x76EE;&#x94FE;&#x63A5;&#x94FE;&#x63A5;" class="headerlink" title="&#x9879;&#x76EE;&#x94FE;&#x63A5;&#x94FE;&#x63A5;"></a>&#x9879;&#x76EE;&#x94FE;&#x63A5;&#x94FE;&#x63A5;</span></a></li></ol></li></ol></li></ol>
-    </div>
     
     <div class="back-top">&#xe639;</div>
     <div class="sidebar">
