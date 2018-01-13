@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
+        
+        风筝-51集 · 小明挖坑的地方
+        
+    </title>
+    <link rel="icon" href= /assets/favicon.ico>
+    <!-- TODO: 在font-face加载完毕后改变字体  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
+    <!-- 提前加载place holder  -->
+    <style type="text/css">
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url(/font/Oswald-Regular.ttf);
+        }
+    </style>
+    <style type="text/css">
+        .site-intro-placeholder {
+            position: absolute;
+            z-index: -2;
+            top: 0;
+            left: 0px;
+            width: calc(100% + 300px);
+            height: 100%;
+            background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+            background-position: center center;
+            transform: translate3d(-226px, 0, 0);
+            animation: gradient-move 2.5s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+    <link rel="stylesheet" href = /css/style.css?v=20171020 />
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >小明挖坑的地方</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">风筝-51集</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>小明挖坑的地方</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(http://oumn0o088.bkt.clouddn.com/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            风筝-51集
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = 看剧>看剧</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = 资源>资源</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/01/13</span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <script>
+            var browser = {
+                    versions: function () {
+                        var u = window.navigator.userAgent;
+                        return {
+                            userAgent: u,
+                            trident: u.indexOf('Trident') > -1, //IE内核
+                            presto: u.indexOf('Presto') > -1, //opera内核
+                            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+                            iPad: u.indexOf('iPad') > -1, //是否为iPad
+                            webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+                            weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+                            uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+                        };
+                    }()
+                }
+
+            function fontLoaded(){
+                console.log('font loaded');
+                if (document.getElementsByClassName('site-intro-meta')) {
+                    document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+                    document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+                    var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+                        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+                        if (postIntroTags) {
+                            postIntroTags.classList.add('post-fade-in');
+                        }
+                        if (postIntroMeat) {
+                            postIntroMeat.classList.add('post-fade-in');
+                        }
+                    }
+                }
+                
+            console.log("userAgent:" + browser.versions.userAgent);
+            // UC不支持跨域，所以直接显示
+            if (browser.versions.uc) {
+                console.log("UCBrowser");
+                fontLoaded();
+            } else {
+                WebFont.load({
+                    custom: {
+                        families: ['Oswald-Regular']
+                    },
+                    loading: function () {  //所有字体开始加载
+                        // console.log('loading');
+                    },
+                    active: function () {  //所有字体已渲染
+                        fontLoaded();
+                    },
+                    inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+                        console.log('inactive: timeout');
+                        fontLoaded();
+                    },
+                    timeout: 7000 // Set the timeout to two seconds
+                });
+            }
+        </script>
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>女票推荐我看《风筝》，一看果然好看，整理下未删减版资源，无广告哦</p>
+<hr>
+<h2 id="第1集"><a href="#第1集" class="headerlink" title="第1集"></a><a href="http://112.25.79.6/videos/v0/20171220/b9/1d/72d5f0a5f006c901f2dc3b5f83631249.mp4?key=079526bd828bbdfec21e74a5bd8e72d34&amp;dis_k=203482dc8c94615ac962ade9a2949bc6f&amp;dis_t=1515858355&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c2d6-5a5a29b3-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=5e2562364f578fc60b691dceb648e579&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858355371" target="_blank" rel="noopener">第1集</a></h2><h2 id="第2集"><a href="#第2集" class="headerlink" title="第2集"></a><a href="http://221.130.5.30/videos/v0/20171220/58/91/a590466a64553836267f5abc4ebf0d66.mp4?key=0e57a58df549a22832ad336c862922eea&amp;dis_k=2ebce9a2fbf474e533ed1b0dbbb5bb363&amp;dis_t=1515858387&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996d60-5a5a29d3-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=fcfbdfaa1b02f4c10f501b629d08d618&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858387911" target="_blank" rel="noopener">第2集</a></h2><h2 id="第3集"><a href="#第3集" class="headerlink" title="第3集"></a><a href="http://112.25.49.137/videos/v0/20171220/2d/a8/962c1186ce28326eeb8d89ad27ec2cf9.mp4?key=0ae514c2a095df984fb728b58ca932fd9&amp;dis_k=2097920e7e0a8065f7232048a32e0d73d&amp;dis_t=1515856886&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996dbc-5a5a23f6-19b&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=5c5654e52d6115d270139f1b5f0c645f&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515856886730" target="_blank" rel="noopener">第3集</a></h2><h2 id="第4集"><a href="#第4集" class="headerlink" title="第4集"></a><a href="http://112.25.44.53/videos/v0/20171219/c3/f2/0afbf495ef4ae3b97159058b3b6b649e.mp4?key=0cdfc6f7357d4a03ec49c340f656a8308&amp;dis_k=293cc625bc078163d0b617369d799dda0&amp;dis_t=1515858488&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2a38-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=4df65581a3458f6b03f70586c3990ec3&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858488289" target="_blank" rel="noopener">第4集</a></h2><h2 id="第5集"><a href="#第5集" class="headerlink" title="第5集"></a><a href="http://221.130.5.37/videos/v0/20171219/57/56/49440b363e0192f4f4e7310e405c0652.mp4?key=0073aa1216d3adf6f591ac6ab631a8e62&amp;dis_k=24492b4a9c48b3e744a21729cfd5ff090&amp;dis_t=1515858651&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c2df-5a5a2adb-1a0&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=c1d2174615ebbf1569515952df2bc1e8&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858651269" target="_blank" rel="noopener">第5集</a></h2><h2 id="第6集"><a href="#第6集" class="headerlink" title="第6集"></a><a href="http://112.25.79.1/videos/v0/20171220/30/d7/0bbb3bcd6e15ce5e39dad1e300e65397.mp4?key=0c651172a5078ab9d890fe82bdb81b4c4&amp;dis_k=229d91bf2edb63533acc174a8b33e43b9&amp;dis_t=1515858679&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7a-5a5a2af7-19d&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=9367c8ab30bcc1670901c9b456d62ed6&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858679357" target="_blank" rel="noopener">第6集</a></h2><h2 id="第7集"><a href="#第7集" class="headerlink" title="第7集"></a><a href="http://112.25.79.1/videos/v0/20171220/30/d7/0bbb3bcd6e15ce5e39dad1e300e65397.mp4?key=0c651172a5078ab9d890fe82bdb81b4c4&amp;dis_k=229d91bf2edb63533acc174a8b33e43b9&amp;dis_t=1515858679&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7a-5a5a2af7-19d&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=9367c8ab30bcc1670901c9b456d62ed6&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858679357" target="_blank" rel="noopener">第7集</a></h2><h2 id="第8集"><a href="#第8集" class="headerlink" title="第8集"></a><a href="http://36.155.65.6/videos/v0/20171221/94/42/c9e4e9ca31b0d1f872e6e7e8bdfabc33.mp4?key=036648f5abf01d1d330c0baa2606ff935&amp;dis_k=2ef48524668bac678c2d66ef5d3f02c3d&amp;dis_t=1515858761&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a74-5a5a2b49-19b&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=704ac04c12b57282bef010e49ce05f85&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858761231" target="_blank" rel="noopener">第8集</a></h2><h2 id="第9集"><a href="#第9集" class="headerlink" title="第9集"></a><a href="http://112.25.79.14/videos/v0/20171221/86/53/0b49f1b8137a3666aa3cc5e4907f45c9.mp4?key=0f0348f195dab60e3f3a877c138eaffe7&amp;dis_k=2e4ec2632ebc6e2b5e84f6dc44340745b&amp;dis_t=1515858805&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c21a-5a5a2b75-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=905f29b3e189c892bc0d06340c11b243&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858805742" target="_blank" rel="noopener">第9集</a></h2><h2 id="第10集"><a href="#第10集" class="headerlink" title="第10集"></a><a href="http://112.25.49.33/videos/v0/20171221/22/05/551ab676fd7c9d549a0f3523fe214154.mp4?key=056819291216a3716b6d52c4927ec189f&amp;dis_k=23b177dfdd5ea4e55a8a81feeab41dd99&amp;dis_t=1515858821&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2b85-19f&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=a5d9ea58179e78980fd124fa2cc93d9b&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858821361" target="_blank" rel="noopener">第10集</a></h2><h2 id="第11集"><a href="#第11集" class="headerlink" title="第11集"></a><a href="http://112.25.44.56/videos/v0/20171221/ab/83/0ec012f9199c94100341d7bcc958ef96.mp4?key=081a09d97c317eb85e8e7848016879c63&amp;dis_k=2e915ec4240ed5af6e0ae0db0d321251c&amp;dis_t=1515858845&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996df9-5a5a2b9d-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=8508862cc8e52ec0e32da82763366843&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858845132" target="_blank" rel="noopener">第11集</a></h2><h2 id="第12集"><a href="#第12集" class="headerlink" title="第12集"></a><a href="http://112.25.79.9/videos/v0/20171221/35/97/496d980187ebf33ef32564662b94fa28.mp4?key=0fddc9afb9b08f69de0c22db88e532d2&amp;dis_k=2564801d9d92a54ef1c4257c7d8ec7186&amp;dis_t=1515859015&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c219-5a5a2c47-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f0864c2f55df8a0b6aee6c70bef9745a&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859015580" target="_blank" rel="noopener">第12集</a></h2><h2 id="第13集"><a href="#第13集" class="headerlink" title="第13集"></a><a href="http://221.130.5.38/videos/v0/20171221/25/e3/b4d3949a52af27b1ba02ce7e0bcad8a3.mp4?key=0a32c6e594d5cb8fdf013c14546b51031&amp;dis_k=27b9130e2dbc89f7111fabd0ff3e7a0b3&amp;dis_t=1515858987&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2c2b-19f&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=8ccfd937f8b878c66288ad928e2759e2&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858987437" target="_blank" rel="noopener">第13集</a></h2><h2 id="第14集"><a href="#第14集" class="headerlink" title="第14集"></a><a href="http://36.155.65.9/videos/v0/20171221/82/b8/c6bff6e85c3151deabfb891d5d8eb0b8.mp4?key=0657daa92c9cfdf92925b7673543eacbe&amp;dis_k=288934271507b8f1818767828ca1d02a5&amp;dis_t=1515858964&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a74-5a5a2c14-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=40d8305d4c1fa455015da3e5806da37e&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858964761" target="_blank" rel="noopener">第14集</a></h2><h2 id="第15集"><a href="#第15集" class="headerlink" title="第15集"></a><a href="http://112.25.49.24/videos/v0/20171221/35/97/496d980187ebf33ef32564662b94fa28.mp4?key=0f9de89de4dd8452a6dd89d17d95abca1&amp;dis_k=270de2cb81165360ea3d3b94e15c632d5&amp;dis_t=1515858875&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996dbc-5a5a2bbb-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=c50c4078506670f0ea41b96f1bb8527b&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858875557" target="_blank" rel="noopener">第15集</a></h2><h2 id="第16集"><a href="#第16集" class="headerlink" title="第16集"></a><a href="http://112.25.79.12/videos/v0/20171221/2d/7d/4f1145ea9d97c8255d5937b25923643a.mp4?key=009c364d8bdf86f73d3bcfa8996d61308&amp;dis_k=27fdef07219ad47c69fcec8a41541d50d&amp;dis_t=1515859094&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2c96-19b&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=32b892d8bbd04f692a9c96646c76f9bb&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859094086" target="_blank" rel="noopener">第16集</a></h2><h2 id="第17集"><a href="#第17集" class="headerlink" title="第17集"></a><a href="http://112.25.49.142/videos/v0/20171226/be/28/f497b05753b067c0cb41be364f0795b2.mp4?key=030ba5b20db2be2eefad70f207a0cbb8d&amp;dis_k=2ba7bdc78a6a951b85da3bdcd6d109d3c&amp;dis_t=1515859109&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a78-5a5a2ca5-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=20d3d23c378e35b896dcd67c1a73e055&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859109877" target="_blank" rel="noopener">第17集</a></h2><h2 id="第18集"><a href="#第18集" class="headerlink" title="第18集"></a><a href="http://112.25.49.142/videos/v0/20171226/be/28/f497b05753b067c0cb41be364f0795b2.mp4?key=030ba5b20db2be2eefad70f207a0cbb8d&amp;dis_k=2ba7bdc78a6a951b85da3bdcd6d109d3c&amp;dis_t=1515859109&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a78-5a5a2ca5-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=20d3d23c378e35b896dcd67c1a73e055&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859109877" target="_blank" rel="noopener">第18集</a></h2><h2 id="第19集"><a href="#第19集" class="headerlink" title="第19集"></a><a href="http://36.155.65.5/videos/v0/20171226/29/71/7cb1e34bdef386a9bdd5acc15a54864b.mp4?key=0f844444855b2ff1de5af53480f6e0286&amp;dis_k=2b6d61dd1d8ce4ac55168cfee1cea09f6&amp;dis_t=1515859155&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7a-5a5a2cd3-19a&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=168970463cb2589a55eb4eded2ffcbae&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859155222" target="_blank" rel="noopener">第19集</a></h2><h2 id="第20集"><a href="#第20集" class="headerlink" title="第20集"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">第20集</a></h2><h2 id="第21集"><a href="#第21集" class="headerlink" title="第21集"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">第21集</a></h2><h2 id="第22集"><a href="#第22集" class="headerlink" title="第22集"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">第22集</a></h2><h2 id="第23集"><a href="#第23集" class="headerlink" title="第23集"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">第23集</a></h2><h2 id="第24集"><a href="#第24集" class="headerlink" title="第24集"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">第24集</a></h2><h2 id="第25集"><a href="#第25集" class="headerlink" title="第25集"></a><a href="http://112.25.79.8/videos/v0/20171228/ad/f3/11a464c552208d48f08a3c8fcb33c998.mp4?key=0f32ef3ea6e4150001fdeb1e5ba0c7ad5&amp;dis_k=2e6c4178b0c264a4427402192be47f711&amp;dis_t=1515859409&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2dd1-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=156d7bb9cf1d72e67015a74ca1c14772&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859409499" target="_blank" rel="noopener">第25集</a></h2><h2 id="第26集"><a href="#第26集" class="headerlink" title="第26集"></a><a href="http://www.iqiyi.com/v_19rrf5teb8.html" target="_blank" rel="noopener">第26集</a></h2><h2 id="第27集"><a href="#第27集" class="headerlink" title="第27集"></a><a href="http://www.iqiyi.com/v_19rrf5uc0s.html" target="_blank" rel="noopener">第27集</a></h2><h2 id="第28集"><a href="#第28集" class="headerlink" title="第28集"></a><a href="http://www.iqiyi.com/v_19rret1foo.html" target="_blank" rel="noopener">第28集</a></h2><h2 id="第29集"><a href="#第29集" class="headerlink" title="第29集"></a><a href="http://www.iqiyi.com/v_19rret17rk.html" target="_blank" rel="noopener">第29集</a></h2><h2 id="第30集"><a href="#第30集" class="headerlink" title="第30集"></a><a href="http://www.iqiyi.com/v_19rretei8s.html" target="_blank" rel="noopener">第30集</a></h2><h2 id="第31集"><a href="#第31集" class="headerlink" title="第31集"></a><a href="http://www.iqiyi.com/v_19rreteaj4.html" target="_blank" rel="noopener">第31集</a></h2><h2 id="第32集"><a href="#第32集" class="headerlink" title="第32集"></a><a href="http://www.iqiyi.com/v_19rrerx6x4.html" target="_blank" rel="noopener">第32集</a></h2><h2 id="第33集"><a href="#第33集" class="headerlink" title="第33集"></a><a href="http://www.iqiyi.com/v_19rrerygtk.html" target="_blank" rel="noopener">第33集</a></h2><h2 id="第34集"><a href="#第34集" class="headerlink" title="第34集"></a><a href="http://www.iqiyi.com/v_19rrercr2g.html" target="_blank" rel="noopener">第34集</a></h2><h2 id="第35集"><a href="#第35集" class="headerlink" title="第35集"></a><a href="http://www.iqiyi.com/v_19rrerchko.html" target="_blank" rel="noopener">第35集</a></h2><h2 id="第36集"><a href="#第36集" class="headerlink" title="第36集"></a><a href="http://www.iqiyi.com/v_19rrercbc0.html" target="_blank" rel="noopener">第36集</a></h2><h2 id="第37集"><a href="#第37集" class="headerlink" title="第37集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17467763-102-009-000748.mp4" target="_blank" rel="noopener">第37集</a></h2><h2 id="第38集"><a href="#第38集" class="headerlink" title="第38集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17468717-102-009-002725.mp4" target="_blank" rel="noopener">第38集</a></h2><h2 id="第39集"><a href="#第39集" class="headerlink" title="第39集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17469472-102-009-004333.mp4" target="_blank" rel="noopener">第39集</a></h2><h2 id="第40集"><a href="#第40集" class="headerlink" title="第40集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17469697-102-009-004925.mp4" target="_blank" rel="noopener">第40集</a></h2><h2 id="第41集"><a href="#第41集" class="headerlink" title="第41集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471238-102-009-013535.mp4" target="_blank" rel="noopener">第41集</a></h2><h2 id="第42集"><a href="#第42集" class="headerlink" title="第42集"></a><a href="http://video19.ifeng.com/video09/2018/01/03/17736469-102-009-171132.mp4" target="_blank" rel="noopener">第42集</a></h2><h2 id="第43集"><a href="#第43集" class="headerlink" title="第43集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471898-102-009-014822.mp4" target="_blank" rel="noopener">第43集</a></h2><h2 id="第44集"><a href="#第44集" class="headerlink" title="第44集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471920-102-009-014822.mp4" target="_blank" rel="noopener">第44集</a></h2><h2 id="第45集"><a href="#第45集" class="headerlink" title="第45集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17479315-102-009-050431.mp4" target="_blank" rel="noopener">第45集</a></h2><h2 id="第46集"><a href="#第46集" class="headerlink" title="第46集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471951-102-009-014927.mp4" target="_blank" rel="noopener">第46集</a></h2><h2 id="第47集"><a href="#第47集" class="headerlink" title="第47集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471969-102-009-014927.mp4" target="_blank" rel="noopener">第47集</a></h2><h2 id="第48集"><a href="#第48集" class="headerlink" title="第48集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471973-102-009-015036.mp4" target="_blank" rel="noopener">第48集</a></h2><h2 id="第49集"><a href="#第49集" class="headerlink" title="第49集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17472009-102-009-015041.mp4" target="_blank" rel="noopener">第49集</a></h2><h2 id="第50集"><a href="#第50集" class="headerlink" title="第50集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17478739-102-009-044629.mp4" target="_blank" rel="noopener">第50集</a></h2><h2 id="第51集"><a href="#第51集" class="headerlink" title="第51集"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17472018-102-009-015117.mp4" target="_blank" rel="noopener">第51集</a></h2>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+        
+            <li class="previous">
+                <a href= "/2018/01/07/微信跳一跳之线性回归算法优化/" title= 微信跳一跳之线性回归算法优化 >
+                    <span>Previous Post</span>
+                    <span>微信跳一跳之线性回归算法优化</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:toddlerya@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/toddlerya" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第1集"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x7B2C;1&#x96C6;" class="headerlink" title="&#x7B2C;1&#x96C6;"></a><a href="http://112.25.79.6/videos/v0/20171220/b9/1d/72d5f0a5f006c901f2dc3b5f83631249.mp4?key=079526bd828bbdfec21e74a5bd8e72d34&amp;dis_k=203482dc8c94615ac962ade9a2949bc6f&amp;dis_t=1515858355&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c2d6-5a5a29b3-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=5e2562364f578fc60b691dceb648e579&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858355371" target="_blank" rel="noopener">&#x7B2C;1&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第2集"><span class="toc-number">2.</span> <span class="toc-text"><a href="#&#x7B2C;2&#x96C6;" class="headerlink" title="&#x7B2C;2&#x96C6;"></a><a href="http://221.130.5.30/videos/v0/20171220/58/91/a590466a64553836267f5abc4ebf0d66.mp4?key=0e57a58df549a22832ad336c862922eea&amp;dis_k=2ebce9a2fbf474e533ed1b0dbbb5bb363&amp;dis_t=1515858387&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996d60-5a5a29d3-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=fcfbdfaa1b02f4c10f501b629d08d618&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858387911" target="_blank" rel="noopener">&#x7B2C;2&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第3集"><span class="toc-number">3.</span> <span class="toc-text"><a href="#&#x7B2C;3&#x96C6;" class="headerlink" title="&#x7B2C;3&#x96C6;"></a><a href="http://112.25.49.137/videos/v0/20171220/2d/a8/962c1186ce28326eeb8d89ad27ec2cf9.mp4?key=0ae514c2a095df984fb728b58ca932fd9&amp;dis_k=2097920e7e0a8065f7232048a32e0d73d&amp;dis_t=1515856886&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996dbc-5a5a23f6-19b&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=5c5654e52d6115d270139f1b5f0c645f&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515856886730" target="_blank" rel="noopener">&#x7B2C;3&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第4集"><span class="toc-number">4.</span> <span class="toc-text"><a href="#&#x7B2C;4&#x96C6;" class="headerlink" title="&#x7B2C;4&#x96C6;"></a><a href="http://112.25.44.53/videos/v0/20171219/c3/f2/0afbf495ef4ae3b97159058b3b6b649e.mp4?key=0cdfc6f7357d4a03ec49c340f656a8308&amp;dis_k=293cc625bc078163d0b617369d799dda0&amp;dis_t=1515858488&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2a38-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=4df65581a3458f6b03f70586c3990ec3&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858488289" target="_blank" rel="noopener">&#x7B2C;4&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第5集"><span class="toc-number">5.</span> <span class="toc-text"><a href="#&#x7B2C;5&#x96C6;" class="headerlink" title="&#x7B2C;5&#x96C6;"></a><a href="http://221.130.5.37/videos/v0/20171219/57/56/49440b363e0192f4f4e7310e405c0652.mp4?key=0073aa1216d3adf6f591ac6ab631a8e62&amp;dis_k=24492b4a9c48b3e744a21729cfd5ff090&amp;dis_t=1515858651&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c2df-5a5a2adb-1a0&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=c1d2174615ebbf1569515952df2bc1e8&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858651269" target="_blank" rel="noopener">&#x7B2C;5&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第6集"><span class="toc-number">6.</span> <span class="toc-text"><a href="#&#x7B2C;6&#x96C6;" class="headerlink" title="&#x7B2C;6&#x96C6;"></a><a href="http://112.25.79.1/videos/v0/20171220/30/d7/0bbb3bcd6e15ce5e39dad1e300e65397.mp4?key=0c651172a5078ab9d890fe82bdb81b4c4&amp;dis_k=229d91bf2edb63533acc174a8b33e43b9&amp;dis_t=1515858679&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7a-5a5a2af7-19d&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=9367c8ab30bcc1670901c9b456d62ed6&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858679357" target="_blank" rel="noopener">&#x7B2C;6&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第7集"><span class="toc-number">7.</span> <span class="toc-text"><a href="#&#x7B2C;7&#x96C6;" class="headerlink" title="&#x7B2C;7&#x96C6;"></a><a href="http://112.25.79.1/videos/v0/20171220/30/d7/0bbb3bcd6e15ce5e39dad1e300e65397.mp4?key=0c651172a5078ab9d890fe82bdb81b4c4&amp;dis_k=229d91bf2edb63533acc174a8b33e43b9&amp;dis_t=1515858679&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7a-5a5a2af7-19d&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=9367c8ab30bcc1670901c9b456d62ed6&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858679357" target="_blank" rel="noopener">&#x7B2C;7&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第8集"><span class="toc-number">8.</span> <span class="toc-text"><a href="#&#x7B2C;8&#x96C6;" class="headerlink" title="&#x7B2C;8&#x96C6;"></a><a href="http://36.155.65.6/videos/v0/20171221/94/42/c9e4e9ca31b0d1f872e6e7e8bdfabc33.mp4?key=036648f5abf01d1d330c0baa2606ff935&amp;dis_k=2ef48524668bac678c2d66ef5d3f02c3d&amp;dis_t=1515858761&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a74-5a5a2b49-19b&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=704ac04c12b57282bef010e49ce05f85&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858761231" target="_blank" rel="noopener">&#x7B2C;8&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第9集"><span class="toc-number">9.</span> <span class="toc-text"><a href="#&#x7B2C;9&#x96C6;" class="headerlink" title="&#x7B2C;9&#x96C6;"></a><a href="http://112.25.79.14/videos/v0/20171221/86/53/0b49f1b8137a3666aa3cc5e4907f45c9.mp4?key=0f0348f195dab60e3f3a877c138eaffe7&amp;dis_k=2e4ec2632ebc6e2b5e84f6dc44340745b&amp;dis_t=1515858805&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c21a-5a5a2b75-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=905f29b3e189c892bc0d06340c11b243&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858805742" target="_blank" rel="noopener">&#x7B2C;9&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第10集"><span class="toc-number">10.</span> <span class="toc-text"><a href="#&#x7B2C;10&#x96C6;" class="headerlink" title="&#x7B2C;10&#x96C6;"></a><a href="http://112.25.49.33/videos/v0/20171221/22/05/551ab676fd7c9d549a0f3523fe214154.mp4?key=056819291216a3716b6d52c4927ec189f&amp;dis_k=23b177dfdd5ea4e55a8a81feeab41dd99&amp;dis_t=1515858821&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2b85-19f&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=a5d9ea58179e78980fd124fa2cc93d9b&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858821361" target="_blank" rel="noopener">&#x7B2C;10&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第11集"><span class="toc-number">11.</span> <span class="toc-text"><a href="#&#x7B2C;11&#x96C6;" class="headerlink" title="&#x7B2C;11&#x96C6;"></a><a href="http://112.25.44.56/videos/v0/20171221/ab/83/0ec012f9199c94100341d7bcc958ef96.mp4?key=081a09d97c317eb85e8e7848016879c63&amp;dis_k=2e915ec4240ed5af6e0ae0db0d321251c&amp;dis_t=1515858845&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996df9-5a5a2b9d-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=8508862cc8e52ec0e32da82763366843&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858845132" target="_blank" rel="noopener">&#x7B2C;11&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第12集"><span class="toc-number">12.</span> <span class="toc-text"><a href="#&#x7B2C;12&#x96C6;" class="headerlink" title="&#x7B2C;12&#x96C6;"></a><a href="http://112.25.79.9/videos/v0/20171221/35/97/496d980187ebf33ef32564662b94fa28.mp4?key=0fddc9afb9b08f69de0c22db88e532d2&amp;dis_k=2564801d9d92a54ef1c4257c7d8ec7186&amp;dis_t=1515859015&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a99c219-5a5a2c47-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f0864c2f55df8a0b6aee6c70bef9745a&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859015580" target="_blank" rel="noopener">&#x7B2C;12&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第13集"><span class="toc-number">13.</span> <span class="toc-text"><a href="#&#x7B2C;13&#x96C6;" class="headerlink" title="&#x7B2C;13&#x96C6;"></a><a href="http://221.130.5.38/videos/v0/20171221/25/e3/b4d3949a52af27b1ba02ce7e0bcad8a3.mp4?key=0a32c6e594d5cb8fdf013c14546b51031&amp;dis_k=27b9130e2dbc89f7111fabd0ff3e7a0b3&amp;dis_t=1515858987&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2c2b-19f&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=8ccfd937f8b878c66288ad928e2759e2&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858987437" target="_blank" rel="noopener">&#x7B2C;13&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第14集"><span class="toc-number">14.</span> <span class="toc-text"><a href="#&#x7B2C;14&#x96C6;" class="headerlink" title="&#x7B2C;14&#x96C6;"></a><a href="http://36.155.65.9/videos/v0/20171221/82/b8/c6bff6e85c3151deabfb891d5d8eb0b8.mp4?key=0657daa92c9cfdf92925b7673543eacbe&amp;dis_k=288934271507b8f1818767828ca1d02a5&amp;dis_t=1515858964&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a74-5a5a2c14-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=40d8305d4c1fa455015da3e5806da37e&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858964761" target="_blank" rel="noopener">&#x7B2C;14&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第15集"><span class="toc-number">15.</span> <span class="toc-text"><a href="#&#x7B2C;15&#x96C6;" class="headerlink" title="&#x7B2C;15&#x96C6;"></a><a href="http://112.25.49.24/videos/v0/20171221/35/97/496d980187ebf33ef32564662b94fa28.mp4?key=0f9de89de4dd8452a6dd89d17d95abca1&amp;dis_k=270de2cb81165360ea3d3b94e15c632d5&amp;dis_t=1515858875&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a996dbc-5a5a2bbb-199&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=c50c4078506670f0ea41b96f1bb8527b&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515858875557" target="_blank" rel="noopener">&#x7B2C;15&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第16集"><span class="toc-number">16.</span> <span class="toc-text"><a href="#&#x7B2C;16&#x96C6;" class="headerlink" title="&#x7B2C;16&#x96C6;"></a><a href="http://112.25.79.12/videos/v0/20171221/2d/7d/4f1145ea9d97c8255d5937b25923643a.mp4?key=009c364d8bdf86f73d3bcfa8996d61308&amp;dis_k=27fdef07219ad47c69fcec8a41541d50d&amp;dis_t=1515859094&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7c-5a5a2c96-19b&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=32b892d8bbd04f692a9c96646c76f9bb&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859094086" target="_blank" rel="noopener">&#x7B2C;16&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第17集"><span class="toc-number">17.</span> <span class="toc-text"><a href="#&#x7B2C;17&#x96C6;" class="headerlink" title="&#x7B2C;17&#x96C6;"></a><a href="http://112.25.49.142/videos/v0/20171226/be/28/f497b05753b067c0cb41be364f0795b2.mp4?key=030ba5b20db2be2eefad70f207a0cbb8d&amp;dis_k=2ba7bdc78a6a951b85da3bdcd6d109d3c&amp;dis_t=1515859109&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a78-5a5a2ca5-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=20d3d23c378e35b896dcd67c1a73e055&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859109877" target="_blank" rel="noopener">&#x7B2C;17&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第18集"><span class="toc-number">18.</span> <span class="toc-text"><a href="#&#x7B2C;18&#x96C6;" class="headerlink" title="&#x7B2C;18&#x96C6;"></a><a href="http://112.25.49.142/videos/v0/20171226/be/28/f497b05753b067c0cb41be364f0795b2.mp4?key=030ba5b20db2be2eefad70f207a0cbb8d&amp;dis_k=2ba7bdc78a6a951b85da3bdcd6d109d3c&amp;dis_t=1515859109&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a78-5a5a2ca5-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=20d3d23c378e35b896dcd67c1a73e055&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859109877" target="_blank" rel="noopener">&#x7B2C;18&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第19集"><span class="toc-number">19.</span> <span class="toc-text"><a href="#&#x7B2C;19&#x96C6;" class="headerlink" title="&#x7B2C;19&#x96C6;"></a><a href="http://36.155.65.5/videos/v0/20171226/29/71/7cb1e34bdef386a9bdd5acc15a54864b.mp4?key=0f844444855b2ff1de5af53480f6e0286&amp;dis_k=2b6d61dd1d8ce4ac55168cfee1cea09f6&amp;dis_t=1515859155&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a7a-5a5a2cd3-19a&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=168970463cb2589a55eb4eded2ffcbae&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859155222" target="_blank" rel="noopener">&#x7B2C;19&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第20集"><span class="toc-number">20.</span> <span class="toc-text"><a href="#&#x7B2C;20&#x96C6;" class="headerlink" title="&#x7B2C;20&#x96C6;"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">&#x7B2C;20&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第21集"><span class="toc-number">21.</span> <span class="toc-text"><a href="#&#x7B2C;21&#x96C6;" class="headerlink" title="&#x7B2C;21&#x96C6;"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">&#x7B2C;21&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第22集"><span class="toc-number">22.</span> <span class="toc-text"><a href="#&#x7B2C;22&#x96C6;" class="headerlink" title="&#x7B2C;22&#x96C6;"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">&#x7B2C;22&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第23集"><span class="toc-number">23.</span> <span class="toc-text"><a href="#&#x7B2C;23&#x96C6;" class="headerlink" title="&#x7B2C;23&#x96C6;"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">&#x7B2C;23&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第24集"><span class="toc-number">24.</span> <span class="toc-text"><a href="#&#x7B2C;24&#x96C6;" class="headerlink" title="&#x7B2C;24&#x96C6;"></a><a href="http://112.25.79.4/videos/v0/20171227/68/c8/5d470281e0fd0b7c416f967413d041cc.mp4?key=070fea3113e02c9ee302caa0564458b03&amp;dis_k=2f919a3280a870fe6410791e433341c85&amp;dis_t=1515859213&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2d0d-19e&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=f214286aaa0a2759c090c2566e9723ff&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859213138" target="_blank" rel="noopener">&#x7B2C;24&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第25集"><span class="toc-number">25.</span> <span class="toc-text"><a href="#&#x7B2C;25&#x96C6;" class="headerlink" title="&#x7B2C;25&#x96C6;"></a><a href="http://112.25.79.8/videos/v0/20171228/ad/f3/11a464c552208d48f08a3c8fcb33c998.mp4?key=0f32ef3ea6e4150001fdeb1e5ba0c7ad5&amp;dis_k=2e6c4178b0c264a4427402192be47f711&amp;dis_t=1515859409&amp;dis_dz=CMNET-JiangSu&amp;dis_st=44&amp;src=iqiyi.com&amp;uuid=a997a04-5a5a2dd1-19c&amp;m=v&amp;qd_ip=b7ce054d&amp;qd_p=b7ce054d&amp;qd_k=156d7bb9cf1d72e67015a74ca1c14772&amp;qd_src=03020031010000000000&amp;ssl=1&amp;ip=183.206.5.77&amp;qd_vip=0&amp;dis_src=vrs&amp;qd_uid=0&amp;qdv=1&amp;qd_tm=1515859409499" target="_blank" rel="noopener">&#x7B2C;25&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第26集"><span class="toc-number">26.</span> <span class="toc-text"><a href="#&#x7B2C;26&#x96C6;" class="headerlink" title="&#x7B2C;26&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrf5teb8.html" target="_blank" rel="noopener">&#x7B2C;26&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第27集"><span class="toc-number">27.</span> <span class="toc-text"><a href="#&#x7B2C;27&#x96C6;" class="headerlink" title="&#x7B2C;27&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrf5uc0s.html" target="_blank" rel="noopener">&#x7B2C;27&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第28集"><span class="toc-number">28.</span> <span class="toc-text"><a href="#&#x7B2C;28&#x96C6;" class="headerlink" title="&#x7B2C;28&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rret1foo.html" target="_blank" rel="noopener">&#x7B2C;28&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第29集"><span class="toc-number">29.</span> <span class="toc-text"><a href="#&#x7B2C;29&#x96C6;" class="headerlink" title="&#x7B2C;29&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rret17rk.html" target="_blank" rel="noopener">&#x7B2C;29&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第30集"><span class="toc-number">30.</span> <span class="toc-text"><a href="#&#x7B2C;30&#x96C6;" class="headerlink" title="&#x7B2C;30&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rretei8s.html" target="_blank" rel="noopener">&#x7B2C;30&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第31集"><span class="toc-number">31.</span> <span class="toc-text"><a href="#&#x7B2C;31&#x96C6;" class="headerlink" title="&#x7B2C;31&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rreteaj4.html" target="_blank" rel="noopener">&#x7B2C;31&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第32集"><span class="toc-number">32.</span> <span class="toc-text"><a href="#&#x7B2C;32&#x96C6;" class="headerlink" title="&#x7B2C;32&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrerx6x4.html" target="_blank" rel="noopener">&#x7B2C;32&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第33集"><span class="toc-number">33.</span> <span class="toc-text"><a href="#&#x7B2C;33&#x96C6;" class="headerlink" title="&#x7B2C;33&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrerygtk.html" target="_blank" rel="noopener">&#x7B2C;33&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第34集"><span class="toc-number">34.</span> <span class="toc-text"><a href="#&#x7B2C;34&#x96C6;" class="headerlink" title="&#x7B2C;34&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrercr2g.html" target="_blank" rel="noopener">&#x7B2C;34&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第35集"><span class="toc-number">35.</span> <span class="toc-text"><a href="#&#x7B2C;35&#x96C6;" class="headerlink" title="&#x7B2C;35&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrerchko.html" target="_blank" rel="noopener">&#x7B2C;35&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第36集"><span class="toc-number">36.</span> <span class="toc-text"><a href="#&#x7B2C;36&#x96C6;" class="headerlink" title="&#x7B2C;36&#x96C6;"></a><a href="http://www.iqiyi.com/v_19rrercbc0.html" target="_blank" rel="noopener">&#x7B2C;36&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第37集"><span class="toc-number">37.</span> <span class="toc-text"><a href="#&#x7B2C;37&#x96C6;" class="headerlink" title="&#x7B2C;37&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17467763-102-009-000748.mp4" target="_blank" rel="noopener">&#x7B2C;37&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第38集"><span class="toc-number">38.</span> <span class="toc-text"><a href="#&#x7B2C;38&#x96C6;" class="headerlink" title="&#x7B2C;38&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17468717-102-009-002725.mp4" target="_blank" rel="noopener">&#x7B2C;38&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第39集"><span class="toc-number">39.</span> <span class="toc-text"><a href="#&#x7B2C;39&#x96C6;" class="headerlink" title="&#x7B2C;39&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17469472-102-009-004333.mp4" target="_blank" rel="noopener">&#x7B2C;39&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第40集"><span class="toc-number">40.</span> <span class="toc-text"><a href="#&#x7B2C;40&#x96C6;" class="headerlink" title="&#x7B2C;40&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17469697-102-009-004925.mp4" target="_blank" rel="noopener">&#x7B2C;40&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第41集"><span class="toc-number">41.</span> <span class="toc-text"><a href="#&#x7B2C;41&#x96C6;" class="headerlink" title="&#x7B2C;41&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471238-102-009-013535.mp4" target="_blank" rel="noopener">&#x7B2C;41&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第42集"><span class="toc-number">42.</span> <span class="toc-text"><a href="#&#x7B2C;42&#x96C6;" class="headerlink" title="&#x7B2C;42&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2018/01/03/17736469-102-009-171132.mp4" target="_blank" rel="noopener">&#x7B2C;42&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第43集"><span class="toc-number">43.</span> <span class="toc-text"><a href="#&#x7B2C;43&#x96C6;" class="headerlink" title="&#x7B2C;43&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471898-102-009-014822.mp4" target="_blank" rel="noopener">&#x7B2C;43&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第44集"><span class="toc-number">44.</span> <span class="toc-text"><a href="#&#x7B2C;44&#x96C6;" class="headerlink" title="&#x7B2C;44&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471920-102-009-014822.mp4" target="_blank" rel="noopener">&#x7B2C;44&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第45集"><span class="toc-number">45.</span> <span class="toc-text"><a href="#&#x7B2C;45&#x96C6;" class="headerlink" title="&#x7B2C;45&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17479315-102-009-050431.mp4" target="_blank" rel="noopener">&#x7B2C;45&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第46集"><span class="toc-number">46.</span> <span class="toc-text"><a href="#&#x7B2C;46&#x96C6;" class="headerlink" title="&#x7B2C;46&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471951-102-009-014927.mp4" target="_blank" rel="noopener">&#x7B2C;46&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第47集"><span class="toc-number">47.</span> <span class="toc-text"><a href="#&#x7B2C;47&#x96C6;" class="headerlink" title="&#x7B2C;47&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471969-102-009-014927.mp4" target="_blank" rel="noopener">&#x7B2C;47&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第48集"><span class="toc-number">48.</span> <span class="toc-text"><a href="#&#x7B2C;48&#x96C6;" class="headerlink" title="&#x7B2C;48&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17471973-102-009-015036.mp4" target="_blank" rel="noopener">&#x7B2C;48&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第49集"><span class="toc-number">49.</span> <span class="toc-text"><a href="#&#x7B2C;49&#x96C6;" class="headerlink" title="&#x7B2C;49&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17472009-102-009-015041.mp4" target="_blank" rel="noopener">&#x7B2C;49&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第50集"><span class="toc-number">50.</span> <span class="toc-text"><a href="#&#x7B2C;50&#x96C6;" class="headerlink" title="&#x7B2C;50&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17478739-102-009-044629.mp4" target="_blank" rel="noopener">&#x7B2C;50&#x96C6;</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第51集"><span class="toc-number">51.</span> <span class="toc-text"><a href="#&#x7B2C;51&#x96C6;" class="headerlink" title="&#x7B2C;51&#x96C6;"></a><a href="http://video19.ifeng.com/video09/2017/12/31/17472018-102-009-015117.mp4" target="_blank" rel="noopener">&#x7B2C;51&#x96C6;</a></span></a></li></ol>
+    </div>
+    
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header sidebar-header-show-archive">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 11 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2018/01/13/风筝-51集/" >风筝-51集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2018/01/07/微信跳一跳之线性回归算法优化/" >微信跳一跳之线性回归算法优化</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/31</span><a class="archive-post-title" href= "/2017/12/31/Golang学习（二）/" >Golang学习（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/30</span><a class="archive-post-title" href= "/2017/12/30/开源工具集-备忘清单/" >开源工具集--备忘清单</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/24</span><a class="archive-post-title" href= "/2017/12/24/Inode耗尽导致的no-space-left-on-device报错/" >探究inode耗尽导致的no space left on device报错原因</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/24</span><a class="archive-post-title" href= "/2017/12/24/Golang学习（一）/" >Golang学习（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2017/10/29/50万Coding用户关系爬爬爬爬/" >50万Coding用户关系爬爬爬爬</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/22</span><a class="archive-post-title" href= "/2017/10/22/利用Python解读十九大工作报告/" >利用Python解读十九大工作报告</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Scrapy爬取Coding冒泡广场/" >Scrapy爬取Coding冒泡广场</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/08</span><a class="archive-post-title" href= "/2017/09/08/Pythoner的vim/" >Pythoner的vim</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2017/05/10/关于NebulaSolarDash/" >关于NebulaSolarDash</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name"><a href= "#">Python</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">爬虫</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Golang</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">工具</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Linux</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">问题排查</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">资源监控</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">vim</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">机器学习</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">游戏</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">看剧</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">资源</a></span>
+    
+    </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #888; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
