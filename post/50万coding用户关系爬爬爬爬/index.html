@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>50万Coding用户关系爬爬爬爬</title>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.42.2" />
+	<meta property="og:title" content="50万Coding用户关系爬爬爬爬" />
+<meta property="og:description" content="今天我们继续来搞Coding数据~
+从官方给出的数据我们知道目前Coding大概有50万注册用户
+然后我们还能看到冒泡广场有很多热门用户
+那么这些用户之间的关系是什么样子滴？
+哪些用户是高冷吸粉狂人？
+哪些用户是社交达人？
+哪些用户是万年潜水独行侠？
+50万Coding小伙伴的社交网络核心是哪位？
+是否真的有50万用户？
+带着这些疑问，我们开始撸代码！
+先把项目地址贴下：https://github.com/toddlerya/AnalyzeCoding
+爬虫算法分析设计： 如何获取全部用户信息 通过分析Coding网站, 我们发现有3个地方可以获取到用户数据信息：  冒泡广场: 每一条冒泡都有发布人，有些还有点赞人、打赏人、评论人
+ 热门用户：冒泡广场首页右侧有20个热门用户，这些用户是当前最活跃的用户，这些用户拥有比较多的粉丝和朋友。
+ 个人主页：用户的个人主页有一个标签页：关注，这里可以看到此用户关注了哪些人，被哪些人关注。
+  现在就是开脑洞的时候啦！ 用户之间的关系分为三种：
+ A关注B: A--&gt;B A被B关注：A&lt;--B A与B互相关注：A&lt;--&gt;B  这就是个有向图嘛！
+六度分隔理论:
+1967年，哈佛大学的心理学教授Stanley Milgram(1933-1984)想要描绘一个连结人与社区的人际连系网。做过一次连锁信实验，结果发现了“六度分隔”现象。简单地说：“你和任何一个陌生人之间所间隔的人不会超过六个，也就是说，最多通过六个人你就能够认识任何一个陌生人。”
+思路渐渐清晰了，我们可以采用深度优先算法（Depth-First Search，简称DFS）
+从A出发，找到A所有的好友（A1,A2,A3）记录为{A: [A1, A2, A3]}
+从A1出发，找到A1所有的好友（A,A2-1,A3-1）记录为{A1: [A, A2-1, A3-1]}
+从A2-1出发，找到A2-1所有的好友（A2-1-1）记录为{A2-1: [A2-1-1]}
+从A3-1出发，找到A3-1所有的好友（A3-1-1）记录为{A3-1: [A3-1-1]}
+从A2出发，找到A2所有的好友（A2-1）记录为{A2: [A2-1]}
+……循环递归……
+直到Z，Z同学没有任何好友，结束本次遍历爬取。
+爬取过程中要注意，已经爬取过的人要跳过，否则会陷入无限循环中。
+相关API  当前热门用户：https://coding.net/api/tweet/best_user 用户的朋友们：https://coding.net/api/user/friends/{用户全局唯一代号}?page=1&amp;pageSize=20 用户的粉丝们：https://coding.net/api/user/followers/{用户全局唯一代号}?page=1&amp;pageSize=20 用户个人信息详情：https://coding.net/api/user/key/{用户全局唯一代号}  代码设计实现 数据库设计 为了程序轻便，数据便于分享，我们决定使用Sqlite数据库。
+上述分析过程中发送，用户的登录帐号是全局唯一的，不会重复的，我们以此字段作为主键且不允许为空， 还可以通过上述API获取用户的朋友、朋友的个数、用户的粉丝、粉丝的个数、用户详细信息，因此用户社交关系表设计如下：
+CREATE TABLE IF NOT EXISTS coding_all_user ( global_key VARCHAR PRIMARY KEY NOT NULL, friends_count INTEGER, friends VARCHAR, followers_count INTEGER, followers VARCHAR )  用户个人信息详情表设计如下：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://toddlerya.github.io/post/50%E4%B8%87coding%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E7%88%AC%E7%88%AC%E7%88%AC%E7%88%AC/" />
+
+
+
+<meta property="article:published_time" content="2017-10-29T13:05:54&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-29T13:05:54&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="50万Coding用户关系爬爬爬爬"/>
+<meta name="twitter:description" content="今天我们继续来搞Coding数据~
+从官方给出的数据我们知道目前Coding大概有50万注册用户
+然后我们还能看到冒泡广场有很多热门用户
+那么这些用户之间的关系是什么样子滴？
+哪些用户是高冷吸粉狂人？
+哪些用户是社交达人？
+哪些用户是万年潜水独行侠？
+50万Coding小伙伴的社交网络核心是哪位？
+是否真的有50万用户？
+带着这些疑问，我们开始撸代码！
+先把项目地址贴下：https://github.com/toddlerya/AnalyzeCoding
+爬虫算法分析设计： 如何获取全部用户信息 通过分析Coding网站, 我们发现有3个地方可以获取到用户数据信息：  冒泡广场: 每一条冒泡都有发布人，有些还有点赞人、打赏人、评论人
+ 热门用户：冒泡广场首页右侧有20个热门用户，这些用户是当前最活跃的用户，这些用户拥有比较多的粉丝和朋友。
+ 个人主页：用户的个人主页有一个标签页：关注，这里可以看到此用户关注了哪些人，被哪些人关注。
+  现在就是开脑洞的时候啦！ 用户之间的关系分为三种：
+ A关注B: A--&gt;B A被B关注：A&lt;--B A与B互相关注：A&lt;--&gt;B  这就是个有向图嘛！
+六度分隔理论:
+1967年，哈佛大学的心理学教授Stanley Milgram(1933-1984)想要描绘一个连结人与社区的人际连系网。做过一次连锁信实验，结果发现了“六度分隔”现象。简单地说：“你和任何一个陌生人之间所间隔的人不会超过六个，也就是说，最多通过六个人你就能够认识任何一个陌生人。”
+思路渐渐清晰了，我们可以采用深度优先算法（Depth-First Search，简称DFS）
+从A出发，找到A所有的好友（A1,A2,A3）记录为{A: [A1, A2, A3]}
+从A1出发，找到A1所有的好友（A,A2-1,A3-1）记录为{A1: [A, A2-1, A3-1]}
+从A2-1出发，找到A2-1所有的好友（A2-1-1）记录为{A2-1: [A2-1-1]}
+从A3-1出发，找到A3-1所有的好友（A3-1-1）记录为{A3-1: [A3-1-1]}
+从A2出发，找到A2所有的好友（A2-1）记录为{A2: [A2-1]}
+……循环递归……
+直到Z，Z同学没有任何好友，结束本次遍历爬取。
+爬取过程中要注意，已经爬取过的人要跳过，否则会陷入无限循环中。
+相关API  当前热门用户：https://coding.net/api/tweet/best_user 用户的朋友们：https://coding.net/api/user/friends/{用户全局唯一代号}?page=1&amp;pageSize=20 用户的粉丝们：https://coding.net/api/user/followers/{用户全局唯一代号}?page=1&amp;pageSize=20 用户个人信息详情：https://coding.net/api/user/key/{用户全局唯一代号}  代码设计实现 数据库设计 为了程序轻便，数据便于分享，我们决定使用Sqlite数据库。
+上述分析过程中发送，用户的登录帐号是全局唯一的，不会重复的，我们以此字段作为主键且不允许为空， 还可以通过上述API获取用户的朋友、朋友的个数、用户的粉丝、粉丝的个数、用户详细信息，因此用户社交关系表设计如下：
+CREATE TABLE IF NOT EXISTS coding_all_user ( global_key VARCHAR PRIMARY KEY NOT NULL, friends_count INTEGER, friends VARCHAR, followers_count INTEGER, followers VARCHAR )  用户个人信息详情表设计如下："/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/scripts.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+</head>
+<body class="body body-right-sidebar">
+	<div class="container container-outer">
+		<header class="header">
+			<div class="container container-inner">
+				<div class="logo" role="banner">
+					<a class="logo__link" href="/" title="日拱一卒" rel="home">
+						<div class="logo__title">日拱一卒</div>
+						<div class="logo__tagline">但行好事，莫问前程。</div>
+					</a>
+				</div>
+			</div>
+			<div class="divider"></div>
+		</header>
+		<div class="wrapper clearfix">
+
+<main class="main content">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">50万Coding用户关系爬爬爬爬</h1><div class="post__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2017-10-29T13:05:54">October 29, 2017</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%88%ac%e8%99%ab" rel="category">爬虫</a></span>
+</span></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#爬虫算法分析设计">爬虫算法分析设计：</a>
+<ul>
+<li><a href="#如何获取全部用户信息">如何获取全部用户信息</a>
+<ul>
+<li><a href="#通过分析coding网站-我们发现有3个地方可以获取到用户数据信息">通过分析Coding网站, 我们发现有3个地方可以获取到用户数据信息：</a></li>
+<li><a href="#现在就是开脑洞的时候啦">现在就是开脑洞的时候啦！</a></li>
+<li><a href="#相关api">相关API</a></li>
+</ul></li>
+<li><a href="#代码设计实现">代码设计实现</a>
+<ul>
+<li><a href="#数据库设计">数据库设计</a></li>
+<li><a href="#爬虫设计">爬虫设计</a>
+<ul>
+<li><a href="#根节点设置">根节点设置</a></li>
+<li><a href="#遍历用户爬虫-crawl-all-user-py-执行逻辑">遍历用户爬虫(crawl_all_user.py)执行逻辑</a></li>
+<li><a href="#用户详细信息爬虫-crawl-user-info-py-逻辑">用户详细信息爬虫(crawl_user_info.py)逻辑</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#遇到的问题">遇到的问题：</a>
+<ul>
+<li><a href="#1-python递归深度报错">1. python递归深度报错</a></li>
+<li><a href="#部分代码">部分代码</a></li>
+<li><a href="#爬取的数据库文件">爬取的数据库文件</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="post__content clearfix">
+			
+
+<p>今天我们继续来搞Coding数据~</p>
+
+<p>从官方给出的数据我们知道目前Coding大概有50万注册用户<br />
+<!-- ![](/images/20171029-da78583c.png)   -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/002/20171029-da78583c.png" alt="" /><br />
+然后我们还能看到冒泡广场有很多热门用户<br />
+<!-- ![](/images/20171029-9dce21d4.png)   -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/002/20171029-9dce21d4.png" alt="" /><br />
+那么这些用户之间的关系是什么样子滴？<br />
+哪些用户是高冷吸粉狂人？<br />
+哪些用户是社交达人？<br />
+哪些用户是万年潜水独行侠？<br />
+50万Coding小伙伴的社交网络核心是哪位？<br />
+是否真的有50万用户？</p>
+
+<p>带着这些疑问，我们开始撸代码！<br />
+先把项目地址贴下：<a href="https://github.com/toddlerya/AnalyzeCoding">https://github.com/toddlerya/AnalyzeCoding</a></p>
+
+<h2 id="爬虫算法分析设计">爬虫算法分析设计：</h2>
+
+<h3 id="如何获取全部用户信息">如何获取全部用户信息</h3>
+
+<h4 id="通过分析coding网站-我们发现有3个地方可以获取到用户数据信息">通过分析Coding网站, 我们发现有3个地方可以获取到用户数据信息：</h4>
+
+<ul>
+<li><p>冒泡广场: 每一条冒泡都有<code>发布人</code>，有些还有<code>点赞人</code>、<code>打赏人</code>、<code>评论人</code><br />
+<!-- ![](/images/20171029-82b5268a.png)   -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/002/20171029-82b5268a.png" alt="" /></p></li>
+
+<li><p>热门用户：冒泡广场首页右侧有20个热门用户，这些用户是当前最活跃的用户，这些用户拥有比较多的粉丝和朋友。<br />
+<!-- ![](/images/20171029-9dce21d4.png)   -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/002/20171029-9dce21d4.png" alt="" /></p></li>
+
+<li><p>个人主页：用户的个人主页有一个标签页：<code>关注</code>，这里可以看到此用户关注了哪些人，被哪些人关注。<br />
+<!-- ![](/images/20171029-7b53d006.png)   -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/002/20171029-7b53d006.png" alt="" /></p></li>
+</ul>
+
+<h4 id="现在就是开脑洞的时候啦">现在就是开脑洞的时候啦！</h4>
+
+<p>用户之间的关系分为三种：</p>
+
+<pre><code>  A关注B: A--&gt;B  
+  A被B关注：A&lt;--B  
+  A与B互相关注：A&lt;--&gt;B  
+</code></pre>
+
+<p>这就是个<code>有向图</code>嘛！</p>
+
+<p><code>六度分隔理论</code>:<br />
+1967年，哈佛大学的心理学教授Stanley Milgram(1933-1984)想要描绘一个连结人与社区的人际连系网。做过一次连锁信实验，结果发现了“六度分隔”现象。简单地说：“你和任何一个陌生人之间所间隔的人不会超过六个，也就是说，最多通过六个人你就能够认识任何一个陌生人。”</p>
+
+<p>思路渐渐清晰了，我们可以采用<code>深度优先算法</code>（Depth-First Search，简称DFS）<br />
+从A出发，找到A所有的好友（A1,A2,A3）记录为<code>{A: [A1, A2, A3]}</code><br />
+从A1出发，找到A1所有的好友（A,A2-1,A3-1）记录为<code>{A1: [A, A2-1, A3-1]}</code><br />
+从A2-1出发，找到A2-1所有的好友（A2-1-1）记录为<code>{A2-1: [A2-1-1]}</code><br />
+从A3-1出发，找到A3-1所有的好友（A3-1-1）记录为<code>{A3-1: [A3-1-1]}</code><br />
+从A2出发，找到A2所有的好友（A2-1）记录为<code>{A2: [A2-1]}</code><br />
+……循环递归……<br />
+直到Z，Z同学没有任何好友，结束本次遍历爬取。<br />
+<b>爬取过程中要注意，已经爬取过的人要跳过，否则会陷入无限循环中。</b></p>
+
+<h4 id="相关api">相关API</h4>
+
+<ul>
+<li>当前热门用户：<code>https://coding.net/api/tweet/best_user</code></li>
+<li>用户的朋友们：<code>https://coding.net/api/user/friends/{用户全局唯一代号}?page=1&amp;pageSize=20</code></li>
+<li>用户的粉丝们：<code>https://coding.net/api/user/followers/{用户全局唯一代号}?page=1&amp;pageSize=20</code></li>
+<li>用户个人信息详情：<code>https://coding.net/api/user/key/{用户全局唯一代号}</code></li>
+</ul>
+
+<h3 id="代码设计实现">代码设计实现</h3>
+
+<h4 id="数据库设计">数据库设计</h4>
+
+<p>为了程序轻便，数据便于分享，我们决定使用<code>Sqlite</code>数据库。<br />
+上述分析过程中发送，用户的登录帐号是全局唯一的，不会重复的，我们以此字段作为主键且不允许为空，
+还可以通过上述API获取用户的朋友、朋友的个数、用户的粉丝、粉丝的个数、用户详细信息，因此用户社交关系表设计如下：</p>
+
+<pre><code class="language-SQL">CREATE TABLE IF NOT EXISTS coding_all_user (
+       global_key VARCHAR PRIMARY KEY NOT NULL,
+       friends_count INTEGER,
+       friends VARCHAR,
+       followers_count INTEGER,
+       followers VARCHAR
+     )
+</code></pre>
+
+<p>用户个人信息详情表设计如下：</p>
+
+<pre><code class="language-SQL">CREATE TABLE IF NOT EXISTS coding_user_info (
+        global_key VARCHAR PRIMARY KEY NOT NULL,
+        user_name VARCHAR,
+        name_pinyin VARCHAR,
+        sex VARCHAR,
+        slogan VARCHAR,
+        company VARCHAR,
+        job VARCHAR,
+        tags VARCHAR,
+        skills VARCHAR,
+        website VARCHAR,
+        introduction VARCHAR,
+        avatar VARCHAR,
+        school VARCHAR,
+        follows_count VARCHAR,
+        fans_count INTEGER,
+        tweets_count INTEGER,
+        vip VARCHAR,
+        created_at VARCHAR,
+        last_logined_at VARCHAR,
+        last_activity_at VARCHAR
+        )
+</code></pre>
+
+<h4 id="爬虫设计">爬虫设计</h4>
+
+<p>这里要注意有一个特殊的用户<code>coding</code>，此用户为官方帐号，此用户的<code>friends</code>和<code>followers</code>两个API数据为空，遇到此用户要进行跳过。</p>
+
+<h5 id="根节点设置">根节点设置</h5>
+
+<p>第一次爬取，将当前热门用户作为起始根节点，后续取数据库中已经存储的用户与当前热门用户比较，若当前热门用户有未录入数据库的，则以当前热门用户作为根节点，否则以数据库中的用户作为根节点启动爬虫。</p>
+
+<h5 id="遍历用户爬虫-crawl-all-user-py-执行逻辑">遍历用户爬虫(crawl_all_user.py)执行逻辑</h5>
+
+<p>爬取每一个节点的好友、粉丝，入库(<code>coding_all_user</code>)更新（因为用户的好友和粉丝会变化）、若其好友未录入数据库，则加入下一轮递归抓取的任务列表，否则结束此轮任务。</p>
+
+<h5 id="用户详细信息爬虫-crawl-user-info-py-逻辑">用户详细信息爬虫(crawl_user_info.py)逻辑</h5>
+
+<p>以<code>遍历用户爬虫</code>录入的<code>coding_all_user</code>表作为输入数据，遍历库中的每一个用户，通过<code>用户个人信息详情</code>API来获取用户信息录入<code>coding_user_info</code>表</p>
+
+<h2 id="遇到的问题">遇到的问题：</h2>
+
+<h3 id="1-python递归深度报错">1. python递归深度报错</h3>
+
+<ul>
+<li>报错详情：<br />
+<code>
+--RuntimeError: maximum recursion depth exceeded
+</code></li>
+<li>问题原因：<br />
+python默认的递归深度是<font color=red>1000</font>，因此当递归深度超过999的时，就会引发这样的一个异常。<br />
+从Coding的官方公布数据了解到，Coding目前有50万用户，所以当程序爬取到第1000个人以后肯定就报错崩溃啦！<br /></li>
+<li>解决方案：
+粗暴的将默认递归深度调大点
+<code>python
+import sys   
+sys.setrecursionlimit(1000000) #例如这里设置为一百万
+</code>
+经过尝试我们发现Python可以递归的最大深度为<font color=red>2147483647</font><br />
+大于此深度，设置时会报错：
+<code>python
+OverflowError: signed integer is greater than maximum  # Linux
+OverflowError: Python int too large to convert to C long  # Windows
+</code>
+<font color='red'><b>但是！但是！这不是正确的解决方案，正确的解决方案应该是优化代码，使用生成器+循环来解决问题！</b></font><br /></li>
+</ul>
+
+<h3 id="部分代码">部分代码</h3>
+
+<p><a href="https://github.com/toddlerya/AnalyzeCoding/blob/master/Crawl/crawl_all_user.py">crawl_all_user.py</a><br />
+<a href="https://github.com/toddlerya/AnalyzeCoding/blob/master/Crawl/crawl_user_info.py">crawl_user_info.py</a></p>
+
+<h3 id="爬取的数据库文件">爬取的数据库文件</h3>
+
+<p><a href="https://github.com/toddlerya/AnalyzeCoding/blob/master/Data/analyzecoding.db">analyzecoding.db</a></p>
+
+<hr />
+
+<p>2017年10月29日 于 南京<br />
+<a href="toddlerya@qq.com">Email</a><br />
+<a href="https://github.com/toddlerya">GitHub</a></p>
+
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 16 16"><path d="M16 9.5c0 .373-.24.74-.5 1l-5 5c-.275.26-.634.5-1 .5-.373 0-.74-.24-1-.5L1 8a2.853 2.853 0 0 1-.7-1C.113 6.55 0 5.973 0 5.6V1.4C0 1.034.134.669.401.401.67.134 1.034 0 1.4 0h4.2c.373 0 .95.113 1.4.3.45.187.732.432 1 .7l7.5 7.502c.26.274.5.632.5.998zM3.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">Python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li>
+	</ul>
+</div>
+	</article>
+	
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="toddlerya avatar" src="/img/dog.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About toddlerya</span>
+	</div>
+	<div class="authorbox__description">
+		witness me.
+	</div>
+</div>
+	
+<nav class="post-nav row clearfix">
+	<div class="post-nav__item post-nav__item--prev col-1-2">
+		<a class="post-nav__link" href="/post/%E5%88%A9%E7%94%A8python%E8%A7%A3%E8%AF%BB%E5%8D%81%E4%B9%9D%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">利用Python解读十九大工作报告</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next col-1-2">
+		<a class="post-nav__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%B8%80/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Golang学习（一）</p></a>
+	</div>
+</nav>
+	
+</main>
+
+<aside class="sidebar">
+	
+	
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/">探究inode耗尽导致的no space left on device报错原因</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7%e7%ae%b1">工具箱</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
+				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
+				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>toddlerya@qq.com</span>
+			</a>
+		</div>
+	</div>
+</div>
+	
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e9%97%ae%e9%a2%98%e6%8e%92%e6%9f%a5" title="问题排查">问题排查 (1)</a>
+	</div>
+</div>
+</aside>
+	</div>
+		<footer class="footer">
+			<div class="container container-inner">
+				<div class="footer__copyright">&copy; 2018 日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
+			</div>
+		</footer>
+	</div>
+
+<script>
+	var navigation = responsiveNav(".menu", {
+		navClass: "menu--collapse",
+	});
+</script></body>
+</html>

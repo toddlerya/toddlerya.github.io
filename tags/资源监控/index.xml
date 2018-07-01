@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>资源监控 on 日拱一卒</title>
+    <link>https://toddlerya.github.io/tags/%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7/</link>
+    <description>Recent content in 资源监控 on 日拱一卒</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 May 2017 22:06:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://toddlerya.github.io/tags/%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于NebulaSolarDash</title>
+      <link>https://toddlerya.github.io/post/%E5%85%B3%E4%BA%8Enebulasolardash/</link>
+      <pubDate>Wed, 10 May 2017 22:06:10 +0000</pubDate>
+      
+      <guid>https://toddlerya.github.io/post/%E5%85%B3%E4%BA%8Enebulasolardash/</guid>
+      <description>2017年的5月1日，三天假期，闭门造了个轮子 写这个工具的目的是为了解决工作问题。 个人工作生产环境无法连接互联网，也没有自建的yum源等，手头又有很多服务器需要进行监控，使用现有的开源方案安装部署是个问题， 各种依赖组件包需要挨个安装，很麻烦，所以想找一款依赖较少部署简单的分布式服务器资源监控工具，找来找去没找到，索性自己动手写一个。 我的本职工作是测试，所以就用最熟悉的Python来写吧，第一次写web应用，先做出来再边学边优化吧。
+工具分为客户端和服务端两部分： 服务端使用了bottle来作为web框架，echarts来渲染生成图表； 客户端使用Python原生类库采集服务器资源，客户端采集数据部分代码参考了pyDash
+效果如下 项目链接链接 NebulaSolarDash
+2017年05月10日 于 南京
+Email
+GitHub</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>微信跳一跳之线性回归算法优化</title>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.42.2" />
+	<meta property="og:title" content="微信跳一跳之线性回归算法优化" />
+<meta property="og:description" content="最近微信上线了一款小应用&mdash;“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派&#43;步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。
+今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000&#43; 新增AI模块，机器人自主学习生成跳跃公式，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。
+这个pull request介绍如下： &gt; 机器人精确采集跳跃结果并自主学习，使用线性回归方法 &gt; 拟合出最优 [按压时间]-&gt;[弹跳距离] 线性公式 Y =kX &#43; b &gt; 本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可 &gt; 模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。 &gt; 理论上只要目标点获取无误，会一直跳下去。
+工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。 下面来动手试一下，找出下岗多年的MX3，充电开机。
+第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 {% codeblock lang:Python %} screenshot = screenshot.replace(b&rsquo;\r\n&rsquo;, b&rsquo;\n&rsquo;) {% endcodeblock %} 修改为 {% codeblock lang:python %} screenshot = screenshot.replace(b&rsquo;\r\r\n&rsquo;, b&rsquo;\n&rsquo;) {% endcodeblock %}  第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://toddlerya.github.io/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/" />
+
+
+
+<meta property="article:published_time" content="2018-01-07T12:24:53&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-01-07T12:24:53&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="微信跳一跳之线性回归算法优化"/>
+<meta name="twitter:description" content="最近微信上线了一款小应用&mdash;“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派&#43;步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。
+今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000&#43; 新增AI模块，机器人自主学习生成跳跃公式，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。
+这个pull request介绍如下： &gt; 机器人精确采集跳跃结果并自主学习，使用线性回归方法 &gt; 拟合出最优 [按压时间]-&gt;[弹跳距离] 线性公式 Y =kX &#43; b &gt; 本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可 &gt; 模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。 &gt; 理论上只要目标点获取无误，会一直跳下去。
+工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。 下面来动手试一下，找出下岗多年的MX3，充电开机。
+第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 {% codeblock lang:Python %} screenshot = screenshot.replace(b&rsquo;\r\n&rsquo;, b&rsquo;\n&rsquo;) {% endcodeblock %} 修改为 {% codeblock lang:python %} screenshot = screenshot.replace(b&rsquo;\r\r\n&rsquo;, b&rsquo;\n&rsquo;) {% endcodeblock %}  第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/scripts.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+</head>
+<body class="body body-right-sidebar">
+	<div class="container container-outer">
+		<header class="header">
+			<div class="container container-inner">
+				<div class="logo" role="banner">
+					<a class="logo__link" href="/" title="日拱一卒" rel="home">
+						<div class="logo__title">日拱一卒</div>
+						<div class="logo__tagline">但行好事，莫问前程。</div>
+					</a>
+				</div>
+			</div>
+			<div class="divider"></div>
+		</header>
+		<div class="wrapper clearfix">
+
+<main class="main content">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">微信跳一跳之线性回归算法优化</h1><div class="post__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2018-01-07T12:24:53">January 07, 2018</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" rel="category">机器学习</a>, <a class="meta-categories__link" href="/categories/%e6%b8%b8%e6%88%8f" rel="category">游戏</a></span>
+</span></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#第一次调试">第一次调试</a></li>
+<li><a href="#第二次调试">第二次调试</a></li>
+<li><a href="#第三次调试-重点">第三次调试（重点）</a>
+<ul>
+<li><a href="#问题1">问题1</a></li>
+<li><a href="#问题2">问题2</a></li>
+<li><a href="#改进1">改进1</a></li>
+<li><a href="#改进2">改进2</a></li>
+</ul></li>
+<li><a href="#效果展示">效果展示</a>
+<ul>
+<li><a href="#训练数据拟合函数">训练数据拟合函数</a></li>
+<li><a href="#debug误差效果">debug误差效果</a></li>
+<li><a href="#自动运行视频">自动运行视频</a></li>
+<li><a href="#成绩">成绩</a></li>
+<li><a href="#项目地址">项目地址</a></li>
+</ul></li>
+<li><a href="#后记">后记</a></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="post__content clearfix">
+			
+
+<p>最近微信上线了一款小应用&mdash;“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派+步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。</p>
+
+<p>今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目<a href="https://github.com/wangshub/wechat_jump_game">wechat_jump_game</a>进行优化改造。此项目有个pull request<a href="https://github.com/wangshub/wechat_jump_game/pull/825">[优化]跑分17000+ 新增AI模块，机器人自主学习生成跳跃公式</a>，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。</p>
+
+<p>这个pull request介绍如下：
+&gt; 机器人精确采集跳跃结果并自主学习，使用线性回归方法
+&gt; 拟合出最优 [按压时间]-&gt;[弹跳距离] 线性公式 Y =kX + b
+&gt; 本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可
+&gt; 模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。
+&gt; 理论上只要目标点获取无误，会一直跳下去。</p>
+
+<p>工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。
+下面来动手试一下，找出下岗多年的MX3，充电开机。</p>
+
+<h1 id="第一次调试">第一次调试</h1>
+
+<ol>
+<li>安装好adb，配置好环境变量。</li>
+<li>手机打开开发者模式，连接PC。</li>
+<li>命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。</li>
+<li>测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。</li>
+<li>通过virtualenv建立虚拟环境，安装项目所需的第三方库。</li>
+<li>手机微信打开跳一跳，点击开始游戏。</li>
+<li>运行wechat_jump_auto_ai.py，报错T_T&hellip;
+查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行
+将
+{% codeblock lang:Python %}
+screenshot = screenshot.replace(b&rsquo;\r\n&rsquo;, b&rsquo;\n&rsquo;)
+{% endcodeblock %}
+修改为
+{% codeblock lang:python %}
+screenshot = screenshot.replace(b&rsquo;\r\r\n&rsquo;, b&rsquo;\n&rsquo;)
+{% endcodeblock %}</li>
+</ol>
+
+<h1 id="第二次调试">第二次调试</h1>
+
+<p>按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&hellip;
+查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.sleep(0.2)。
+    {% codeblock lang:python %}
+        # 在跳跃落下的瞬间 摄像机移动前截图 这个参数要自己校调
+        time.sleep(0.2)
+        pull_screenshot_temp()
+        im_temp = Image.open(&lsquo;./autojump_temp.png&rsquo;)
+        temp_piece_x, temp_piece_y = find_piece(im_temp)
+        debug.computing_error(press_time, board_x, board_y, piece_x, piece_y, temp_piece_x, temp_piece_y)
+    {% endcodeblock %}
+经过debug截图不断调整，得出我的PC和MX3配合的最佳数值是0.04。
+删除学习数据jump_range.csv，重新开始训练，程序终于能磕磕绊绊达到400分左右，但是大概需要1小时左右，对学习数据通过pandas和matplotlib进行绘图，看到训练采集到的数据离散程度很高，明显学习效果不佳。</p>
+
+<h1 id="第三次调试-重点">第三次调试（重点）</h1>
+
+<p>再次阅读代码，发现这个AI版本的代码有瑕疵：
+    {% codeblock lang:python %}
+    def computing_error(last_press_time, target_board_x, target_board_y, last_piece_x, last_piece_y, temp_piece_x, temp_piece_y):
+        &ldquo;&rdquo;&rdquo;
+        计算跳跃实际误差
+        &ldquo;&rdquo;&rdquo;
+        target_distance = math.sqrt(abs(target_board_x - last_piece_x) ** 2 + abs(target_board_y - last_piece_y) ** 2)  # 上一轮目标跳跃距离
+        actual_distance = math.sqrt(abs(temp_piece_x - last_piece_x) ** 2 + abs(temp_piece_y - last_piece_y) ** 2)  # 上一轮实际跳跃距离
+        jump_error_value = math.sqrt(abs(target_board_x - temp_piece_x) ** 2 + abs(target_board_y - temp_piece_y) ** 2)  # 跳跃误差</p>
+
+<pre><code>    print &quot;目标距离: {0}, 实际距离: {1}, 误差距离: {2}, 蓄力时间: {3}ms&quot;.format(round(target_distance), round(actual_distance), round(jump_error_value), round(last_press_time))
+    # 将结果采集进学习字典
+
+    if last_piece_x &gt; 0 and last_press_time &gt; 0 :
+        ai.add_data(round(actual_distance, 2), round(last_press_time))
+{% endcodeblock %}
+</code></pre>
+
+<h2 id="问题1">问题1</h2>
+
+<p>target_distance与actual_distance有可能会等于0.0或者一个超出实际范围的值，这些值会在游戏失败重新开始时出现，原程序没有进行过滤；</p>
+
+<h2 id="问题2">问题2</h2>
+
+<p>jump_error_value作为一个很重要的值，没有进行有效利用。</p>
+
+<p>上述两个问题会导致数据质量不高，干扰项太多，目标函数拟合速度太慢。</p>
+
+<p>因此改进数据采集策略：
+    {% codeblock lang:python %}
+    if jump_error_value &lt; 5 and last_piece_x &gt; 0 and last_press_time &gt; 0 and target_distance &gt; 0 and actual_distance &gt; 0:
+            ai.add_data(round(actual_distance, 2), round(last_press_time))
+    {% endcodeblock %}</p>
+
+<h2 id="改进1">改进1</h2>
+
+<p>要求target_distance与actual_distance必须要大于0才是有效值，剔除干扰项；</p>
+
+<h2 id="改进2">改进2</h2>
+
+<p>jump_error_value合理利用，开始时将此参数放大到50左右，后续根据学习效果，逐步缩小jump_error_value的阈值，提高精确度，加速训练效果。</p>
+
+<h1 id="效果展示">效果展示</h1>
+
+<h2 id="训练数据拟合函数">训练数据拟合函数</h2>
+
+<p>经过大概四五轮训练，采样到571条数据，拟合出线性回归函数如图
+<!-- ![](/images/snipaste_20180107_143133.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20180107_143133.png" alt="" /></p>
+
+<h2 id="debug误差效果">debug误差效果</h2>
+
+<ol>
+<li>运行debug截图, 基本完美命中目标
+<!-- ![](/images/snipaste_20180107_132535.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20180107_132535.png" alt="" /><br /></li>
+
+<li><p>运行debug日志，误差基本控制在40以内
+<!-- ![](/images/snipaste_20180107_130834.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20180107_130834.png?imageMogr2/thumbnail/!80p" alt="" /></p>
+
+<h2 id="自动运行视频">自动运行视频</h2>
+
+<!-- video id="video" controls="controls" preload="auto">
+<source id="mp4" src="/images/wechat_ai.mp4" type="video/mp4" poster="/images/snipaste_20180107_163211.png">
+<p>Your user agent does not support the HTML5 Video element.</p>
+</video -->
+
+<video id="video" controls="controls" preload="auto">
+<source id="mp4" src="http://ovzv5zg5e.bkt.clouddn.com/wechat_ai.mp4" type="video/mp4" poster="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20180107_163211.png">
+<p>Your user agent does not support the HTML5 Video element.</p>
+</video></li>
+</ol>
+
+<h2 id="成绩">成绩</h2>
+
+<p>因为MX3手机硬件有问题，电量低于75%就会出现屏幕抖动，所以目前成绩如此
+<!-- ![](/images/wechat_ai_20180107141219.jpg) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/wechat_ai_20180107141219.jpg?imageMogr2/thumbnail/!80p" alt="AI成绩" /></p>
+
+<h2 id="项目地址">项目地址</h2>
+
+<p>优化后的代码以及训练数据： <a href="https://github.com/toddlerya/WechatJumpAI">https://github.com/toddlerya/WechatJumpAI</a></p>
+
+<h1 id="后记">后记</h1>
+
+<p>不得不承认，机器学习在合适的领域使用合适方式，达到的效果非常棒！只用了简单的线性回归算法，最经典最基本的机器学习算法，达到的效果已经秒杀人类上千倍。
+为了不被这个时代淘汰，一定要跟上节奏，加油~</p>
+
+<hr />
+
+<p>2018年01月07日 于 南京<br />
+<a href="toddlerya@qq.com">Email</a><br />
+<a href="https://github.com/toddlerya">GitHub</a></p>
+
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 16 16"><path d="M16 9.5c0 .373-.24.74-.5 1l-5 5c-.275.26-.634.5-1 .5-.373 0-.74-.24-1-.5L1 8a2.853 2.853 0 0 1-.7-1C.113 6.55 0 5.973 0 5.6V1.4C0 1.034.134.669.401.401.67.134 1.034 0 1.4 0h4.2c.373 0 .95.113 1.4.3.45.187.732.432 1 .7l7.5 7.502c.26.274.5.632.5.998zM3.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">Python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag">游戏</a></li>
+	</ul>
+</div>
+	</article>
+	
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="toddlerya avatar" src="/img/dog.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About toddlerya</span>
+	</div>
+	<div class="authorbox__description">
+		witness me.
+	</div>
+</div>
+	
+<nav class="post-nav row clearfix">
+	<div class="post-nav__item post-nav__item--prev col-1-2">
+		<a class="post-nav__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Golang学习（二）</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next col-1-2">
+		<a class="post-nav__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">无序大数组的中位数算法</p></a>
+	</div>
+</nav>
+	
+</main>
+
+<aside class="sidebar">
+	
+	
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/">探究inode耗尽导致的no space left on device报错原因</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7%e7%ae%b1">工具箱</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
+				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
+				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>toddlerya@qq.com</span>
+			</a>
+		</div>
+	</div>
+</div>
+	
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e9%97%ae%e9%a2%98%e6%8e%92%e6%9f%a5" title="问题排查">问题排查 (1)</a>
+	</div>
+</div>
+</aside>
+	</div>
+		<footer class="footer">
+			<div class="container container-inner">
+				<div class="footer__copyright">&copy; 2018 日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
+			</div>
+		</footer>
+	</div>
+
+<script>
+	var navigation = responsiveNav(".menu", {
+		navClass: "menu--collapse",
+	});
+</script></body>
+</html>

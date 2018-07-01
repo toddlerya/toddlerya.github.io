@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具箱 on 日拱一卒</title>
+    <link>https://toddlerya.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/</link>
+    <description>Recent content in 工具箱 on 日拱一卒</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 30 Dec 2017 21:37:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://toddlerya.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>开源工具集--备忘清单</title>
+      <link>https://toddlerya.github.io/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/</link>
+      <pubDate>Sat, 30 Dec 2017 21:37:25 +0000</pubDate>
+      
+      <guid>https://toddlerya.github.io/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/</guid>
+      <description>经常看到一些有趣的开源工具，没机会去尝试，时间久了就忘记还有这些轮子啦，开个坑做个备忘录，记录下。
+监控系统  open-falcon Prometheus Cockpit  数据分析/BI  Metabase  数据库  时间序列数据库influxdb  2017年10月22日 于 南京
+Email
+GitHub</description>
+    </item>
+    
+  </channel>
+</rss>

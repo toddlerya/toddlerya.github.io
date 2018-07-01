@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Golang学习（一）</title>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.42.2" />
+	<meta property="og:title" content="Golang学习（一）" />
+<meta property="og:description" content="闲扯 去北京参加Top100学习到现在一个多月过去了，时间过得好快，转眼2017年只剩下最后一周了，不由得感叹时间就像指缝的流沙。 再加上最近中年程序员不堪重负的各种新闻，感觉自己距离那一天也没多远了，在此之前努力提高自己的姿势水平吧，要没时间了。
+在Top100听到了很多讲师提到了Golang，结合之前看过的左耳朵耗子的文章《GO语言、DOCKER 和新技术》，决定要学习了解下Golang了。 最近半个月断断续续看了Golang的一些教程《GO 语言简介（上）— 语法》、《GO 语言简介（下）— 特性》、无闻老师的《Go 编程基础》，只是对Golang有了一点点初步的了解。 学习一门语言最重要的还是要撸代码啊，要动手写个小工具试试手。 恰巧昨天加班时帮同事写了个小工具，感觉用Python的性能不够好，而且想要高性能还要依赖gevent这种第三方库，不方便部署，于是想到用Golang可以来试下，写完编译下给同事用就好啦！昨晚回到家吃过饭陪女朋友玩了会，从十点开始撸代码到凌晨一点，终于写出一个小demo，特此记录下年轻人的第一个Golang小程序。
+正文 工具需求是有一个样例zip包，zip包里面有一些bcp数据、xml数据、bjson数据、图片、视频什么的。 zip包的命名规范如下： AAA-BBB-1514090969-CCC_DDD_21234.zip 我们要将zip包的1514090969【绝对秒数】与21234【随机序列】进行替换，随机生成大量的zip包副本，发送到某个ETL输入目录，暂且不管zip包里面的内容（其实zip包内的文件也要随机生成）。 之前同事用Shell写的，没看他代码怎么实现的，不过肯定有问题，一小时才生成了三万个样例zip包，远远达不到压测的要求。 于是我花了十几分钟调用Python的gevent模块帮他重新用Python写了一遍，性能瞬间爆炸。 但是部署gevent比较麻烦（公司和客户都是内网环境，pip是没法用的，只能手动安装所需的第三方包，而且公司大部分操作系统还是Redhat AS6U3，默认的Python是2.6版本，各种不方便），就想到了如果用Golang写一遍是否性能很好，编译后提供二进制文件直接运行就可以了，于是就有了下面的代码。
+代码 /* * User: toddlerya * Date: 2017/12/23 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os.Stat(name); err != nil { if os.IsNotExist(err) { return false } } return true } func copyFile(src, des string) (w int64, err error) { srcFile, err := os." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://toddlerya.github.io/post/golang%E5%AD%A6%E4%B9%A0%E4%B8%80/" />
+
+
+
+<meta property="article:published_time" content="2017-12-24T12:11:49&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-12-24T12:11:49&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang学习（一）"/>
+<meta name="twitter:description" content="闲扯 去北京参加Top100学习到现在一个多月过去了，时间过得好快，转眼2017年只剩下最后一周了，不由得感叹时间就像指缝的流沙。 再加上最近中年程序员不堪重负的各种新闻，感觉自己距离那一天也没多远了，在此之前努力提高自己的姿势水平吧，要没时间了。
+在Top100听到了很多讲师提到了Golang，结合之前看过的左耳朵耗子的文章《GO语言、DOCKER 和新技术》，决定要学习了解下Golang了。 最近半个月断断续续看了Golang的一些教程《GO 语言简介（上）— 语法》、《GO 语言简介（下）— 特性》、无闻老师的《Go 编程基础》，只是对Golang有了一点点初步的了解。 学习一门语言最重要的还是要撸代码啊，要动手写个小工具试试手。 恰巧昨天加班时帮同事写了个小工具，感觉用Python的性能不够好，而且想要高性能还要依赖gevent这种第三方库，不方便部署，于是想到用Golang可以来试下，写完编译下给同事用就好啦！昨晚回到家吃过饭陪女朋友玩了会，从十点开始撸代码到凌晨一点，终于写出一个小demo，特此记录下年轻人的第一个Golang小程序。
+正文 工具需求是有一个样例zip包，zip包里面有一些bcp数据、xml数据、bjson数据、图片、视频什么的。 zip包的命名规范如下： AAA-BBB-1514090969-CCC_DDD_21234.zip 我们要将zip包的1514090969【绝对秒数】与21234【随机序列】进行替换，随机生成大量的zip包副本，发送到某个ETL输入目录，暂且不管zip包里面的内容（其实zip包内的文件也要随机生成）。 之前同事用Shell写的，没看他代码怎么实现的，不过肯定有问题，一小时才生成了三万个样例zip包，远远达不到压测的要求。 于是我花了十几分钟调用Python的gevent模块帮他重新用Python写了一遍，性能瞬间爆炸。 但是部署gevent比较麻烦（公司和客户都是内网环境，pip是没法用的，只能手动安装所需的第三方包，而且公司大部分操作系统还是Redhat AS6U3，默认的Python是2.6版本，各种不方便），就想到了如果用Golang写一遍是否性能很好，编译后提供二进制文件直接运行就可以了，于是就有了下面的代码。
+代码 /* * User: toddlerya * Date: 2017/12/23 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os.Stat(name); err != nil { if os.IsNotExist(err) { return false } } return true } func copyFile(src, des string) (w int64, err error) { srcFile, err := os."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/scripts.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+</head>
+<body class="body body-right-sidebar">
+	<div class="container container-outer">
+		<header class="header">
+			<div class="container container-inner">
+				<div class="logo" role="banner">
+					<a class="logo__link" href="/" title="日拱一卒" rel="home">
+						<div class="logo__title">日拱一卒</div>
+						<div class="logo__tagline">但行好事，莫问前程。</div>
+					</a>
+				</div>
+			</div>
+			<div class="divider"></div>
+		</header>
+		<div class="wrapper clearfix">
+
+<main class="main content">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Golang学习（一）</h1><div class="post__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2017-12-24T12:11:49">December 24, 2017</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90" rel="category">造轮子</a></span>
+</span></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#闲扯">闲扯</a></li>
+<li><a href="#正文">正文</a></li>
+<li><a href="#代码">代码</a></li>
+<li><a href="#使用效果如下">使用效果如下</a>
+<ul>
+<li><a href="#测试运行">测试运行</a></li>
+<li><a href="#异常处理">异常处理</a></li>
+<li><a href="#遗留bug">遗留BUG</a></li>
+</ul></li>
+<li><a href="#后续">后续</a></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="post__content clearfix">
+			
+
+<h1 id="闲扯">闲扯</h1>
+
+<p>去北京参加Top100学习到现在一个多月过去了，时间过得好快，转眼2017年只剩下最后一周了，不由得感叹时间就像指缝的流沙。
+再加上最近中年程序员不堪重负的各种新闻，感觉自己距离那一天也没多远了，在此之前努力提高自己的姿势水平吧，要没时间了。</p>
+
+<p>在Top100听到了很多讲师提到了Golang，结合之前看过的左耳朵耗子的文章<a href="https://coolshell.cn/articles/18190.html">《GO语言、DOCKER 和新技术》</a>，决定要学习了解下Golang了。
+最近半个月断断续续看了Golang的一些教程<a href="https://coolshell.cn/articles/8460.html">《GO 语言简介（上）— 语法》</a>、<a href="https://coolshell.cn/articles/8489.html">《GO 语言简介（下）— 特性》</a>、无闻老师的<a href="https://github.com/Unknwon/go-fundamental-programming">《Go 编程基础》</a>，只是对Golang有了一点点初步的了解。
+学习一门语言最重要的还是要撸代码啊，要动手写个小工具试试手。
+恰巧昨天加班时帮同事写了个小工具，感觉用Python的性能不够好，而且想要高性能还要依赖gevent这种第三方库，不方便部署，于是想到用Golang可以来试下，写完编译下给同事用就好啦！昨晚回到家吃过饭陪女朋友玩了会，从十点开始撸代码到凌晨一点，终于写出一个小demo，特此记录下年轻人的第一个Golang小程序。</p>
+
+<hr />
+
+<h1 id="正文">正文</h1>
+
+<p>工具需求是有一个样例zip包，zip包里面有一些bcp数据、xml数据、bjson数据、图片、视频什么的。
+zip包的命名规范如下：
+    AAA-BBB-1514090969-CCC_DDD_21234.zip
+我们要将zip包的1514090969【绝对秒数】与21234【随机序列】进行替换，随机生成大量的zip包副本，发送到某个ETL输入目录，暂且不管zip包里面的内容（其实zip包内的文件也要随机生成）。
+之前同事用Shell写的，没看他代码怎么实现的，不过肯定有问题，一小时才生成了三万个样例zip包，远远达不到压测的要求。
+于是我花了十几分钟调用Python的gevent模块帮他重新用Python写了一遍，性能瞬间爆炸。
+但是部署gevent比较麻烦（公司和客户都是内网环境，pip是没法用的，只能手动安装所需的第三方包，而且公司大部分操作系统还是Redhat AS6U3，默认的Python是2.6版本，各种不方便），就想到了如果用Golang写一遍是否性能很好，编译后提供二进制文件直接运行就可以了，于是就有了下面的代码。</p>
+
+<h1 id="代码">代码</h1>
+
+<pre><code class="language-Golang">/*
+ * User: toddlerya
+ * Date: 2017/12/23
+ * ds接入模块加压工具
+ */
+
+package main
+
+import (
+	&quot;flag&quot;
+	&quot;fmt&quot;
+	&quot;io&quot;
+	&quot;math/rand&quot;
+	&quot;os&quot;
+	&quot;strconv&quot;
+	&quot;strings&quot;
+	&quot;time&quot;
+)
+
+func judgeExists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
+}
+
+func copyFile(src, des string) (w int64, err error) {
+	srcFile, err := os.Open(src)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer srcFile.Close()
+
+	desFile, err := os.Create(des)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer desFile.Close()
+
+	return io.Copy(desFile, srcFile)
+}
+
+func generateRandomNumber(start int, end int) int {
+	if end &lt; 0 || start &lt; 0 || (end-start) &lt;= 0 {
+		fmt.Println(&quot;[-] 随机数起始值[start]必须大于等于0, 截至值[end]必须大于起始值!&quot;)
+		fmt.Printf(&quot;[-] 请检查配置是否正确: start=%v, end=%v\n&quot;, start, end)
+		panic(&quot;随机数参数错误&quot;)
+	}
+	rand.Seed(time.Now().UnixNano())
+	num := rand.Intn((end - start)) + start
+	return num
+}
+
+func main() {
+	srcFilePath := flag.String(&quot;s&quot;, &quot;/home&quot;, &quot;输入原始文件路径&quot;)
+	dstFilePath := flag.String(&quot;d&quot;, &quot;/tmp&quot;, &quot;目标输出路径&quot;)
+	renameFormat := flag.String(&quot;f&quot;, &quot;abc-{random1}-456_780_{random2}.zip&quot;, &quot;参数原始文件替换格式&quot;)
+	random1Start := flag.Int(&quot;r1s&quot;, 100, &quot;随机参数1的起始值&quot;)
+	random1End := flag.Int(&quot;r1e&quot;, 999, &quot;随机参数1的截止值&quot;)
+	random2Start := flag.Int(&quot;r2s&quot;, 100000, &quot;随机参数2的起始值&quot;)
+	random2End := flag.Int(&quot;r2e&quot;, 999999, &quot;随机参数2的截止值&quot;)
+	generateFileNumber := flag.Int(&quot;g&quot;, 10000, &quot;需要生成的文件个数&quot;)
+	// taskQueueSize := flag.Int(&quot;t&quot;, 100, &quot;每次任务队列生成文件个数&quot;)
+	// interval := flag.Int(&quot;i&quot;, 3, &quot;任务运行间隔[单位秒]&quot;)
+	flag.Parse()
+	fmt.Printf(&quot;[srcFilePath]          :%s\n&quot;, *srcFilePath)
+	fmt.Printf(&quot;[dstFilePath]          :%s\n&quot;, *dstFilePath)
+	fmt.Printf(&quot;[renameFormat]         :%s\n&quot;, *renameFormat)
+	fmt.Printf(&quot;[random1Start]         :%v\n&quot;, *random1Start)
+	fmt.Printf(&quot;[random1End]           :%v\n&quot;, *random1End)
+	fmt.Printf(&quot;[random2Start]         :%v\n&quot;, *random2Start)
+	fmt.Printf(&quot;[random2End]           :%v\n&quot;, *random2End)
+	fmt.Printf(&quot;[generateFileNumber]   :%v\n&quot;, *generateFileNumber)
+	// fmt.Printf(&quot;[taskQueueSize]        :%v\n&quot;, *taskQueueSize)
+	// fmt.Printf(&quot;[interval](second)     :%v\n&quot;, *interval)
+	fmt.Println(&quot;=======================================&quot;)
+	if judgeExists(*srcFilePath) {
+		fmt.Println(&quot;[+] 开始随机生成目标数据, 请注意&quot;, *dstFilePath, &quot;目录是否有数据生成\t&quot;, &quot;计划生成&quot;, *generateFileNumber, &quot;个文件Orz&quot;)
+		count := 0
+		for {
+			if count &gt;= *generateFileNumber {
+				fmt.Println(&quot;[+] 已经完成目标: 共计生成&quot;, *generateFileNumber, &quot;个文件&quot;)
+				return
+			}
+			random1Val := generateRandomNumber(*random1Start, *random1End)
+			random2Val := generateRandomNumber(*random2Start, *random2End)
+			temp := strings.Replace(*renameFormat, &quot;{random1}&quot;, strconv.Itoa(random1Val), -1)
+			newFileName := strings.Replace(temp, &quot;{random2}&quot;, strconv.Itoa(random2Val), -1)
+			dstJoinList := []string{*dstFilePath, newFileName}
+			newDstFilePath := strings.Join(dstJoinList, &quot;/&quot;)
+			fmt.Println(&quot;[*] 输出随机生成的文件: &quot;, newDstFilePath)
+			copyFile(*srcFilePath, newDstFilePath)
+			count++
+		}
+	} else {
+		fmt.Println(&quot;[-] 原始文件不存在, 请检查: &quot;, *srcFilePath)
+	}
+}
+</code></pre>
+
+<h1 id="使用效果如下">使用效果如下</h1>
+
+<h2 id="测试运行">测试运行</h2>
+
+<!-- ![](/images/snipaste_20171224_011006.png) -->
+
+<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_011428.png" alt="" /></p>
+
+<h2 id="异常处理">异常处理</h2>
+
+<!-- ![](/images/snipaste_20171224_011006.png) -->
+
+<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_011006.png" alt="" /></p>
+
+<h2 id="遗留bug">遗留BUG</h2>
+
+<p>但是在阿里云的测试中发现了程序的BUG，df看磁盘剩余空间还有很多，但是df -i查看发现磁盘Inode被耗尽了导致无法复制文件，可是是程序并没有停止复制，异常退出，这个BUG以后再修改：
+<!-- ![](/images/snipaste_20171224_134323.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_134323.png" alt="" /></p>
+
+<h1 id="后续">后续</h1>
+
+<p>因为还没学到Golang的并发，所以这个demo只是简单的循环执行，后续学会了并发再来更新T_T</p>
+
+<hr />
+
+<p>2017年12月24日 于 南京<br />
+<a href="toddlerya@qq.com">Email</a><br />
+<a href="https://github.com/toddlerya">GitHub</a></p>
+
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 16 16"><path d="M16 9.5c0 .373-.24.74-.5 1l-5 5c-.275.26-.634.5-1 .5-.373 0-.74-.24-1-.5L1 8a2.853 2.853 0 0 1-.7-1C.113 6.55 0 5.973 0 5.6V1.4C0 1.034.134.669.401.401.67.134 1.034 0 1.4 0h4.2c.373 0 .95.113 1.4.3.45.187.732.432 1 .7l7.5 7.502c.26.274.5.632.5.998zM3.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/golang/" rel="tag">Golang</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li>
+	</ul>
+</div>
+	</article>
+	
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="toddlerya avatar" src="/img/dog.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About toddlerya</span>
+	</div>
+	<div class="authorbox__description">
+		witness me.
+	</div>
+</div>
+	
+<nav class="post-nav row clearfix">
+	<div class="post-nav__item post-nav__item--prev col-1-2">
+		<a class="post-nav__link" href="/post/50%E4%B8%87coding%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E7%88%AC%E7%88%AC%E7%88%AC%E7%88%AC/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">50万Coding用户关系爬爬爬爬</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next col-1-2">
+		<a class="post-nav__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">探究inode耗尽导致的no space left on device报错原因</p></a>
+	</div>
+</nav>
+	
+</main>
+
+<aside class="sidebar">
+	
+	
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/">探究inode耗尽导致的no space left on device报错原因</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7%e7%ae%b1">工具箱</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
+				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
+				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>toddlerya@qq.com</span>
+			</a>
+		</div>
+	</div>
+</div>
+	
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e9%97%ae%e9%a2%98%e6%8e%92%e6%9f%a5" title="问题排查">问题排查 (1)</a>
+	</div>
+</div>
+</aside>
+	</div>
+		<footer class="footer">
+			<div class="container container-inner">
+				<div class="footer__copyright">&copy; 2018 日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
+			</div>
+		</footer>
+	</div>
+
+<script>
+	var navigation = responsiveNav(".menu", {
+		navClass: "menu--collapse",
+	});
+</script></body>
+</html>

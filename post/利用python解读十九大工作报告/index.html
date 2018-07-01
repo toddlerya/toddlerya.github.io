@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>利用Python解读十九大工作报告</title>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.42.2" />
+	<meta property="og:title" content="利用Python解读十九大工作报告" />
+<meta property="og:description" content="关键词: Python、wordcloud、jieba、matplotlib、词云、分词
+ 前几天的召开的十九大，习近平讲了三小时的三万字工作报告究竟讲了些什么内容呢，我们用Python来一次数据分析看看究竟讲了哪些内容。
+主要思路： &#43; 通过jieba分词对工作报告进行切词，清洗，词频统计。 &#43; 通过wordcloud对切词统计结果进行可视化展示。
+jieba分词利器 特点  支持三种分词模式：  精确模式，试图将句子最精确地切开，适合文本分析； 全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义； 搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。
+   jieba项目地址：https://github.com/fxsjy/jieba
+遇到的问题以及解决办法： 1. 无法匹配最新的词汇 我们采用精确模式进行分词，但是遇到一些词汇在jieba的默认词库没有，所以要根据十九大进行一些定制词库，加载到jieba词库:
+import jieba cpc_dict_path = u&#39;user_dict/cpc_dictionary.txt&#39; jieba.load_userdict(cpc_dict_path) # 加载针对全国人民代表大会的分词词典  2. 匹配到了各种符号、空格 切词后统计词频发现有很多标点符号、空格，这些内容我们可以使用正则匹配法进行过滤，u&#39;[\u4e00-\u9fa5]&#43;&#39;匹配所有中文字符，舍弃未命中内容:
+import re goal_word = &#39;&#39;.join(re.findall(u&#39;[\u4e00-\u9fa5]&#43;&#39;, seg)).strip() # 过滤所有非中文字符内容  3. 匹配到了很多停词 切词后统计词频发现有很多停词，例如：“的”、“和”、“而且”…… 这种问题肯定不止我遇到了，所以直接去找前人整理好的停词词库即可，通过匹配停词来进行过滤：
+stop_words_path = u&#39;user_dict/stopword.txt&#39; with open(stop_words_path) as sf: st_content = sf.readlines() stop_words = [line.strip().decode(&#39;utf-8&#39;) for line in st_content] # 将读取的数据都转为unicode处理 if len(goal_word) !" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://toddlerya.github.io/post/%E5%88%A9%E7%94%A8python%E8%A7%A3%E8%AF%BB%E5%8D%81%E4%B9%9D%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A/" />
+
+
+
+<meta property="article:published_time" content="2017-10-22T16:23:44&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-22T16:23:44&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="利用Python解读十九大工作报告"/>
+<meta name="twitter:description" content="关键词: Python、wordcloud、jieba、matplotlib、词云、分词
+ 前几天的召开的十九大，习近平讲了三小时的三万字工作报告究竟讲了些什么内容呢，我们用Python来一次数据分析看看究竟讲了哪些内容。
+主要思路： &#43; 通过jieba分词对工作报告进行切词，清洗，词频统计。 &#43; 通过wordcloud对切词统计结果进行可视化展示。
+jieba分词利器 特点  支持三种分词模式：  精确模式，试图将句子最精确地切开，适合文本分析； 全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义； 搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。
+   jieba项目地址：https://github.com/fxsjy/jieba
+遇到的问题以及解决办法： 1. 无法匹配最新的词汇 我们采用精确模式进行分词，但是遇到一些词汇在jieba的默认词库没有，所以要根据十九大进行一些定制词库，加载到jieba词库:
+import jieba cpc_dict_path = u&#39;user_dict/cpc_dictionary.txt&#39; jieba.load_userdict(cpc_dict_path) # 加载针对全国人民代表大会的分词词典  2. 匹配到了各种符号、空格 切词后统计词频发现有很多标点符号、空格，这些内容我们可以使用正则匹配法进行过滤，u&#39;[\u4e00-\u9fa5]&#43;&#39;匹配所有中文字符，舍弃未命中内容:
+import re goal_word = &#39;&#39;.join(re.findall(u&#39;[\u4e00-\u9fa5]&#43;&#39;, seg)).strip() # 过滤所有非中文字符内容  3. 匹配到了很多停词 切词后统计词频发现有很多停词，例如：“的”、“和”、“而且”…… 这种问题肯定不止我遇到了，所以直接去找前人整理好的停词词库即可，通过匹配停词来进行过滤：
+stop_words_path = u&#39;user_dict/stopword.txt&#39; with open(stop_words_path) as sf: st_content = sf.readlines() stop_words = [line.strip().decode(&#39;utf-8&#39;) for line in st_content] # 将读取的数据都转为unicode处理 if len(goal_word) !"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/scripts.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+</head>
+<body class="body body-right-sidebar">
+	<div class="container container-outer">
+		<header class="header">
+			<div class="container container-inner">
+				<div class="logo" role="banner">
+					<a class="logo__link" href="/" title="日拱一卒" rel="home">
+						<div class="logo__title">日拱一卒</div>
+						<div class="logo__tagline">但行好事，莫问前程。</div>
+					</a>
+				</div>
+			</div>
+			<div class="divider"></div>
+		</header>
+		<div class="wrapper clearfix">
+
+<main class="main content">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">利用Python解读十九大工作报告</h1><div class="post__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2017-10-22T16:23:44">October 22, 2017</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90" rel="category">数据分析</a></span>
+</span></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#jieba分词利器">jieba分词利器</a>
+<ul>
+<li><a href="#特点">特点</a></li>
+<li><a href="#遇到的问题以及解决办法">遇到的问题以及解决办法：</a>
+<ul>
+<li><a href="#1-无法匹配最新的词汇">1. 无法匹配最新的词汇</a></li>
+<li><a href="#2-匹配到了各种符号-空格">2. 匹配到了各种符号、空格</a></li>
+<li><a href="#3-匹配到了很多停词">3. 匹配到了很多停词</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#wordcloud词云神器">wordcloud词云神器</a>
+<ul>
+<li><a href="#遇到的问题及解决办法">遇到的问题及解决办法：</a>
+<ul>
+<li><a href="#1-wordcloud默认不支持显示中文">1. wordcloud默认不支持显示中文</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="post__content clearfix">
+			
+
+<blockquote>
+<p>关键词: Python、wordcloud、jieba、matplotlib、词云、分词</p>
+</blockquote>
+
+<p>前几天的召开的十九大，习近平讲了三小时的三万字工作报告究竟讲了些什么内容呢，我们用Python来一次数据分析看看究竟讲了哪些内容。<br />
+主要思路：
+  + 通过<code>jieba</code>分词对工作报告进行切词，清洗，词频统计。
+  + 通过<code>wordcloud</code>对切词统计结果进行可视化展示。</p>
+
+<hr />
+
+<h2 id="jieba分词利器">jieba分词利器</h2>
+
+<h3 id="特点">特点</h3>
+
+<ul>
+<li>支持三种分词模式：
+
+<ul>
+<li>精确模式，试图将句子最精确地切开，适合文本分析；</li>
+<li>全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义；</li>
+<li>搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。<br /></li>
+</ul></li>
+</ul>
+
+<p>jieba项目地址：<a href="https://github.com/fxsjy/jieba">https://github.com/fxsjy/jieba</a></p>
+
+<h3 id="遇到的问题以及解决办法">遇到的问题以及解决办法：</h3>
+
+<h4 id="1-无法匹配最新的词汇">1. 无法匹配最新的词汇</h4>
+
+<p>我们采用精确模式进行分词，但是遇到一些词汇在jieba的默认词库没有，所以要根据十九大进行一些<a href="https://github.com/toddlerya/AnalyzeNPC/blob/master/user_dict/cpc_dictionary.txt"><code>定制词库</code></a>，加载到<code>jieba</code>词库:</p>
+
+<pre><code class="language-Python">import jieba
+cpc_dict_path = u'user_dict/cpc_dictionary.txt'
+jieba.load_userdict(cpc_dict_path)  # 加载针对全国人民代表大会的分词词典
+</code></pre>
+
+<h4 id="2-匹配到了各种符号-空格">2. 匹配到了各种符号、空格</h4>
+
+<p>切词后统计词频发现有很多标点符号、空格，这些内容我们可以使用正则匹配法进行过滤，<code>u'[\u4e00-\u9fa5]+'</code>匹配所有中文字符，舍弃未命中内容:</p>
+
+<pre><code class="language-Python">import re
+goal_word = ''.join(re.findall(u'[\u4e00-\u9fa5]+', seg)).strip()  # 过滤所有非中文字符内容
+</code></pre>
+
+<h4 id="3-匹配到了很多停词">3. 匹配到了很多停词</h4>
+
+<p>切词后统计词频发现有很多<code>停词</code>，例如：“的”、“和”、“而且”……
+这种问题肯定不止我遇到了，所以直接去找前人整理好的<a href="https://github.com/toddlerya/AnalyzeNPC/blob/master/user_dict/stopword.txt"><code>停词词库</code></a>即可，通过匹配停词来进行过滤：</p>
+
+<pre><code class="language-Python">stop_words_path = u'user_dict/stopword.txt'
+with open(stop_words_path) as sf:
+    st_content = sf.readlines()
+stop_words = [line.strip().decode('utf-8') for line in st_content]  # 将读取的数据都转为unicode处理
+if len(goal_word) != 0 and not stop_words.__contains__(goal_word):
+    ......
+</code></pre>
+
+<hr />
+
+<h2 id="wordcloud词云神器">wordcloud词云神器</h2>
+
+<p>使用<code>wordcloud</code>生成词云，支持进行各种个性化设置，很好很强大。<br />
+项目地址：<a href="https://github.com/amueller/word_cloud">https://github.com/amueller/word_cloud</a></p>
+
+<h3 id="遇到的问题及解决办法">遇到的问题及解决办法：</h3>
+
+<h4 id="1-wordcloud默认不支持显示中文">1. wordcloud默认不支持显示中文</h4>
+
+<p>不进行处理，直接使用<code>wordcloud</code>绘制词云，显示效果如下，中文都是小方框：<br />
+<!-- ![](/images/20171022-ca2e12dc.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/001/20171022-ca2e12dc.png" alt="" /><br />
+善用搜索引擎，查到问题原因根本在于<font color=red><b>wordcloud的默认字体不支持中文</b></font>。<br />
+解决方案基本分为两种：
+ + 方案1：修改<code>wordcloud</code>库文件，增加字体环境变量：<a href="https://zhuanlan.zhihu.com/p/20436581">https://zhuanlan.zhihu.com/p/20436581</a>
+ + 方案2：在每个项目代码中创建<code>WordCloud</code>对象时指定字体文件：<a href="http://blog.csdn.net/xiemanr/article/details/72796739">http://blog.csdn.net/xiemanr/article/details/72796739</a></p>
+
+<p>个人认为<code>方案2</code>更好一些，提高了代码的可移植性，同时避免了升级<code>wordcloud</code>库导致代码失效的风险。</p>
+
+<pre><code class="language-Python">import os
+font = os.path.abspath('assets/msyh.ttf')
+wc = WordCloud(collocations=False, font_path=font, width=3600, height=3600, margin=2)
+</code></pre>
+
+<p>设置好字体后显示效果如下，已经基本实现了我们的目标：<br />
+<!-- ![](/images/20171022-637b8f8f.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/001/20171022-637b8f8f.png" alt="" /></p>
+
+<hr />
+
+<p>项目地址：<a href="https://github.com/toddlerya/AnalyzeNPC">AnalyzeNPC</a><br />
+核心代码如下：</p>
+
+<pre><code class="language-Python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+# author: toddler
+
+import jieba
+from collections import Counter
+import re
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+
+def cut_analyze(input_file):
+    &quot;&quot;&quot;
+    :param input_file: 输入带切词分析的文本路径
+    :return: (list1, list2) list1切词处理后的列表结果, list2输出切词处理排序后的词频结果, 列表-元祖嵌套结果
+    &quot;&quot;&quot;
+    cpc_dict_path = u'user_dict/cpc_dictionary.txt'
+    stop_words_path = u'user_dict/stopword.txt'
+
+    with open(input_file) as f:
+        content = f.read()
+
+    with open(stop_words_path) as sf:
+        st_content = sf.readlines()
+
+    jieba.load_userdict(cpc_dict_path)  # 加载针对全国人民代表大会的分词词典
+
+    stop_words = [line.strip().decode('utf-8') for line in st_content]  # 将读取的数据都转为unicode处理
+
+    seg_list = jieba.cut(content, cut_all=False)  # 精确模式
+
+    filter_seg_list = list()
+
+    for seg in seg_list:
+        goal_word = ''.join(re.findall(u'[\u4e00-\u9fa5]+', seg)).strip()  # 过滤所有非中文字符内容
+        if len(goal_word) != 0 and not stop_words.__contains__(goal_word):  # 过滤分词结果中的停词内容
+            # filter_seg_list.append(goal_word.encode('utf-8'))  # 将unicode的文本转为utf-8保存到列表以备后续处理
+            filter_seg_list.append(goal_word)
+
+    seg_counter_all = Counter(filter_seg_list).most_common()  # 对切词结果按照词频排序
+
+    # for item in seg_counter_all:
+    #     print &quot;词语: {0} - 频数: {1}&quot;.format(item[0].encode('utf-8'), item[1])
+
+    return filter_seg_list, seg_counter_all
+
+
+def main():
+    input_file_path = u'input_file/nighteen-cpc.txt'
+    cut_data, sort_data = cut_analyze(input_file=input_file_path)
+    font = r'E:\Codes\National_Congress_of_ CPC\assets\msyh.ttf'
+    wc = WordCloud(collocations=False, font_path=font, width=3600, height=3600, margin=2)
+    wc.generate_from_frequencies(dict(sort_data))
+    plt.figure()
+    plt.imshow(wc)
+    plt.axis('off')
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<hr />
+
+<p>2017年10月22日 于 南京<br />
+<a href="toddlerya@qq.com">Email</a><br />
+<a href="https://github.com/toddlerya">GitHub</a></p>
+
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 16 16"><path d="M16 9.5c0 .373-.24.74-.5 1l-5 5c-.275.26-.634.5-1 .5-.373 0-.74-.24-1-.5L1 8a2.853 2.853 0 0 1-.7-1C.113 6.55 0 5.973 0 5.6V1.4C0 1.034.134.669.401.401.67.134 1.034 0 1.4 0h4.2c.373 0 .95.113 1.4.3.45.187.732.432 1 .7l7.5 7.502c.26.274.5.632.5.998zM3.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">Python</a></li>
+	</ul>
+</div>
+	</article>
+	
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="toddlerya avatar" src="/img/dog.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About toddlerya</span>
+	</div>
+	<div class="authorbox__description">
+		witness me.
+	</div>
+</div>
+	
+<nav class="post-nav row clearfix">
+	<div class="post-nav__item post-nav__item--prev col-1-2">
+		<a class="post-nav__link" href="/post/pythoner%E7%9A%84vim/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Pythoner的vim</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next col-1-2">
+		<a class="post-nav__link" href="/post/50%E4%B8%87coding%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E7%88%AC%E7%88%AC%E7%88%AC%E7%88%AC/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">50万Coding用户关系爬爬爬爬</p></a>
+	</div>
+</nav>
+	
+</main>
+
+<aside class="sidebar">
+	
+	
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/">探究inode耗尽导致的no space left on device报错原因</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7%e7%ae%b1">工具箱</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
+				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
+				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>toddlerya@qq.com</span>
+			</a>
+		</div>
+	</div>
+</div>
+	
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e9%97%ae%e9%a2%98%e6%8e%92%e6%9f%a5" title="问题排查">问题排查 (1)</a>
+	</div>
+</div>
+</aside>
+	</div>
+		<footer class="footer">
+			<div class="container container-inner">
+				<div class="footer__copyright">&copy; 2018 日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
+			</div>
+		</footer>
+	</div>
+
+<script>
+	var navigation = responsiveNav(".menu", {
+		navClass: "menu--collapse",
+	});
+</script></body>
+</html>

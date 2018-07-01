@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>探究inode耗尽导致的no space left on device报错原因</title>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.42.2" />
+	<meta property="og:title" content="探究inode耗尽导致的no space left on device报错原因" />
+<meta property="og:description" content="在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。
+什么是inode？ 理解inode，要从文件储存说起。 文件储存在硬盘上，硬盘的最小存储单位叫做&rdquo;扇区&rdquo;（Sector）。每个扇区储存512字节（相当于0.5KB）。 操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个&rdquo;块&rdquo;（block）。这种由多个扇区组成的&rdquo;块&rdquo;，是文件存取的最小单位。&rdquo;块&rdquo;的大小，最常见的是4KB，即连续八个 sector组成一个 block。 文件数据都储存在&rdquo;块&rdquo;中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为&rdquo;索引节点&rdquo;。
+inode记录了什么信息？ inode包含文件的元信息，具体来说有以下内容： &#43; 文件的字节数 &#43; 文件拥有者的User ID &#43; 文件的Group ID &#43; 文件的读、写、执行权限 &#43; 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。 &#43; 链接数，即有多少文件名指向这个inode &#43; 文件数据block的位置
+可以用stat命令，查看某个文件的inode信息：stat example.txt
+总之，除了文件名以外的所有文件信息，都存在inode之中。
+inode的大小 inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。 每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，一般是每1KB或每2KB就设置一个inode。假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。
+查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。 df -i 查看每个inode节点的大小，可以用如下命令： sudo dumpe2fs -h /dev/vdb | grep &ldquo;inode size&rdquo;
+由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。
+inode号码 每个inode都有一个号码，操作系统用inode号码来识别不同的文件。
+这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt
+目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
+目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。
+ls命令只列出目录文件中的所有文件名：ls /etc
+ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://toddlerya.github.io/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/" />
+
+
+
+<meta property="article:published_time" content="2017-12-24T13:57:10&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-12-24T13:57:10&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="探究inode耗尽导致的no space left on device报错原因"/>
+<meta name="twitter:description" content="在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。
+什么是inode？ 理解inode，要从文件储存说起。 文件储存在硬盘上，硬盘的最小存储单位叫做&rdquo;扇区&rdquo;（Sector）。每个扇区储存512字节（相当于0.5KB）。 操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个&rdquo;块&rdquo;（block）。这种由多个扇区组成的&rdquo;块&rdquo;，是文件存取的最小单位。&rdquo;块&rdquo;的大小，最常见的是4KB，即连续八个 sector组成一个 block。 文件数据都储存在&rdquo;块&rdquo;中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为&rdquo;索引节点&rdquo;。
+inode记录了什么信息？ inode包含文件的元信息，具体来说有以下内容： &#43; 文件的字节数 &#43; 文件拥有者的User ID &#43; 文件的Group ID &#43; 文件的读、写、执行权限 &#43; 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。 &#43; 链接数，即有多少文件名指向这个inode &#43; 文件数据block的位置
+可以用stat命令，查看某个文件的inode信息：stat example.txt
+总之，除了文件名以外的所有文件信息，都存在inode之中。
+inode的大小 inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。 每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，一般是每1KB或每2KB就设置一个inode。假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。
+查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。 df -i 查看每个inode节点的大小，可以用如下命令： sudo dumpe2fs -h /dev/vdb | grep &ldquo;inode size&rdquo;
+由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。
+inode号码 每个inode都有一个号码，操作系统用inode号码来识别不同的文件。
+这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt
+目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
+目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。
+ls命令只列出目录文件中的所有文件名：ls /etc
+ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/scripts.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+</head>
+<body class="body body-right-sidebar">
+	<div class="container container-outer">
+		<header class="header">
+			<div class="container container-inner">
+				<div class="logo" role="banner">
+					<a class="logo__link" href="/" title="日拱一卒" rel="home">
+						<div class="logo__title">日拱一卒</div>
+						<div class="logo__tagline">但行好事，莫问前程。</div>
+					</a>
+				</div>
+			</div>
+			<div class="divider"></div>
+		</header>
+		<div class="wrapper clearfix">
+
+<main class="main content">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">探究inode耗尽导致的no space left on device报错原因</h1><div class="post__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2017-12-24T13:57:10">December 24, 2017</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95" rel="category">踩坑记录</a></span>
+</span></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#什么是inode">什么是inode？</a></li>
+<li><a href="#inode记录了什么信息">inode记录了什么信息？</a></li>
+<li><a href="#inode的大小">inode的大小</a></li>
+<li><a href="#inode号码">inode号码</a></li>
+<li><a href="#目录文件">目录文件</a></li>
+<li><a href="#硬链接">硬链接</a></li>
+<li><a href="#软链接">软链接</a></li>
+<li><a href="#inode的特殊作用">inode的特殊作用</a></li>
+<li><a href="#实际问题">实际问题</a>
+<ul>
+<li><a href="#问题现象">问题现象</a></li>
+<li><a href="#问题原因">问题原因</a></li>
+<li><a href="#解决方案">解决方案</a></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="post__content clearfix">
+			
+
+<p>在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。</p>
+
+<hr />
+
+<h1 id="什么是inode">什么是inode？</h1>
+
+<p>理解inode，要从文件储存说起。
+文件储存在硬盘上，硬盘的最小存储单位叫做&rdquo;扇区&rdquo;（Sector）。每个扇区储存512字节（相当于0.5KB）。
+操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个&rdquo;块&rdquo;（block）。这种由多个扇区组成的&rdquo;块&rdquo;，是文件存取的最小单位。&rdquo;块&rdquo;的大小，最常见的是4KB，即连续八个 sector组成一个 block。
+文件数据都储存在&rdquo;块&rdquo;中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为&rdquo;索引节点&rdquo;。</p>
+
+<h1 id="inode记录了什么信息">inode记录了什么信息？</h1>
+
+<p>inode包含文件的元信息，具体来说有以下内容：
++ 文件的字节数
++ 文件拥有者的User ID
++ 文件的Group ID
++ 文件的读、写、执行权限
++ 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。
++ 链接数，即有多少文件名指向这个inode
++ 文件数据block的位置</p>
+
+<p>可以用stat命令，查看某个文件的inode信息：stat example.txt<br />
+<!-- ![](/images/snipaste_20171224_140302.png)   -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_140302.png" alt="" />
+总之，除了文件名以外的所有文件信息，都存在inode之中。</p>
+
+<h1 id="inode的大小">inode的大小</h1>
+
+<p>inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。
+每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，一般是每1KB或每2KB就设置一个inode。假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。</p>
+
+<p>查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。
+df -i
+查看每个inode节点的大小，可以用如下命令：
+sudo dumpe2fs -h /dev/vdb | grep &ldquo;inode size&rdquo;<br />
+<!-- ![](/images/snipaste_20171224_141006.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_141006.png" alt="" />
+<strong>由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。</strong></p>
+
+<h1 id="inode号码">inode号码</h1>
+
+<p>每个inode都有一个号码，操作系统用inode号码来识别不同的文件。<br />
+这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。
+对于系统来说，文件名只是inode号码便于识别的别称或者绰号。
+表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。
+使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt<br />
+<!-- ![](/images/snipaste_20171224_141138.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_141138.png" alt="" /></p>
+
+<h1 id="目录文件">目录文件</h1>
+
+<p>Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。<br />
+目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。<br />
+ls命令只列出目录文件中的所有文件名：ls /etc<br />
+ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc<br />
+如果要查看文件的详细信息，就必须根据inode号码，访问inode节点，读取信息。ls -l命令列出文件的详细信息：ls -l /etc</p>
+
+<h1 id="硬链接">硬链接</h1>
+
+<p>一般情况下，文件名和inode号码是&rdquo;一一对应&rdquo;关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为&rdquo;硬链接&rdquo;（hard link）。
+ln命令可以创建硬链接：
+{% codeblock %}
+ln 源文件 目标文件
+{% endcodeblock %}
+运行上面这条命令以后，源文件与目标文件的inode号码相同，都指向同一个inode。inode信息中有一项叫做&rdquo;链接数&rdquo;，记录指向该inode的文件名总数，这时就会增加1。反过来，删除一个文件名，就会使得inode节点中的&rdquo;链接数&rdquo;减1。当这个值减到0，表明没有文件名指向这个inode，系统就会回收这个inode号码，以及其所对应block区域。
+这里顺便说一下目录文件的&rdquo;链接数&rdquo;。创建目录时，默认会生成两个目录项：&rdquo;.&ldquo;和&rdquo;..&ldquo;。前者的inode号码就是当前目录的inode号码，等同于当前目录的&rdquo;硬链接&rdquo;；后者的inode号码就是当前目录的父目录的inode号码，等同于父目录的&rdquo;硬链接&rdquo;。所以，任何一个目录的&rdquo;硬链接&rdquo;总数，总是等于2加上它的子目录总数（含隐藏目录）,这里的2是父目录对其的“硬链接”和当前目录下的“.硬链接”。</p>
+
+<h1 id="软链接">软链接</h1>
+
+<p>除了硬链接以外，还有一种特殊情况。文件A和文件B的inode号码虽然不一样，但是文件A的内容是文件B的路径。读取文件A时，系统会自动将访问者导向文件B。因此，无论打开哪一个文件，最终读取的都是文件B。这时，文件A就称为文件B的&rdquo;软链接&rdquo;（soft link）或者&rdquo;符号链接（symbolic link）。
+这意味着，文件A依赖于文件B而存在，如果删除了文件B，打开文件A就会报错：&rdquo;No such file or directory&rdquo;。这是软链接与硬链接最大的不同：文件A指向文件B的文件名，而不是文件B的inode号码，文件B的inode&rdquo;链接数&rdquo;不会因此发生变化。
+ln -s命令可以创建软链接。
+ln -s 源文文件或目录 目标文件或目录</p>
+
+<h1 id="inode的特殊作用">inode的特殊作用</h1>
+
+<p>由于inode号码与文件名分离，这种机制导致了一些Unix/Linux系统特有的现象。<br />
+    1. 有时，文件名包含特殊字符，无法正常删除。这时，直接删除inode节点，就能起到删除文件的作用。<br />
+    2. 移动文件或重命名文件，只是改变文件名，不影响inode号码。<br />
+    3. 打开一个文件以后，系统就以inode号码来识别这个文件，不再考虑文件名。因此，通常来说，系统无法从inode号码得知文件名。<br />
+第3点使得软件更新变得简单，可以在不关闭软件的情况下进行更新，不需要重启。因为系统通过inode号码，识别运行中的文件，不通过文件名。更新的时候，新版文件以同样的文件名，生成一个新的inode，不会影响到运行中的文件。等到下一次运行这个软件的时候，文件名就自动指向新版文件，旧版文件的inode则被回收。</p>
+
+<h1 id="实际问题">实际问题</h1>
+
+<h2 id="问题现象">问题现象</h2>
+
+<p>在一台配置较低的Linux服务器（内存、硬盘比较小）的/data分区内创建文件时，系统提示磁盘空间不足，用df -h命令查看了一下磁盘使用情况，发现/data分区只使用了66%，还有12G的剩余空间，按理说不会出现这种问题。后来用df -i查看了一下/data分区的索引节点(inode)，发现已经用满(IUsed=100%)，导致系统无法创建新目录和文件。
+<!-- ![](/images/snipaste_20171224_142431.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_142431.png" alt="" /></p>
+
+<h2 id="问题原因">问题原因</h2>
+
+<p>/data/dstFilePath目录中存在数量非常多的小字节文件，占用的Block不多，但是占用了大量的inode。<br />
+<!-- ![](/images/snipaste_20171224_142637.png) -->
+<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171224_142637.png" alt="" /></p>
+
+<h2 id="解决方案">解决方案</h2>
+
+<p>方案1. 删除/data/dstFilePath目录中的部分文件，释放出/data分区的一部分inode。
+方案2. 用软连接将空闲分区/中的newdstFilePath目录连接到/data/dstFilePath，使用/分区的inode来缓解/data分区inode不足的问题：</p>
+
+<pre><code>ln -s /newdstFilePath /data/dstFilePath
+</code></pre>
+
+<blockquote>
+<p>参考<a href="https://www.cnblogs.com/itech/archive/2012/05/15/2502284.html">《Linux的inode的理解》</a></p>
+</blockquote>
+
+<hr />
+
+<p>2017年12月24日 于 南京<br />
+<a href="toddlerya@qq.com">Email</a><br />
+<a href="https://github.com/toddlerya">GitHub</a></p>
+
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 16 16"><path d="M16 9.5c0 .373-.24.74-.5 1l-5 5c-.275.26-.634.5-1 .5-.373 0-.74-.24-1-.5L1 8a2.853 2.853 0 0 1-.7-1C.113 6.55 0 5.973 0 5.6V1.4C0 1.034.134.669.401.401.67.134 1.034 0 1.4 0h4.2c.373 0 .95.113 1.4.3.45.187.732.432 1 .7l7.5 7.502c.26.274.5.632.5.998zM3.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/linux/" rel="tag">Linux</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" rel="tag">问题排查</a></li>
+	</ul>
+</div>
+	</article>
+	
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="toddlerya avatar" src="/img/dog.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About toddlerya</span>
+	</div>
+	<div class="authorbox__description">
+		witness me.
+	</div>
+</div>
+	
+<nav class="post-nav row clearfix">
+	<div class="post-nav__item post-nav__item--prev col-1-2">
+		<a class="post-nav__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%B8%80/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Golang学习（一）</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next col-1-2">
+		<a class="post-nav__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">开源工具集--备忘清单</p></a>
+	</div>
+</nav>
+	
+</main>
+
+<aside class="sidebar">
+	
+	
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/">探究inode耗尽导致的no space left on device报错原因</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7%e7%ae%b1">工具箱</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
+				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
+				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>toddlerya@qq.com</span>
+			</a>
+		</div>
+	</div>
+</div>
+	
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e9%97%ae%e9%a2%98%e6%8e%92%e6%9f%a5" title="问题排查">问题排查 (1)</a>
+	</div>
+</div>
+</aside>
+	</div>
+		<footer class="footer">
+			<div class="container container-inner">
+				<div class="footer__copyright">&copy; 2018 日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
+			</div>
+		</footer>
+	</div>
+
+<script>
+	var navigation = responsiveNav(".menu", {
+		navClass: "menu--collapse",
+	});
+</script></body>
+</html>
