@@ -21,7 +21,8 @@
 今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000+ 新增AI模块，机器人自主学习生成跳跃公式，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。
 这个pull request介绍如下： &amp;gt; 机器人精确采集跳跃结果并自主学习，使用线性回归方法 &amp;gt; 拟合出最优 [按压时间]-&amp;gt;[弹跳距离] 线性公式 Y =kX + b &amp;gt; 本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可 &amp;gt; 模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。 &amp;gt; 理论上只要目标点获取无误，会一直跳下去。
 工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。 下面来动手试一下，找出下岗多年的MX3，充电开机。
-第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&amp;hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 {% codeblock lang:Python %} screenshot = screenshot.replace(b&amp;rsquo;\r\n&amp;rsquo;, b&amp;rsquo;\n&amp;rsquo;) {% endcodeblock %} 修改为 {% codeblock lang:python %} screenshot = screenshot.replace(b&amp;rsquo;\r\r\n&amp;rsquo;, b&amp;rsquo;\n&amp;rsquo;) {% endcodeblock %}  第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&amp;hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.</description>
+第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&amp;hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 Python screenshot = screenshot.replace(b&#39;\r\n&#39;, b&#39;\n&#39;)  修改为 Python screenshot = screenshot.replace(b&#39;\r\r\n&#39;, b&#39;\n&#39;)   第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&amp;hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.sleep(0.2)。
+# 在跳跃落下的瞬间 摄像机移动前截图 这个参数要自己校调 time.sleep(0.2) pull_screenshot_temp() im_temp = Image.open(&#39;./autojump_temp.png&#39;) temp_piece_x, temp_piece_y = find_piece(im_temp) debug.</description>
     </item>
     
   </channel>

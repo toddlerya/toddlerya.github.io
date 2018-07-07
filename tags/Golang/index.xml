@@ -19,10 +19,10 @@
       <guid>https://toddlerya.github.io/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/</guid>
       <description>闲扯 2017年的最后一天啦！今天是最后一批90后（1999年12月31日出生）的18岁生日，祝他们生日快乐！明天就是2018年啦，意味着90后已经全部成年，逐步成为社会的中流砥柱啦！ 顺便吐槽下，被朋友圈的18岁照片刷屏啦，岁月是把杀猪刀，18岁的少年们都去哪啦！小伙伴们不要只顾着工作，也注意下身体啊，要变强不要变秃啊！不要变成油腻的中年胖子啊！
 祝自己在2018年能更加努力，锻炼好身体！还有很多很多事情等我去做！Fight！
-言归正传，在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
-正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic {% codeblock lang:golang %} srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&amp;ldquo;打开文件错误!&amp;rdquo;) } defer srcFile.Close()
-desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&amp;ldquo;创建文件错误!&amp;rdquo;) } defer desFile.Close() {% endcodeblock %}
-使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下 {% codeblock lang:golang %} func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &amp;lt; *generateFileNumber; count++ { dosomething&amp;copy; } &amp;lt;-c }</description>
+言归正传，在Golang学习（一）那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
+正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic
+srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&amp;quot;打开文件错误!&amp;quot;) } defer srcFile.Close() desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&amp;quot;创建文件错误!&amp;quot;) } defer desFile.Close()  使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下
+func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &amp;lt; *generateFileNumber; count++ { dosomething(c) } &amp;lt;-c } func dosomething(c) { do c &amp;lt;- true }  代码 /* * User: toddlerya * Date: 2017/12/23 * Update: 2017/12/31 * ds接入模块加压工具 */ package main import ( &amp;quot;flag&amp;quot; &amp;quot;fmt&amp;quot; &amp;quot;io&amp;quot; &amp;quot;math/rand&amp;quot; &amp;quot;os&amp;quot; &amp;quot;runtime&amp;quot; &amp;quot;strconv&amp;quot; &amp;quot;strings&amp;quot; &amp;quot;time&amp;quot; ) func judgeExists(name string) bool { if _, err := os.</description>
     </item>
     
     <item>

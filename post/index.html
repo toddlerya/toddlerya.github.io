@@ -94,7 +94,8 @@
 今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000+ 新增AI模块，机器人自主学习生成跳跃公式，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。
 这个pull request介绍如下： &gt; 机器人精确采集跳跃结果并自主学习，使用线性回归方法 &gt; 拟合出最优 [按压时间]-&gt;[弹跳距离] 线性公式 Y =kX + b &gt; 本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可 &gt; 模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。 &gt; 理论上只要目标点获取无误，会一直跳下去。
 工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。 下面来动手试一下，找出下岗多年的MX3，充电开机。
-第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 {% codeblock lang:Python %} screenshot = screenshot.replace(b&rsquo;\r\n&rsquo;, b&rsquo;\n&rsquo;) {% endcodeblock %} 修改为 {% codeblock lang:python %} screenshot = screenshot.replace(b&rsquo;\r\r\n&rsquo;, b&rsquo;\n&rsquo;) {% endcodeblock %}  第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.
+第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 Python screenshot = screenshot.replace(b'\r\n', b'\n')  修改为 Python screenshot = screenshot.replace(b'\r\r\n', b'\n')   第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.sleep(0.2)。
+# 在跳跃落下的瞬间 摄像机移动前截图 这个参数要自己校调 time.sleep(0.2) pull_screenshot_temp() im_temp = Image.open('./autojump_temp.png') temp_piece_x, temp_piece_y = find_piece(im_temp) debug.
 		</div>
 	</div>
 </article><article class="list__item post">
@@ -113,10 +114,10 @@
 		<div class="list__excerpt post__content">
 			闲扯 2017年的最后一天啦！今天是最后一批90后（1999年12月31日出生）的18岁生日，祝他们生日快乐！明天就是2018年啦，意味着90后已经全部成年，逐步成为社会的中流砥柱啦！ 顺便吐槽下，被朋友圈的18岁照片刷屏啦，岁月是把杀猪刀，18岁的少年们都去哪啦！小伙伴们不要只顾着工作，也注意下身体啊，要变强不要变秃啊！不要变成油腻的中年胖子啊！
 祝自己在2018年能更加努力，锻炼好身体！还有很多很多事情等我去做！Fight！
-言归正传，在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
-正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic {% codeblock lang:golang %} srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&ldquo;打开文件错误!&rdquo;) } defer srcFile.Close()
-desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&ldquo;创建文件错误!&rdquo;) } defer desFile.Close() {% endcodeblock %}
-使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下 {% codeblock lang:golang %} func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count++ { dosomething&copy; } &lt;-c }
+言归正传，在Golang学习（一）那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
+正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic
+srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&quot;打开文件错误!&quot;) } defer srcFile.Close() desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&quot;创建文件错误!&quot;) } defer desFile.Close()  使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下
+func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count++ { dosomething(c) } &lt;-c } func dosomething(c) { do c &lt;- true }  代码 /* * User: toddlerya * Date: 2017/12/23 * Update: 2017/12/31 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;runtime&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os.
 		</div>
 	</div>
 </article><article class="list__item post">
@@ -153,20 +154,19 @@ GitHub
 </span></div>
 		</header>
 		<div class="list__excerpt post__content">
-			在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。
+			在Golang学习（一）那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。
 什么是inode？ 理解inode，要从文件储存说起。 文件储存在硬盘上，硬盘的最小存储单位叫做&rdquo;扇区&rdquo;（Sector）。每个扇区储存512字节（相当于0.5KB）。 操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个&rdquo;块&rdquo;（block）。这种由多个扇区组成的&rdquo;块&rdquo;，是文件存取的最小单位。&rdquo;块&rdquo;的大小，最常见的是4KB，即连续八个 sector组成一个 block。 文件数据都储存在&rdquo;块&rdquo;中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为&rdquo;索引节点&rdquo;。
 inode记录了什么信息？ inode包含文件的元信息，具体来说有以下内容： + 文件的字节数 + 文件拥有者的User ID + 文件的Group ID + 文件的读、写、执行权限 + 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。 + 链接数，即有多少文件名指向这个inode + 文件数据block的位置
-可以用stat命令，查看某个文件的inode信息：stat example.txt
-总之，除了文件名以外的所有文件信息，都存在inode之中。
+可以用stat命令，查看某个文件的inode信息：stat example.txt 总之，除了文件名以外的所有文件信息，都存在inode之中。
 inode的大小 inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。 每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，一般是每1KB或每2KB就设置一个inode。假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。
-查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。 df -i 查看每个inode节点的大小，可以用如下命令： sudo dumpe2fs -h /dev/vdb | grep &ldquo;inode size&rdquo;
+查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。df -i
+查看每个inode节点的大小，可以用如下命令sudo dumpe2fs -h /dev/vdb | grep &quot;inode size&quot;
 由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。
 inode号码 每个inode都有一个号码，操作系统用inode号码来识别不同的文件。
-这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt
-目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
+这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt 目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
 目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。
-ls命令只列出目录文件中的所有文件名：ls /etc
-ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc
+ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc 如果要查看文件的详细信息，就必须根据inode号码，访问inode节点，读取信息。ls -l命令列出文件的详细信息：ls -l /etc
+硬链接 一般情况下，文件名和inode号码是&rdquo;一一对应&rdquo;关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为&rdquo;硬链接&rdquo;（hard link）。 ln命令可以创建硬链接：ln 源文件 目标文件
 		</div>
 	</div>
 </article><article class="list__item post">

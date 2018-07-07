@@ -10,10 +10,10 @@
 	<meta property="og:title" content="Golang学习（二）" />
 <meta property="og:description" content="闲扯 2017年的最后一天啦！今天是最后一批90后（1999年12月31日出生）的18岁生日，祝他们生日快乐！明天就是2018年啦，意味着90后已经全部成年，逐步成为社会的中流砥柱啦！ 顺便吐槽下，被朋友圈的18岁照片刷屏啦，岁月是把杀猪刀，18岁的少年们都去哪啦！小伙伴们不要只顾着工作，也注意下身体啊，要变强不要变秃啊！不要变成油腻的中年胖子啊！
 祝自己在2018年能更加努力，锻炼好身体！还有很多很多事情等我去做！Fight！
-言归正传，在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
-正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic {% codeblock lang:golang %} srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&ldquo;打开文件错误!&rdquo;) } defer srcFile.Close()
-desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&ldquo;创建文件错误!&rdquo;) } defer desFile.Close() {% endcodeblock %}
-使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下 {% codeblock lang:golang %} func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count&#43;&#43; { dosomething&copy; } &lt;-c }" />
+言归正传，在Golang学习（一）那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
+正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic
+srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&quot;打开文件错误!&quot;) } defer srcFile.Close() desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&quot;创建文件错误!&quot;) } defer desFile.Close()  使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下
+func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count&#43;&#43; { dosomething(c) } &lt;-c } func dosomething(c) { do c &lt;- true }  代码 /* * User: toddlerya * Date: 2017/12/23 * Update: 2017/12/31 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;runtime&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://toddlerya.github.io/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/" />
 
@@ -37,10 +37,10 @@ desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&ldquo;创
 <meta name="twitter:title" content="Golang学习（二）"/>
 <meta name="twitter:description" content="闲扯 2017年的最后一天啦！今天是最后一批90后（1999年12月31日出生）的18岁生日，祝他们生日快乐！明天就是2018年啦，意味着90后已经全部成年，逐步成为社会的中流砥柱啦！ 顺便吐槽下，被朋友圈的18岁照片刷屏啦，岁月是把杀猪刀，18岁的少年们都去哪啦！小伙伴们不要只顾着工作，也注意下身体啊，要变强不要变秃啊！不要变成油腻的中年胖子啊！
 祝自己在2018年能更加努力，锻炼好身体！还有很多很多事情等我去做！Fight！
-言归正传，在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
-正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic {% codeblock lang:golang %} srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&ldquo;打开文件错误!&rdquo;) } defer srcFile.Close()
-desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&ldquo;创建文件错误!&rdquo;) } defer desFile.Close() {% endcodeblock %}
-使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下 {% codeblock lang:golang %} func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count&#43;&#43; { dosomething&copy; } &lt;-c }"/>
+言归正传，在Golang学习（一）那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
+正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic
+srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&quot;打开文件错误!&quot;) } defer srcFile.Close() desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&quot;创建文件错误!&quot;) } defer desFile.Close()  使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下
+func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count&#43;&#43; { dosomething(c) } &lt;-c } func dosomething(c) { do c &lt;- true }  代码 /* * User: toddlerya * Date: 2017/12/23 * Update: 2017/12/31 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;runtime&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os."/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -109,7 +109,7 @@ desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&ldquo;创
 
 <p>祝自己在2018年能更加努力，锻炼好身体！还有很多很多事情等我去做！Fight！</p>
 
-<p>言归正传，在{% post_link Golang学习（一） 《Golang学习（一）》 %}那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。</p>
+<p>言归正传，在<a href="/post/golang%E5%AD%A6%E4%B9%A0%E4%B8%80/">Golang学习（一）</a>那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。</p>
 
 <hr />
 
@@ -117,41 +117,38 @@ desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&ldquo;创
 
 <h2 id="遗留bug修复">遗留Bug修复</h2>
 
-<p>文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic
-{% codeblock lang:golang %}
-srcFile, err := os.Open(src)
-if err != nil {
-    fmt.Println(err)
-    panic(&ldquo;打开文件错误!&rdquo;)
-}
-defer srcFile.Close()</p>
+<p>文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic</p>
 
-<p>desFile, err := os.Create(des)
+<pre><code class="language-go">srcFile, err := os.Open(src)
 if err != nil {
     fmt.Println(err)
-    panic(&ldquo;创建文件错误!&rdquo;)
+    panic(&quot;打开文件错误!&quot;)
+}
+defer srcFile.Close()
+desFile, err := os.Create(des)
+if err != nil {
+    fmt.Println(err)
+    panic(&quot;创建文件错误!&quot;)
 }
 defer desFile.Close()
-{% endcodeblock %}</p>
+</code></pre>
 
 <h2 id="使用golang的gorutine来并发-提高性能">使用Golang的gorutine来并发，提高性能</h2>
 
-<p>创建一个容量与期望生成文件个数大小相当的布尔型的<b>chan</b>，然后循环执行任务，每次向<b>chan</b>写入一个值，并通过读取<b>chan</b>来阻塞<b>main</b>函数的结束，伪代码如下
-{% codeblock lang:golang %}
-func main() {
+<p>创建一个容量与期望生成文件个数大小相当的布尔型的<b>chan</b>，然后循环执行任务，每次向<b>chan</b>写入一个值，并通过读取<b>chan</b>来阻塞<b>main</b>函数的结束，伪代码如下</p>
+
+<pre><code class="language-go">func main() {
     c := make(chan bool, *generateFileNumber)
     for count := 0; count &lt; *generateFileNumber; count++ {
-        dosomething&copy;
+        dosomething(c)
     }
     &lt;-c
-}</p>
-
-<p>func dosomething&copy; {
+}
+func dosomething(c) {
     do
     c &lt;- true
-}</p>
-
-<p>{% endcodeblock %}</p>
+}
+</code></pre>
 
 <h1 id="代码">代码</h1>
 
@@ -280,37 +277,41 @@ func main() {
 
 <p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164046.png" alt="" /></p>
 
-<p>第一次自己写的代码遇到这个文件打开数过多的问题，还有点小激动呢！查看下系统当前的<b>ulimit open files</b>配置值
-<!-- ![](images/snipaste_20171231_164447.png) -->
-<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164447.png" alt="" /></p>
+<p>第一次自己写的代码遇到这个文件打开数过多的问题，还有点小激动呢！查看下系统当前的<strong>ulimit open files</strong>配置值
+<!-- ![](images/snipaste_20171231_164447.png) --></p>
 
-<p>果断手动改大些（个人笔记本，不会经常进新大量IO操作，就临时改下吧）<b>ulimit -n 65535</b>
-<!-- ![](images/snipaste_20171231_164748.png) -->
-<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164748.png" alt="" /></p>
+<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164447.png" alt="" /></p>
+
+<p>果断手动改大些（个人笔记本，不会经常进新大量IO操作，就临时改下吧）<strong>ulimit -n 65535</strong>
+<!-- ![](images/snipaste_20171231_164748.png) --></p>
+
+<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164748.png" alt="" /></p>
 
 <p>修改后的使用效果就是上面的并发测试那个图啦！</p>
 
 <h1 id="后续">后续</h1>
 
 <p>其实还有一个使用了sync的版本，但是测试效果和没有使用并发的测试结果一样，甚至还要差一些，还是不懂的太多，留个坑，等搞明白了再来补充。
-<!-- ![](images/snipaste_20171231_165138.png) -->
-<img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_165138.png" alt="" />
-相关伪代码逻辑如下
-{% codeblock lang:golang %}
-func main() {
+<!-- ![](images/snipaste_20171231_165138.png) --></p>
+
+<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_165138.png" alt="" /></p>
+
+<p>相关伪代码逻辑如下</p>
+
+<pre><code class="language-go">func main() {
     wg := sync.WaitGroup{}
-    wg.Add(*generateFileNumber)
+	wg.Add(*generateFileNumber)
     for count := 0; count &lt; *generateFileNumber; count++ {
         dosomething(&amp;wg)
     }
     wg.Wait()
-}</p>
-
-<p>func dosomething(wg *sync.WaitGroup) {
+}
+func dosomething(wg *sync.WaitGroup) {
     do
     wg.Done()
 }
-{% endcodeblock %}</p>
+{% endcodeblock %}
+</code></pre>
 
 <hr />
 
