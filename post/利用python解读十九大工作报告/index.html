@@ -185,9 +185,9 @@ if len(goal_word) != 0 and not stop_words.__contains__(goal_word):
 <h4 id="1-wordcloud默认不支持显示中文">1. wordcloud默认不支持显示中文</h4>
 
 <p>不进行处理，直接使用<code>wordcloud</code>绘制词云，显示效果如下，中文都是小方框：<br />
-<!-- ![](/images/20171022-ca2e12dc.png) -->
-<img src="http://ovzv5zg5e.bkt.clouddn.com/001/20171022-ca2e12dc.png" alt="" /><br />
-善用搜索引擎，查到问题原因根本在于<font color=red><b>wordcloud的默认字体不支持中文</b></font>。<br />
+<img src="/images/20171022-ca2e12dc.png" alt="" /></p>
+
+<p>善用搜索引擎，查到问题原因根本在于<font color=red><b>wordcloud的默认字体不支持中文</b></font>。<br />
 解决方案基本分为两种：
  + 方案1：修改<code>wordcloud</code>库文件，增加字体环境变量：<a href="https://zhuanlan.zhihu.com/p/20436581">https://zhuanlan.zhihu.com/p/20436581</a>
  + 方案2：在每个项目代码中创建<code>WordCloud</code>对象时指定字体文件：<a href="http://blog.csdn.net/xiemanr/article/details/72796739">http://blog.csdn.net/xiemanr/article/details/72796739</a></p>
@@ -200,8 +200,7 @@ wc = WordCloud(collocations=False, font_path=font, width=3600, height=3600, marg
 </code></pre>
 
 <p>设置好字体后显示效果如下，已经基本实现了我们的目标：<br />
-<!-- ![](/images/20171022-637b8f8f.png) -->
-<img src="http://ovzv5zg5e.bkt.clouddn.com/001/20171022-637b8f8f.png" alt="" /></p>
+<img src="/images/20171022-637b8f8f.png" alt="" /></p>
 
 <hr />
 

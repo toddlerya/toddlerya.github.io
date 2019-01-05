@@ -97,7 +97,8 @@ inode的大小 inode也会消耗硬盘空间，所以硬盘格式化的时候，
 查看每个inode节点的大小，可以用如下命令sudo dumpe2fs -h /dev/vdb | grep &amp;quot;inode size&amp;quot;
 由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。
 inode号码 每个inode都有一个号码，操作系统用inode号码来识别不同的文件。
-这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt 目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
+这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt
+目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
 目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。
 ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc 如果要查看文件的详细信息，就必须根据inode号码，访问inode节点，读取信息。ls -l命令列出文件的详细信息：ls -l /etc
 硬链接 一般情况下，文件名和inode号码是&amp;rdquo;一一对应&amp;rdquo;关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为&amp;rdquo;硬链接&amp;rdquo;（hard link）。 ln命令可以创建硬链接：ln 源文件 目标文件</description>
@@ -111,7 +112,7 @@ ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出�
       <guid>https://toddlerya.github.io/post/golang%E5%AD%A6%E4%B9%A0%E4%B8%80/</guid>
       <description>闲扯 去北京参加Top100学习到现在一个多月过去了，时间过得好快，转眼2017年只剩下最后一周了，不由得感叹时间就像指缝的流沙。 再加上最近中年程序员不堪重负的各种新闻，感觉自己距离那一天也没多远了，在此之前努力提高自己的姿势水平吧，要没时间了。
 在Top100听到了很多讲师提到了Golang，结合之前看过的左耳朵耗子的文章《GO语言、DOCKER 和新技术》，决定要学习了解下Golang了。 最近半个月断断续续看了Golang的一些教程《GO 语言简介（上）— 语法》、《GO 语言简介（下）— 特性》、无闻老师的《Go 编程基础》，只是对Golang有了一点点初步的了解。 学习一门语言最重要的还是要撸代码啊，要动手写个小工具试试手。 恰巧昨天加班时帮同事写了个小工具，感觉用Python的性能不够好，而且想要高性能还要依赖gevent这种第三方库，不方便部署，于是想到用Golang可以来试下，写完编译下给同事用就好啦！昨晚回到家吃过饭陪女朋友玩了会，从十点开始撸代码到凌晨一点，终于写出一个小demo，特此记录下年轻人的第一个Golang小程序。
-正文 工具需求是有一个样例zip包，zip包里面有一些bcp数据、xml数据、bjson数据、图片、视频什么的。 zip包的命名规范如下： AAA-BBB-1514090969-CCC_DDD_21234.zip 我们要将zip包的1514090969【绝对秒数】与21234【随机序列】进行替换，随机生成大量的zip包副本，发送到某个ETL输入目录，暂且不管zip包里面的内容（其实zip包内的文件也要随机生成）。 之前同事用Shell写的，没看他代码怎么实现的，不过肯定有问题，一小时才生成了三万个样例zip包，远远达不到压测的要求。 于是我花了十几分钟调用Python的gevent模块帮他重新用Python写了一遍，性能瞬间爆炸。 但是部署gevent比较麻烦（公司和客户都是内网环境，pip是没法用的，只能手动安装所需的第三方包，而且公司大部分操作系统还是Redhat AS6U3，默认的Python是2.6版本，各种不方便），就想到了如果用Golang写一遍是否性能很好，编译后提供二进制文件直接运行就可以了，于是就有了下面的代码。
+正文 工具需求是有一个样例zip包，zip包里面有一些bcp数据、xml数据、bjson数据、图片、视频什么的。 zip包的命名规范如下： ​ AAA-BBB-1514090969-CCC_DDD_21234.zip 我们要将zip包的1514090969【绝对秒数】与21234【随机序列】进行替换，随机生成大量的zip包副本，发送到某个ETL输入目录，暂且不管zip包里面的内容（其实zip包内的文件也要随机生成）。 之前同事用Shell写的，没看他代码怎么实现的，不过肯定有问题，一小时才生成了三万个样例zip包，远远达不到压测的要求。 于是我花了十几分钟调用Python的gevent模块帮他重新用Python写了一遍，性能瞬间爆炸。 但是部署gevent比较麻烦（公司和客户都是内网环境，pip是没法用的，只能手动安装所需的第三方包，而且公司大部分操作系统还是Redhat AS6U3，默认的Python是2.6版本，各种不方便），就想到了如果用Golang写一遍是否性能很好，编译后提供二进制文件直接运行就可以了，于是就有了下面的代码。
 代码 /* * User: toddlerya * Date: 2017/12/23 * ds接入模块加压工具 */ package main import ( &amp;quot;flag&amp;quot; &amp;quot;fmt&amp;quot; &amp;quot;io&amp;quot; &amp;quot;math/rand&amp;quot; &amp;quot;os&amp;quot; &amp;quot;strconv&amp;quot; &amp;quot;strings&amp;quot; &amp;quot;time&amp;quot; ) func judgeExists(name string) bool { if _, err := os.Stat(name); err != nil { if os.IsNotExist(err) { return false } } return true } func copyFile(src, des string) (w int64, err error) { srcFile, err := os.</description>
     </item>
     

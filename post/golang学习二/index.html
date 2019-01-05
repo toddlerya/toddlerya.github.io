@@ -261,40 +261,28 @@ func main() {
 
 <h2 id="没有使用gorutine之前">没有使用gorutine之前</h2>
 
-<!-- ![](images/snipaste_20171231_163523.png) -->
-
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_163523.png" alt="" /></p>
+<p><img src="images/snipaste_20171231_163523.png" alt="" /></p>
 
 <h2 id="使用gorutine后的并发效果">使用gorutine后的并发效果</h2>
 
-<!-- ![](images/snipaste_20171231_163646.png) -->
-
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_163646.png" alt="" /></p>
+<p><img src="images/snipaste_20171231_163646.png" alt="" /></p>
 
 <h2 id="异常处理">异常处理</h2>
 
-<!-- ![](images/snipaste_20171231_164046.png) -->
-
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164046.png" alt="" /></p>
+<p><img src="images/snipaste_20171231_164046.png" alt="" /></p>
 
 <p>第一次自己写的代码遇到这个文件打开数过多的问题，还有点小激动呢！查看下系统当前的<strong>ulimit open files</strong>配置值
-<!-- ![](images/snipaste_20171231_164447.png) --></p>
-
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164447.png" alt="" /></p>
+<img src="images/snipaste_20171231_164447.png" alt="" /></p>
 
 <p>果断手动改大些（个人笔记本，不会经常进新大量IO操作，就临时改下吧）<strong>ulimit -n 65535</strong>
-<!-- ![](images/snipaste_20171231_164748.png) --></p>
-
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_164748.png" alt="" /></p>
+<img src="images/snipaste_20171231_164748.png" alt="" /></p>
 
 <p>修改后的使用效果就是上面的并发测试那个图啦！</p>
 
 <h1 id="后续">后续</h1>
 
 <p>其实还有一个使用了sync的版本，但是测试效果和没有使用并发的测试结果一样，甚至还要差一些，还是不懂的太多，留个坑，等搞明白了再来补充。
-<!-- ![](images/snipaste_20171231_165138.png) --></p>
-
-<p><img src="http://ovzv5zg5e.bkt.clouddn.com/snipaste_20171231_165138.png" alt="" /></p>
+<img src="images/snipaste_20171231_165138.png" alt="" /></p>
 
 <p>相关伪代码逻辑如下</p>
 
