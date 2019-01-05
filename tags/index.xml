@@ -6,10 +6,19 @@
     <description>Recent content in Tags on 日拱一卒</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 Dec 2017 16:13:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 05 Jan 2019 12:08:32 +0800</lastBuildDate>
     
 	<atom:link href="https://toddlerya.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker</title>
+      <link>https://toddlerya.github.io/tags/docker/</link>
+      <pubDate>Sat, 05 Jan 2019 12:08:32 +0800</pubDate>
+      
+      <guid>https://toddlerya.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Golang</title>

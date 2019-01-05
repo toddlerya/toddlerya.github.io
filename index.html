@@ -14,7 +14,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-05-25T21:29:10&#43;00:00"/>
+<meta property="og:updated_time" content="2019-01-05T12:08:32&#43;08:00"/>
 
 
 
@@ -54,6 +54,33 @@
 		<div class="wrapper clearfix">
 
 	<main class="main list content" role="main"><article class="list__item post">
+	<div class="list__content clearfix">
+		<header class="list__header">
+			<h3 class="list__title post__title ">
+				<a href="/post/hello-docker/" rel="bookmark">Hello Docker</a>
+			</h3><div class="list__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2019-01-05T12:08:32">January 05, 2019</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
+</span></div>
+		</header>
+		<div class="list__excerpt post__content">
+			说起来Docker，大家都或多或少有耳闻，但是我的公司因为业务场景，长尾效应，至今为止Docker只在小部分项目轻度使用。但是这不妨碍我们主动学习，应用Docker，因此，从2018年开始，我就推动Docker在测试部应用。我们的测试平台，GitLab、JIRA、Confluence等都是通过Docker部署的。
+团队内部做算法测试的同学搭建开发测试环境需要安装各种第三方库，因为工作环境是内网，无法连接互联网进行安装，痛苦不堪，使用Docker将相关环境在外网构建好传入内网使用是比较方便的方式；还有工具链建设、测试平台建设用到的各种基础设施MySQL、Nginx等快速部署，使用Docker都是最佳方案。为了方便团队同学了解Docker，团队老大让我来进行一次内部Docker入门分享。
+没有Docker的从前 为了提高服务器利用效率，我们将一台高性能的服务器通过vSphere虚拟化，创建多台虚拟机，提供相对独立环境隔离的操作系统环境和计算资源，我们可以对每一台虚拟机灵活分配计算资源、存储资源等，还可以对每一台虚拟机创建多个快照，看起来很棒！是的，在传统的软件开发模式下，这种方式挺好，但是这并没有解决软件的部署效率低，交付困难，开发环境与测试环境不一致，测试环境与生产环境不一致等问题，这也是为什么我们有了持续集成，却没有做好持续交付的一大根本问题。
+有了Docker的现在 各大互联网厂商都在使用Docker，通过Docker结合微服务等技术他们将DevOps这一理念落地了，真正做到了持续集成、持续部署、持续交付，快速迭代，可以实现一天多次版本上线发布！回头看有了Docker我们在日常工作中能做什么，举个最简单的例子：
+以往我们想部署三套环境（一套Dev环境、一套Test环境、一套Release环境），需要三个MySQL数据库，需要怎么做呢？
+ 方案1：准备三台服务器，分别安装MySQL，干干净净，互不干扰，但是浪费资源啊； 方案2：一台服务器部署三个MySQL实例，分别配置不同的MySQL数据存储路径、配置文件路径、端口，操作复杂，维护困难，想想都头疼；  用Docker以后呢，我们可以这样做：
+docker run --name release-mysql -p 3306:3306 -d mysql:5.7 docker run --name dev-mysql -p 3307:3306 -d mysql:5.7 docker run --name test-mysql -p 3308:3306 -d mysql:5.7  这样我们就有了三个独立的MySQL数据库服务！当然这是个示例，没有做数据卷映射等配置，但那些配置相比于传统方案来说，复杂度不值一提。
+Docker到底是什么 Docker 是世界领先的软件容器平台。开发人员利用 Docker 可以消除协作编码时“在我的机器上可正常工作”的问题。运维人员利用 Docker 可以在隔离容器中并行运行和管理应用，获得更好的计算密度。企业利用 Docker 可以构建敏捷的软件交付管道，以更快的速度、更高的安全性和可靠的信誉为 Linux 和 Windows Server 应用发布新功能。
+什么是容器呢？  将软件打包成标准化单元，以用于开发、交付和部署  容器镜像是轻量的、可执行的独立软件包，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。容器化软件适用于基于 Linux 和 Windows 的应用，在任何环境中都能够始终如一地运行。容器赋予了软件独立性，使其免受外在环境差异（例如，开发和预演环境的差异）的影响，从而有助于减少团队间在相同基础设施上运行不同软件时的冲突。
+容器的优势特点 轻量 在一台机器上运行的多个 Docker 容器可以共享这台机器的操作系统内核；它们能够迅速启动，只需占用很少的计算和内存资源。镜像是通过文件系统层进行构造的，并共享一些公共文件。这样就能尽量降低磁盘用量，并能更快地下载镜像。
+标准 Docker 容器基于开放式标准，能够在所有主流 Linux 版本、Microsoft Windows 以及包括 VM、裸机服务器和云在内的任何基础设施上运行。
+		</div>
+	</div>
+</article><article class="list__item post">
 	<div class="list__content clearfix">
 		<header class="list__header">
 			<h3 class="list__title post__title ">
@@ -284,28 +311,6 @@ Email
 GitHub
 		</div>
 	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/%E5%85%B3%E4%BA%8Enebulasolardash/" rel="bookmark">关于NebulaSolarDash</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2017-05-10T22:06:10">May 10, 2017</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90" rel="category">造轮子</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			2017年的5月1日，三天假期，闭门造了个轮子 写这个工具的目的是为了解决工作问题。 个人工作生产环境无法连接互联网，也没有自建的yum源等，手头又有很多服务器需要进行监控，使用现有的开源方案安装部署是个问题， 各种依赖组件包需要挨个安装，很麻烦，所以想找一款依赖较少部署简单的分布式服务器资源监控工具，找来找去没找到，索性自己动手写一个。 我的本职工作是测试，所以就用最熟悉的Python来写吧，第一次写web应用，先做出来再边学边优化吧。
-工具分为客户端和服务端两部分： 服务端使用了bottle来作为web框架，echarts来渲染生成图表； 客户端使用Python原生类库采集服务器资源，客户端采集数据部分代码参考了pyDash
-效果如下 项目链接链接 NebulaSolarDash
-2017年05月10日 于 南京
-Email
-GitHub
-		</div>
-	</div>
 </article>
 		
 
@@ -324,11 +329,11 @@ GitHub
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/">探究inode耗尽导致的no space left on device报错原因</a></li>
 		</ul>
 	</div>
 </div>
@@ -343,6 +348,7 @@ GitHub
 			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ac%94%e8%ae%b0">笔记</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
@@ -371,6 +377,7 @@ GitHub
 <div class="widget-taglist widget">
 	<h4 class="widget__title">Tags</h4>
 	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
