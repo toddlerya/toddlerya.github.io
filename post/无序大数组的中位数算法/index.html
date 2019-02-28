@@ -6,30 +6,15 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>无序大数组的中位数算法</title>
 	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.42.2" />
+	<meta name="generator" content="Hugo 0.53" />
 	<meta property="og:title" content="无序大数组的中位数算法" />
 <meta property="og:description" content="题目要求 最近做了一道题，题目是这样的：
 找到一个巨大数组的中位数。 # demo：[1,100,2,5,12,44,88,77,54,932,61]  解题方法 巨大的数组，排序肯定不是最优解了，解题思路可以借鉴快排算法那种分而治之的思想。
 详情直接看代码实现吧。
 #!/usr/bin/env python # -*- coding:utf-8 -*- # author: toddler import random import statistics import time import sys sys.setrecursionlimit(1000000) def find_mid(mid_index, __list): &quot;&quot;&quot; 寻找中位数算法 :param mid_index: 中位数索引 :param __list: 目标数组 :return: 中位数数值 &quot;&quot;&quot; # 随机取一个数作为分割元素, 以分割元素为界限，将数组分割大小两部分 random_num = random.choice(__list) small_list = [i for i in __list if i &lt; random_num] # 若小数组的右端索引大于中位数索引, 则继续缩小小数组的区间长度, 这样可以直接舍弃比中位数大的元素, 减少计算量 if len(small_list) &gt; mid_index: return find_mid(mid_index, small_list) # 分割点左边的元素没有价值, 被舍弃, 相应的中位数索引左移对应长度, 保证相对原始数据索引长度不变 mid_index -= len(small_list) # 判断分割点有几个, 若分割点所占空间长度大于新的中位数索引, 则分割点就是中位数 same_mid_num = __list." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://toddlerya.github.io/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/" />
-
-
-
-<meta property="article:published_time" content="2018-05-25T21:29:10&#43;00:00"/>
-
+<meta property="og:url" content="https://toddlerya.github.io/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/" /><meta property="article:published_time" content="2018-05-25T21:29:10&#43;00:00"/>
 <meta property="article:modified_time" content="2018-05-25T21:29:10&#43;00:00"/>
-
-
-
-
-
-
-
-
-
-
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="无序大数组的中位数算法"/>
@@ -57,7 +42,14 @@
 					</a>
 				</div>
 			</div>
-			<div class="divider"></div>
+			
+<nav class="menu">
+	<ul class="menu__list">
+		<li class="menu__item"><a class="menu__link" href="/about/">ABOUT HUGO</a></li>
+		<li class="menu__item"><a class="menu__link" href="/getting-started/">GETTING STARTED</a></li>
+	</ul>
+</nav>
+
 		</header>
 		<div class="wrapper clearfix">
 
@@ -303,11 +295,11 @@ test([random.randint(0, int(1e6)) for _ in range(int(1e6))])
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/">程序员的自我修养</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/">Golang学习（二）</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/">开源工具集--备忘清单</a></li>
 		</ul>
 	</div>
 </div>
@@ -318,6 +310,7 @@ test([random.randint(0, int(1e6)) for _ in range(int(1e6))])
 		<ul class="widget__list">
 			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7%e7%ae%b1">工具箱</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e6%91%98%e6%8a%84%e7%ac%94%e8%ae%b0">摘抄笔记</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
@@ -357,6 +350,7 @@ test([random.randint(0, int(1e6)) for _ in range(int(1e6))])
 		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%91%98%e6%8a%84" title="摘抄">摘抄 (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
