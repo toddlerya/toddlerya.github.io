@@ -6,7 +6,7 @@
     <description>Recent content in Tags on 日拱一卒</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 05 Jan 2019 12:08:32 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Mar 2019 20:29:16 +0800</lastBuildDate>
     
 	<atom:link href="https://toddlerya.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Docker</title>
       <link>https://toddlerya.github.io/tags/docker/</link>
-      <pubDate>Sat, 05 Jan 2019 12:08:32 +0800</pubDate>
+      <pubDate>Fri, 01 Mar 2019 20:29:16 +0800</pubDate>
       
       <guid>https://toddlerya.github.io/tags/docker/</guid>
       <description></description>
@@ -84,6 +84,15 @@
     </item>
     
     <item>
+      <title>测试开发</title>
+      <link>https://toddlerya.github.io/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Fri, 01 Mar 2019 20:29:16 +0800</pubDate>
+      
+      <guid>https://toddlerya.github.io/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>游戏</title>
       <link>https://toddlerya.github.io/tags/%E6%B8%B8%E6%88%8F/</link>
       <pubDate>Sun, 07 Jan 2018 12:24:53 +0000</pubDate>
@@ -116,6 +125,15 @@
       <pubDate>Wed, 10 May 2017 22:06:10 +0000</pubDate>
       
       <guid>https://toddlerya.github.io/tags/%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>软件测试</title>
+      <link>https://toddlerya.github.io/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Fri, 01 Mar 2019 20:29:16 +0800</pubDate>
+      
+      <guid>https://toddlerya.github.io/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/</guid>
       <description></description>
     </item>
     
