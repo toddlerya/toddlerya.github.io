@@ -11,7 +11,7 @@
 <meta property="og:description" content="日拱一卒" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://toddlerya.github.io/post/" />
-<meta property="og:updated_time" content="2017-10-22T16:23:44&#43;00:00"/>
+<meta property="og:updated_time" content="2017-10-29T13:05:54&#43;00:00"/>
 
 	<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -45,6 +45,52 @@
 		<header class="page-header">
 			<h1 class="page-header__title">Posts</h1>
 		</header><article class="list__item post">
+	<div class="list__content clearfix">
+		<header class="list__header">
+			<h3 class="list__title post__title ">
+				<a href="/post/50%E4%B8%87coding%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E7%88%AC%E7%88%AC%E7%88%AC%E7%88%AC/" rel="bookmark">50万Coding用户关系爬爬爬爬</a>
+			</h3><div class="list__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2017-10-29T13:05:54">October 29, 2017</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%88%ac%e8%99%ab" rel="category">爬虫</a></span>
+</span></div>
+		</header>
+		<div class="list__excerpt post__content">
+			今天我们继续来搞Coding数据~
+从官方给出的数据我们知道目前Coding大概有50万注册用户
+然后我们还能看到冒泡广场有很多热门用户
+那么这些用户之间的关系是什么样子滴？
+哪些用户是高冷吸粉狂人？
+哪些用户是社交达人？
+哪些用户是万年潜水独行侠？
+50万Coding小伙伴的社交网络核心是哪位？
+是否真的有50万用户？
+带着这些疑问，我们开始撸代码！
+先把项目地址贴下：https://github.com/toddlerya/AnalyzeCoding
+爬虫算法分析设计： 如何获取全部用户信息 通过分析Coding网站, 我们发现有3个地方可以获取到用户数据信息：  冒泡广场: 每一条冒泡都有发布人，有些还有点赞人、打赏人、评论人
+ 热门用户：冒泡广场首页右侧有20个热门用户，这些用户是当前最活跃的用户，这些用户拥有比较多的粉丝和朋友。
+ 个人主页：用户的个人主页有一个标签页：关注，这里可以看到此用户关注了哪些人，被哪些人关注。
+  现在就是开脑洞的时候啦！ 用户之间的关系分为三种：
+ A关注B: A--&gt;B A被B关注：A&lt;--B A与B互相关注：A&lt;--&gt;B  这就是个有向图嘛！
+六度分隔理论:
+1967年，哈佛大学的心理学教授Stanley Milgram(1933-1984)想要描绘一个连结人与社区的人际连系网。做过一次连锁信实验，结果发现了“六度分隔”现象。简单地说：“你和任何一个陌生人之间所间隔的人不会超过六个，也就是说，最多通过六个人你就能够认识任何一个陌生人。”
+思路渐渐清晰了，我们可以采用深度优先算法（Depth-First Search，简称DFS）
+从A出发，找到A所有的好友（A1,A2,A3）记录为{A: [A1, A2, A3]}
+从A1出发，找到A1所有的好友（A,A2-1,A3-1）记录为{A1: [A, A2-1, A3-1]}
+从A2-1出发，找到A2-1所有的好友（A2-1-1）记录为{A2-1: [A2-1-1]}
+从A3-1出发，找到A3-1所有的好友（A3-1-1）记录为{A3-1: [A3-1-1]}
+从A2出发，找到A2所有的好友（A2-1）记录为{A2: [A2-1]}
+……循环递归……
+直到Z，Z同学没有任何好友，结束本次遍历爬取。
+爬取过程中要注意，已经爬取过的人要跳过，否则会陷入无限循环中。
+相关API  当前热门用户：https://coding.net/api/tweet/best_user 用户的朋友们：https://coding.net/api/user/friends/{用户全局唯一代号}?page=1&amp;pageSize=20 用户的粉丝们：https://coding.net/api/user/followers/{用户全局唯一代号}?page=1&amp;pageSize=20 用户个人信息详情：https://coding.net/api/user/key/{用户全局唯一代号}  代码设计实现 数据库设计 为了程序轻便，数据便于分享，我们决定使用Sqlite数据库。
+上述分析过程中发送，用户的登录帐号是全局唯一的，不会重复的，我们以此字段作为主键且不允许为空， 还可以通过上述API获取用户的朋友、朋友的个数、用户的粉丝、粉丝的个数、用户详细信息，因此用户社交关系表设计如下：
+CREATE TABLE IF NOT EXISTS coding_all_user ( global_key VARCHAR PRIMARY KEY NOT NULL, friends_count INTEGER, friends VARCHAR, followers_count INTEGER, followers VARCHAR )  用户个人信息详情表设计如下：
+		</div>
+	</div>
+</article><article class="list__item post">
 	<div class="list__content clearfix">
 		<header class="list__header">
 			<h3 class="list__title post__title ">
@@ -162,11 +208,11 @@ GitHub
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/">robotframework字符转译之坑</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/">当开发团队开始用Docker，测试团队应该做什么？</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/">程序员的自我修养</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">微信跳一跳之线性回归算法优化</a></li>
 		</ul>
 	</div>
 </div>
@@ -215,6 +261,8 @@ GitHub
 		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%e7%bc%96%e7%a0%81" title="Python编码">Python编码 (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/robotframework" title="Robotframework">Robotframework (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%91%98%e6%8a%84" title="摘抄">摘抄 (1)</a>

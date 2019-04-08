@@ -6,10 +6,33 @@
     <description>Recent content on 日拱一卒</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Mar 2019 20:29:16 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 08 Apr 2019 23:19:16 +0800</lastBuildDate>
     
 	<atom:link href="https://toddlerya.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>robotframework字符转译之坑</title>
+      <link>https://toddlerya.github.io/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/</link>
+      <pubDate>Mon, 08 Apr 2019 23:19:16 +0800</pubDate>
+      
+      <guid>https://toddlerya.github.io/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/</guid>
+      <description>去年在公司推广了robotframework自动化框架，基于此框架我们设计开发了HTTPTestLibrary关键字库开展接口测试，效果挺好。我们部门测试开发的统一Python版本为python2.7，因为在我来公司前就在用这个版本，虽然2020年社区不再提供支持，但我们目前还没有迁移Python3的计划，这是前提。
+有点别致的JSON 说到接口测试，必然要支持解析处理各种请求体，其中，我们的研发在某些项目的接口中使用了这样的请求体，我举个例子：
+{&amp;quot;key1&amp;quot;: 123, &amp;quot;trouble&amp;quot;: &amp;quot;{\&amp;quot;inner\&amp;quot;: \&amp;quot;hehe\&amp;quot;}&amp;quot;}  JSON里嵌套一个JSON对象，还是个字符串型的，这是个标准的JSON类型嘛？？？google得知如下知识
+我们用Python测试下：
+In [8]: json_str = r&#39;&#39;&#39;{&amp;quot;key1&amp;quot;: 123, &amp;quot;trouble&amp;quot;: &amp;quot;{\&amp;quot;inner\&amp;quot;: \&amp;quot;hehe\&amp;quot;}&amp;quot;}&#39;&#39;&#39; In [9]: json_str Out[9]: &#39;{&amp;quot;key1&amp;quot;: 123, &amp;quot;trouble&amp;quot;: &amp;quot;{\\&amp;quot;inner\\&amp;quot;: \\&amp;quot;hehe\\&amp;quot;}&amp;quot;}&#39; In [10]: print(json_str) {&amp;quot;key1&amp;quot;: 123, &amp;quot;trouble&amp;quot;: &amp;quot;{\&amp;quot;inner\&amp;quot;: \&amp;quot;hehe\&amp;quot;}&amp;quot;} In [11]: import json In [12]: json.loads(json_str) Out[12]: {&#39;key1&#39;: 123, &#39;trouble&#39;: &#39;{&amp;quot;inner&amp;quot;: &amp;quot;hehe&amp;quot;}&#39;} In [13]: type(json.loads(json_str)) Out[13]: dict  研发定义的请求体没毛病，接下来看看我们的Python2的robotframework遇到什么问题了。
+robotframework测试用例 我们的robotframework测试用例如下：
+基于我们对robotframework的了解，robotframework会读取文本格式的robot测试用例，经过解析加载为内存对象，构建测试用例，我们先分别使用Python2和Python3读取测试用例，看看效果是什么样子：
+可以看到，虽然python2和python3对字符串的类型处理方式不同，但是对于我们的测试用例文本，都只进行了转译加上了一个\。
+为了方便定位问题，便于观察，我们统一修改了robotframework的源码，增加了文本用例解析的输出
+Python2版本的robotframework同学登场 先看下robotframework的测试执行结果，看起来没毛病。
+再看看测试用例的debug输出：
+WTF！为神马变成了四个\???，这就是导致我们的请求体异常，接口响应错误的根本原因啊！
+可是在上面的的Python2直接读取测试用例表现的不是这样啊！
+稳住，我们不能冤枉Python2同学，我们看看Python3的表现。
+Python3版本的robot framework同学低调入场  Python3版本我们使用pipenv创建了一个虚拟环境，同样也修改了robotframework的源码，输出repr</description>
+    </item>
     
     <item>
       <title>当开发团队开始用Docker，测试团队应该做什么？</title>
