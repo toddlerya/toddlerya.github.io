@@ -180,13 +180,13 @@ Out[13]: dict
 
 <h1 id="蛛丝马迹">蛛丝马迹</h1>
 
-<p>我们再仔细阅读下源码，到底是怎么读区的文本用例：</p>
+<p>我们再仔细阅读下源码，robotframework到底是怎么读取的文本用例：</p>
 
 <p><img src="/images/rf_source_open_mode.png" alt="rf_source_open_mode" /></p>
 
 <p>robotframework是以<code>rb</code>模式打开文件进行读取的。</p>
 
-<p>官方文档是这么说的：</p>
+<p>Python官方文档是这么说的：</p>
 
 <blockquote>
 <p>通常文件是以 <em>text mode</em> 打开的，这意味着从文件中读取或写入字符串时，都会以指定的编码方式进行编码。如果未指定编码格式，默认值与平台相关 (参见 <a href="https://docs.python.org/zh-cn/3/library/functions.html#open"><code>open()</code></a>)。在mode 中追加的 <code>'b'</code> 则以 <em>binary mode</em> 打开文件：现在数据是以字节对象的形式进行读写的。这个模式应该用于所有不包含文本的文件。</p>
@@ -201,15 +201,12 @@ Out[13]: dict
 <blockquote>
 <p>Reference</p>
 
-<p><a href="http://www.json.org/json-zh.html">http://www.json.org/json-zh.html</a></p>
-
-<p><a href="https://blog.csdn.net/lgysjfs/article/details/86678559">https://blog.csdn.net/lgysjfs/article/details/86678559</a></p>
-
-<p><a href="http://www.ituring.com.cn/article/1116">http://www.ituring.com.cn/article/1116</a></p>
-
-<p><a href="https://stackoverflow.com/questions/9644110/difference-between-parsing-a-text-file-in-r-and-rb-mode/9644141#9644141">https://stackoverflow.com/questions/9644110/difference-between-parsing-a-text-file-in-r-and-rb-mode/9644141#9644141</a></p>
-
-<p><a href="https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files">https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files</a></p>
+<p><a href="http://www.json.org/json-zh.html">http://www.json.org/json-zh.html</a>
+<a href="https://blog.csdn.net/lgysjfs/article/details/86678559">https://blog.csdn.net/lgysjfs/article/details/86678559</a>
+<a href="http://www.ituring.com.cn/article/1116">http://www.ituring.com.cn/article/1116</a>
+<a href="https://stackoverflow.com/questions/9644110/difference-between-parsing-a-text-file-in-r-and-rb-mode/9644141#9644141">https://stackoverflow.com/questions/9644110/difference-between-parsing-a-text-file-in-r-and-rb-mode/9644141#9644141</a>
+<a href="https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files">https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files</a>
+<a href="https://docs.python.org/zh-cn/2.7/tutorial/inputoutput.html#reading-and-writing-files">https://docs.python.org/zh-cn/2.7/tutorial/inputoutput.html#reading-and-writing-files</a></p>
 </blockquote>
 
 <hr />
