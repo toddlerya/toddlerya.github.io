@@ -88,7 +88,7 @@ Python3版本的robot framework同学低调入场  Python3版本我们使用pipe
 <li><a href="#robotframework测试用例">robotframework测试用例</a></li>
 <li><a href="#python2版本的robotframework同学登场">Python2版本的robotframework同学登场</a></li>
 <li><a href="#python3版本的robot-framework同学低调入场">Python3版本的robot framework同学低调入场</a></li>
-<li><a href="#真相大白">真相大白</a></li>
+<li><a href="#蛛丝马迹">蛛丝马迹</a></li>
 </ul>
 </nav>
 	</div>
@@ -178,15 +178,25 @@ Out[13]: dict
 
 <p>一切正常，完美！这样的结果才是我们想要的，这样的结果才能保证我们的接口响应正常。</p>
 
-<h1 id="真相大白">真相大白</h1>
+<h1 id="蛛丝马迹">蛛丝马迹</h1>
 
 <p>我们再仔细阅读下源码，到底是怎么读区的文本用例：</p>
 
 <p><img src="/images/rf_source_open_mode.png" alt="rf_source_open_mode" /></p>
 
-<p>是以<code>rb</code>模式打开的文本用例，debug输出时，python2版本却输出的是<code>&lt;type 'str'&gt;</code>类型，</p>
+<p>robotframework是以<code>rb</code>模式打开文件进行读取的。</p>
 
-<p>python3版本输出的是<code>&lt;class bytes&gt;</code>类型</p>
+<p>官方文档是这么说的：</p>
+
+<blockquote>
+<p>通常文件是以 <em>text mode</em> 打开的，这意味着从文件中读取或写入字符串时，都会以指定的编码方式进行编码。如果未指定编码格式，默认值与平台相关 (参见 <a href="https://docs.python.org/zh-cn/3/library/functions.html#open"><code>open()</code></a>)。在mode 中追加的 <code>'b'</code> 则以 <em>binary mode</em> 打开文件：现在数据是以字节对象的形式进行读写的。这个模式应该用于所有不包含文本的文件。</p>
+</blockquote>
+
+<p>但是我们进行debug输出时，python2版本却输出的是<code>&lt;type 'str'&gt;</code>类型，python3版本输出的是<code>&lt;class bytes&gt;</code>类型，显然Python2版本的robotframework在搞事情！</p>
+
+<p>Python 3最重要的新特性大概要算是对文本和二进制数据作了更为清晰的区分。文本总是Unicode，由str类型表示，二进制数据则由bytes类型表示。Python 3不会以任意隐式的方式混用str和bytes，正是这使得两者的区分特别清晰。</p>
+
+<p>至此，真相逐渐浮出水面了，不过我们还是不知道为什么Python2版本的robotframework会出现这种情况，但我们可以肯定的是，尽早的迁移到Python3，一定是一件正确的事情！</p>
 
 <blockquote>
 <p>Reference</p>
@@ -194,11 +204,17 @@ Out[13]: dict
 <p><a href="http://www.json.org/json-zh.html">http://www.json.org/json-zh.html</a></p>
 
 <p><a href="https://blog.csdn.net/lgysjfs/article/details/86678559">https://blog.csdn.net/lgysjfs/article/details/86678559</a></p>
+
+<p><a href="http://www.ituring.com.cn/article/1116">http://www.ituring.com.cn/article/1116</a></p>
+
+<p><a href="https://stackoverflow.com/questions/9644110/difference-between-parsing-a-text-file-in-r-and-rb-mode/9644141#9644141">https://stackoverflow.com/questions/9644110/difference-between-parsing-a-text-file-in-r-and-rb-mode/9644141#9644141</a></p>
+
+<p><a href="https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files">https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files</a></p>
 </blockquote>
 
 <hr />
 
-<p>2019年03月01日 于 西安<br />
+<p>2019年04月08日 于 南京<br />
 <a href="toddlerya@qq.com">Email</a><br />
 <a href="https://github.com/toddlerya">GitHub</a></p>
 
