@@ -4,18 +4,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>日拱一卒</title>
-	<meta name="description" content="日拱一卒">
+	<title>不期速成日拱一卒</title>
+	<meta name="description" content="不期速成日拱一卒">
 	<meta name="generator" content="Hugo 0.53" />
-	<meta property="og:title" content="日拱一卒" />
-<meta property="og:description" content="日拱一卒" />
+	<meta property="og:title" content="不期速成日拱一卒" />
+<meta property="og:description" content="不期速成日拱一卒" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://toddlerya.github.io/" />
-<meta property="og:updated_time" content="2019-04-08T23:19:16&#43;08:00"/>
+<meta property="og:updated_time" content="2019-05-12T09:37:20&#43;08:00"/>
 
 	<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="日拱一卒"/>
-<meta name="twitter:description" content="日拱一卒"/>
+<meta name="twitter:title" content="不期速成日拱一卒"/>
+<meta name="twitter:description" content="不期速成日拱一卒"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -31,8 +31,8 @@
 		<header class="header">
 			<div class="container container-inner">
 				<div class="logo" role="banner">
-					<a class="logo__link" href="/" title="日拱一卒" rel="home">
-						<div class="logo__title">日拱一卒</div>
+					<a class="logo__link" href="/" title="不期速成日拱一卒" rel="home">
+						<div class="logo__title">不期速成日拱一卒</div>
 						<div class="logo__tagline">但行好事，莫问前程。</div>
 					</a>
 				</div>
@@ -42,6 +42,34 @@
 		<div class="wrapper clearfix">
 
 	<main class="main list content" role="main"><article class="list__item post">
+	<div class="list__content clearfix">
+		<header class="list__header">
+			<h3 class="list__title post__title ">
+				<a href="/post/limit%E5%92%8Cifnull%E7%9A%84%E4%BD%BF%E7%94%A8leetcode-sqlno.176/" rel="bookmark">LIMIT和IFNULL的使用：LeetCode No.176</a>
+			</h3><div class="list__meta meta">
+<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+<time class="post__meta-date meta-date" datetime="2019-05-12T09:37:20">May 12, 2019</time>
+<span class="post__meta-categories meta-categories">
+	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
+</span></div>
+		</header>
+		<div class="list__excerpt post__content">
+			​ 下班在家无聊打开力扣（LeetCode国内版）随便逛逛，突然发现还有SQL题目，随便点开一道简单的题目，平常一般也就用用普通的CURD、分组、排序，多表关联查询什么的，这道题我是没做出来！各位小伙伴看看这道题，大家会不会做～这道题是这样子的：
+看起来普普通通哦，第一反应，排个序嘛～
+SELECT DISTINCT(Salary) AS SecondHighestSalary FROM Employee ORDER BY Salary DESC;  再然后就发现卡壳了，触发了我的知识盲区！
+ 如何只取出第2行数据？ 如何判断是否有第二高的薪水（有可能所有人薪水都一样或空表的情况）？ 如何返回null？  开始补习功课！
+各种数据库的SQL有一定差异，我们以使用较多的MySQL数据库的SQL语法为例。
+一、回顾LIMIT子句知识细节 首先我们回顾下如何限制只返回查询结果的前两行？
+SELECT some_col FROM some_table LIMIT 2;  上述代码使用SELECT语言检索单独的一列数据。LIMIT 2指示MySQL数据库返回不超过2行的数据，其实这就是我们平时最常用的LIMIT子句，但这不是完整的LIMIT子句。
+知识点来了！
+1. LIMIT子句的完整形态是这样子的： LIMIT return_rows_number OFFSET start_index  2. OFFSET默认值为0： 我们上面语句的LIMIT 2其实是LIMIT 2 OFFSET 0的默认简写形式，不显式声明OFFSET值，则OFFSET默认为0。
+3. 简化版的LIMIT子句： LIMIT start_index, return_rows_number  接下来我们实战下看看效果，加深下理解：
+对于这道题，我们要获取第二行数据，应该这样写
+SELECT DISTINCT(Salary) FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1;  二、回顾IFNULL函数的细节 MySQL的IFNULL函数其实就是个if else语句，函数语法规则如下
+		</div>
+	</div>
+</article><article class="list__item post">
 	<div class="list__content clearfix">
 		<header class="list__header">
 			<h3 class="list__title post__title ">
@@ -273,26 +301,6 @@ ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出�
 硬链接 一般情况下，文件名和inode号码是&rdquo;一一对应&rdquo;关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为&rdquo;硬链接&rdquo;（hard link）。 ln命令可以创建硬链接：ln 源文件 目标文件
 		</div>
 	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/golang%E5%AD%A6%E4%B9%A0%E4%B8%80/" rel="bookmark">Golang学习（一）</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2017-12-24T12:11:49">December 24, 2017</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90" rel="category">造轮子</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			闲扯 去北京参加Top100学习到现在一个多月过去了，时间过得好快，转眼2017年只剩下最后一周了，不由得感叹时间就像指缝的流沙。 再加上最近中年程序员不堪重负的各种新闻，感觉自己距离那一天也没多远了，在此之前努力提高自己的姿势水平吧，要没时间了。
-在Top100听到了很多讲师提到了Golang，结合之前看过的左耳朵耗子的文章《GO语言、DOCKER 和新技术》，决定要学习了解下Golang了。 最近半个月断断续续看了Golang的一些教程《GO 语言简介（上）— 语法》、《GO 语言简介（下）— 特性》、无闻老师的《Go 编程基础》，只是对Golang有了一点点初步的了解。 学习一门语言最重要的还是要撸代码啊，要动手写个小工具试试手。 恰巧昨天加班时帮同事写了个小工具，感觉用Python的性能不够好，而且想要高性能还要依赖gevent这种第三方库，不方便部署，于是想到用Golang可以来试下，写完编译下给同事用就好啦！昨晚回到家吃过饭陪女朋友玩了会，从十点开始撸代码到凌晨一点，终于写出一个小demo，特此记录下年轻人的第一个Golang小程序。
-正文 工具需求是有一个样例zip包，zip包里面有一些bcp数据、xml数据、bjson数据、图片、视频什么的。 zip包的命名规范如下： ​ AAA-BBB-1514090969-CCC_DDD_21234.zip 我们要将zip包的1514090969【绝对秒数】与21234【随机序列】进行替换，随机生成大量的zip包副本，发送到某个ETL输入目录，暂且不管zip包里面的内容（其实zip包内的文件也要随机生成）。 之前同事用Shell写的，没看他代码怎么实现的，不过肯定有问题，一小时才生成了三万个样例zip包，远远达不到压测的要求。 于是我花了十几分钟调用Python的gevent模块帮他重新用Python写了一遍，性能瞬间爆炸。 但是部署gevent比较麻烦（公司和客户都是内网环境，pip是没法用的，只能手动安装所需的第三方包，而且公司大部分操作系统还是Redhat AS6U3，默认的Python是2.6版本，各种不方便），就想到了如果用Golang写一遍是否性能很好，编译后提供二进制文件直接运行就可以了，于是就有了下面的代码。
-代码 /* * User: toddlerya * Date: 2017/12/23 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os.Stat(name); err != nil { if os.IsNotExist(err) { return false } } return true } func copyFile(src, des string) (w int64, err error) { srcFile, err := os.
-		</div>
-	</div>
 </article>
 		
 
@@ -311,11 +319,11 @@ ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出�
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/limit%E5%92%8Cifnull%E7%9A%84%E4%BD%BF%E7%94%A8leetcode-sqlno.176/">LIMIT和IFNULL的使用：LeetCode No.176</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/">robotframework字符转译之坑</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/">当开发团队开始用Docker，测试团队应该做什么？</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/">程序员的自我修养</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/">无序大数组的中位数算法</a></li>
 		</ul>
 	</div>
 </div>
@@ -362,10 +370,12 @@ ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出�
 	<div class="widget__content">
 		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leetcode" title="Leetcode">Leetcode (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/python%e7%bc%96%e7%a0%81" title="Python编码">Python编码 (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/robotframework" title="Robotframework">Robotframework (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%91%98%e6%8a%84" title="摘抄">摘抄 (1)</a>
@@ -383,7 +393,7 @@ ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出�
 	</div>
 		<footer class="footer">
 			<div class="container container-inner">
-				<div class="footer__copyright">&copy; 2019 日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
+				<div class="footer__copyright">&copy; 2019 不期速成日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
 			</div>
 		</footer>
 	</div>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on 日拱一卒</title>
+    <title>Tags on 不期速成日拱一卒</title>
     <link>https://toddlerya.github.io/tags/</link>
-    <description>Recent content in Tags on 日拱一卒</description>
+    <description>Recent content in Tags on 不期速成日拱一卒</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 01 Mar 2019 20:29:16 +0800</lastBuildDate>
@@ -26,6 +26,15 @@
       <pubDate>Sun, 31 Dec 2017 16:13:51 +0000</pubDate>
       
       <guid>https://toddlerya.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Leetcode</title>
+      <link>https://toddlerya.github.io/tags/leetcode/</link>
+      <pubDate>Sun, 12 May 2019 09:37:20 +0800</pubDate>
+      
+      <guid>https://toddlerya.github.io/tags/leetcode/</guid>
       <description></description>
     </item>
     
@@ -62,6 +71,15 @@
       <pubDate>Mon, 08 Apr 2019 23:19:16 +0800</pubDate>
       
       <guid>https://toddlerya.github.io/tags/robotframework/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sql</title>
+      <link>https://toddlerya.github.io/tags/sql/</link>
+      <pubDate>Sun, 12 May 2019 09:37:20 +0800</pubDate>
+      
+      <guid>https://toddlerya.github.io/tags/sql/</guid>
       <description></description>
     </item>
     
