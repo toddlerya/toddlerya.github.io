@@ -114,12 +114,6 @@
   
   <url>
     <loc>https://toddlerya.github.io/tags/python/</loc>
-    <lastmod>2018-01-07T12:24:53+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://toddlerya.github.io/tags/python%E7%BC%96%E7%A0%81/</loc>
     <lastmod>2019-04-08T23:19:16+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -163,31 +157,19 @@
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/categories/%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2017-09-08T23:08:23+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://toddlerya.github.io/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2017-12-31T16:13:51+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/</loc>
-    <lastmod>2017-12-30T21:37:25+00:00</lastmod>
+    <loc>https://toddlerya.github.io/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2017-09-08T23:08:23+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://toddlerya.github.io/tags/%E6%91%98%E6%8A%84/</loc>
-    <lastmod>2019-02-28T22:08:32+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://toddlerya.github.io/categories/%E6%91%98%E6%8A%84%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2019-02-28T22:08:32+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -199,13 +181,13 @@
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://toddlerya.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-01-07T12:24:53+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://toddlerya.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-01-07T12:24:53+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -217,25 +199,25 @@
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/categories/%E6%B8%B8%E6%88%8F/</loc>
-    <lastmod>2018-01-07T12:24:53+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://toddlerya.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
     <lastmod>2018-01-07T12:24:53+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/categories/%E7%88%AC%E8%99%AB/</loc>
-    <lastmod>2017-10-29T13:05:54+00:00</lastmod>
+    <loc>https://toddlerya.github.io/categories/%E6%B8%B8%E6%88%8F/</loc>
+    <lastmod>2018-01-07T12:24:53+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://toddlerya.github.io/tags/%E7%88%AC%E8%99%AB/</loc>
+    <lastmod>2017-10-29T13:05:54+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://toddlerya.github.io/categories/%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2017-10-29T13:05:54+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -247,13 +229,13 @@
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/categories/%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://toddlerya.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2018-05-25T21:29:10+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://toddlerya.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://toddlerya.github.io/categories/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2018-05-25T21:29:10+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -279,12 +261,6 @@
   <url>
     <loc>https://toddlerya.github.io/categories/%E9%80%A0%E8%BD%AE%E5%AD%90/</loc>
     <lastmod>2017-12-31T16:13:51+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://toddlerya.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</loc>
-    <lastmod>2017-12-24T13:57:10+00:00</lastmod>
     <priority>0</priority>
   </url>
   
