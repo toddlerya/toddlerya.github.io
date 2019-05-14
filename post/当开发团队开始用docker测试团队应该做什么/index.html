@@ -1,121 +1,149 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>当开发团队开始用Docker，测试团队应该做什么？</title>
-	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
-	<meta property="og:title" content="当开发团队开始用Docker，测试团队应该做什么？" />
-<meta property="og:description" content="在之前的《Hello Docker》中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。
-Docker带来了什么？改变了什么？ 一、传统软件开发流程有几大痛点：  开发、测试、发布环境不统一
- 配置测试环境过程冗长又复杂
- 自动化测试环境不稳定，容易受到污染，隔离不足
- 无法准确获得客户的软件环境
- 开发团队无法复现测试团队报出的软件缺陷，导致两个团队出现相互推诿的现象
-  二、当前测试技术面临的几大挑战：  配置一致的测试环境 快速部署软件 并行执行测试，在并行的同时还要保证测试任务各自的环境不被污染 成功的复现软件缺陷 创建干净的可信的测试环境 快速部署多个测试主机 快速导入测试数据 快速清理测试环境 快速保留、复制、恢复测试环境 正确配置测试工具。快速将测试环境在不同操作系统（类Unix）  三、Docker对测试技术的革命性影响 软件开发交付速度上不去，很大一个问题是软件运行环境这个环节存在瓶颈，Docker解决了这个瓶颈，促进了软件开发的DevOps模式推广，这对所有的软件行业从业者都是巨大利好。
-软件测试的几个重要方面：测试策略、测试设计、测试方法、测试数据、测试环境，前三个是方法论思想层面的，后两个是需要技术突破的。测试数据因具体细分行业不同，各有各的痛点也各有各的解决方案，但是对于测试环境来说，Docker是个近乎接近“银弹”的技术解决方案。
-通过Docker的软件环境快速部署能力，促进了测试时间的再分配 一个小小的Dockerfile明确声明了软件部署的所有细节和流程，从此忘记冗长的安装部署文档吧！无论是从研发自测、功能测试、集成测试等哪个环节来讲，测试环境的部署时间成倍缩短，能给工程师更多的时间做更多有意义的事情，开发工程师可以有更多时间完善优化设计，修复缺陷，测试工程师可以有跟多时间拓宽测试的广度和提高测试的深度，运维工程师有更多的时间专注于改进软件监控分析系统，这和有效的自动化测试的价值可以相提并论。
-通过Docker的软件环境一致性能力，有效降低了偶然复杂度 Docker的镜像发布，容器编排运行等设计实现，保证了开发环境、测试环境、生产发布环境以及不同操作系统发行版的高度一致可信，几乎避免了测试团队发现的缺陷在开发环境无法复现、线上生产环境的缺陷在线下无法复现且不便线上调试等问题带来的一些列人力成本、时间成本、心智成本的无谓消耗。
-通过Docker的环境隔离管理能力，提高了测试资源的自由度 以往虽然有各种虚拟化技术，可以一台服务器虚拟化为多台虚拟机，可以对虚拟机进行快照，随时恢复软件环境，但是终究太笨重，资源损耗太高，利用率太低，无法实现测试资源自由。现在有了Docker的资源隔离管理能力，我们可以按照测试需求，启动多个不同版本的服务，随时创建，随时销毁；我们甚至可以在一台服务器给每个测试人员启动一套独立的测试环境，大家并行测试，互不干扰，避免了互相踩踏。同时这种环境资源的自由度，对于自动化测试的执行过程是有很大帮助的，大大提高了自动化测试的成功率，进而提高自动化测试的ROI。
-测试团队如何顺势而为？ 上一小节总结的三点革命性影响，对于整个开发流程来说，已经为CI/CD提供了道路基石，势必将进一步缩短迭代周期，提高交付速度（虽然还是有需求变更，开发延期等软件开发管理上不可避免的问题和人的不可靠性等因素等debuff）
-效率提高了，交付速度提高了，迭代速度更快了，单纯的手工测试已经跟不上DevOps的软件开发模式了（其实在很多年前就跟不上现代软件开发节奏了），对测试的要求更高了，应当思考下省下来的时间如何更好的利用，如何跟上研发提测的速度。对于我现在所在的这种相对传统的行业软件服务企业来说，测试团队必须尽快适应这种DevOps开发模式了，不然就会被历史的车轮碾死在尘埃里。
-测试团队的核心职责是质量保障，围绕质量保障，我们可以将测试能力向前向后输出，输出的最好形式就是自动化。
- 自动化测试环境资源不再是自动化实施的绊脚石，接下来需要考验的是我们的自动化框架、自动化工具是否真的可靠、可用。 测试驱动开发的模式虽然很好，但是推广落地却不是那么容易的😊。测试团队还可以将测试用例封装为自动化测试服务，提供给研发自测，而不是等研发一次次快速提测再被打回，冲击消耗测试工程师的激情和精力。更近一步可以考虑通过感知镜像仓库中镜像的变化，动态触发自动化测试。当然长远看来还是要与开发团队共同实现CI/CD，需要各个研发部门通力合作。 软件运行环境的高度一致性，理论上线上发现的缺陷可以等价于测试团队漏测，这对测试团队的可信度和口碑是一个挑战，需要进一步提高测试质量和标准 上线后的软件运行状态检测，虽然按照传统分工应当是运维团队来做的，但是测试团队在这方面也有自己得天独厚的优势，对产品的深刻理解，测试角度，可以将内测测试用例调整转为适配线上数据环境的在线自动化测试用例，实现线上测试，在第一时间发现由于线上环境测试数据的多样性和量级带来的问题，及时收集触发线上自动化用例失败的测试数据来完善测试用例库，提高测试覆盖度。  总而言之，核心就是进一步提高自动化测试技术的深度和广度。
-暂时想到这些，有新的想法再补充。
- Reference
-https://www.infoq.cn/article/docker-lead-test-innovation
- 2019年03月01日 于 西安
-Email
-GitHub" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://toddlerya.github.io/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/" /><meta property="article:published_time" content="2019-03-01T20:29:16&#43;08:00"/>
-<meta property="article:modified_time" content="2019-03-01T20:29:16&#43;08:00"/>
-
-	<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="当开发团队开始用Docker，测试团队应该做什么？"/>
-<meta name="twitter:description" content="在之前的《Hello Docker》中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。
-Docker带来了什么？改变了什么？ 一、传统软件开发流程有几大痛点：  开发、测试、发布环境不统一
- 配置测试环境过程冗长又复杂
- 自动化测试环境不稳定，容易受到污染，隔离不足
- 无法准确获得客户的软件环境
- 开发团队无法复现测试团队报出的软件缺陷，导致两个团队出现相互推诿的现象
-  二、当前测试技术面临的几大挑战：  配置一致的测试环境 快速部署软件 并行执行测试，在并行的同时还要保证测试任务各自的环境不被污染 成功的复现软件缺陷 创建干净的可信的测试环境 快速部署多个测试主机 快速导入测试数据 快速清理测试环境 快速保留、复制、恢复测试环境 正确配置测试工具。快速将测试环境在不同操作系统（类Unix）  三、Docker对测试技术的革命性影响 软件开发交付速度上不去，很大一个问题是软件运行环境这个环节存在瓶颈，Docker解决了这个瓶颈，促进了软件开发的DevOps模式推广，这对所有的软件行业从业者都是巨大利好。
-软件测试的几个重要方面：测试策略、测试设计、测试方法、测试数据、测试环境，前三个是方法论思想层面的，后两个是需要技术突破的。测试数据因具体细分行业不同，各有各的痛点也各有各的解决方案，但是对于测试环境来说，Docker是个近乎接近“银弹”的技术解决方案。
-通过Docker的软件环境快速部署能力，促进了测试时间的再分配 一个小小的Dockerfile明确声明了软件部署的所有细节和流程，从此忘记冗长的安装部署文档吧！无论是从研发自测、功能测试、集成测试等哪个环节来讲，测试环境的部署时间成倍缩短，能给工程师更多的时间做更多有意义的事情，开发工程师可以有更多时间完善优化设计，修复缺陷，测试工程师可以有跟多时间拓宽测试的广度和提高测试的深度，运维工程师有更多的时间专注于改进软件监控分析系统，这和有效的自动化测试的价值可以相提并论。
-通过Docker的软件环境一致性能力，有效降低了偶然复杂度 Docker的镜像发布，容器编排运行等设计实现，保证了开发环境、测试环境、生产发布环境以及不同操作系统发行版的高度一致可信，几乎避免了测试团队发现的缺陷在开发环境无法复现、线上生产环境的缺陷在线下无法复现且不便线上调试等问题带来的一些列人力成本、时间成本、心智成本的无谓消耗。
-通过Docker的环境隔离管理能力，提高了测试资源的自由度 以往虽然有各种虚拟化技术，可以一台服务器虚拟化为多台虚拟机，可以对虚拟机进行快照，随时恢复软件环境，但是终究太笨重，资源损耗太高，利用率太低，无法实现测试资源自由。现在有了Docker的资源隔离管理能力，我们可以按照测试需求，启动多个不同版本的服务，随时创建，随时销毁；我们甚至可以在一台服务器给每个测试人员启动一套独立的测试环境，大家并行测试，互不干扰，避免了互相踩踏。同时这种环境资源的自由度，对于自动化测试的执行过程是有很大帮助的，大大提高了自动化测试的成功率，进而提高自动化测试的ROI。
-测试团队如何顺势而为？ 上一小节总结的三点革命性影响，对于整个开发流程来说，已经为CI/CD提供了道路基石，势必将进一步缩短迭代周期，提高交付速度（虽然还是有需求变更，开发延期等软件开发管理上不可避免的问题和人的不可靠性等因素等debuff）
-效率提高了，交付速度提高了，迭代速度更快了，单纯的手工测试已经跟不上DevOps的软件开发模式了（其实在很多年前就跟不上现代软件开发节奏了），对测试的要求更高了，应当思考下省下来的时间如何更好的利用，如何跟上研发提测的速度。对于我现在所在的这种相对传统的行业软件服务企业来说，测试团队必须尽快适应这种DevOps开发模式了，不然就会被历史的车轮碾死在尘埃里。
-测试团队的核心职责是质量保障，围绕质量保障，我们可以将测试能力向前向后输出，输出的最好形式就是自动化。
- 自动化测试环境资源不再是自动化实施的绊脚石，接下来需要考验的是我们的自动化框架、自动化工具是否真的可靠、可用。 测试驱动开发的模式虽然很好，但是推广落地却不是那么容易的😊。测试团队还可以将测试用例封装为自动化测试服务，提供给研发自测，而不是等研发一次次快速提测再被打回，冲击消耗测试工程师的激情和精力。更近一步可以考虑通过感知镜像仓库中镜像的变化，动态触发自动化测试。当然长远看来还是要与开发团队共同实现CI/CD，需要各个研发部门通力合作。 软件运行环境的高度一致性，理论上线上发现的缺陷可以等价于测试团队漏测，这对测试团队的可信度和口碑是一个挑战，需要进一步提高测试质量和标准 上线后的软件运行状态检测，虽然按照传统分工应当是运维团队来做的，但是测试团队在这方面也有自己得天独厚的优势，对产品的深刻理解，测试角度，可以将内测测试用例调整转为适配线上数据环境的在线自动化测试用例，实现线上测试，在第一时间发现由于线上环境测试数据的多样性和量级带来的问题，及时收集触发线上自动化用例失败的测试数据来完善测试用例库，提高测试覆盖度。  总而言之，核心就是进一步提高自动化测试技术的深度和广度。
-暂时想到这些，有新的想法再补充。
- Reference
-https://www.infoq.cn/article/docker-lead-test-innovation
- 2019年03月01日 于 西安
-Email
-GitHub"/>
-
-	<link rel="dns-prefetch" href="//fonts.googleapis.com">
-	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
-	<link rel="stylesheet" href="/css/style.css">
-	<script type="text/javascript" src="/js/scripts.js"></script>
-	<link rel="shortcut icon" href="/favicon.ico">
-	
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>当开发团队开始用Docker，测试团队应该做什么？ - 不期速成日拱一卒</title>
+    <meta name="keywords" content="不期速成日拱一卒,独立,博客,程序员,个人,思考,读书,笔记,技术,分享,Golang">
+    
+    <meta property="og:title" content="当开发团队开始用Docker，测试团队应该做什么？">
+    <meta property="og:site_name" content="不期速成日拱一卒">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="当开发团队开始用Docker，测试团队应该做什么？ - 不期速成日拱一卒" />
+    <meta name="description" content="不期速成日拱一卒 | 博客 | 软件 | 测试 | Python | Golang"> 
+    <link rel="shortcut icon" href="https://toddlerya.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://toddlerya.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://toddlerya.github.io/img/apple-touch-icon.png" />
+    <link href="https://toddlerya.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    <link href="https://toddlerya.github.io/js/vendor/fancybox/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+    <link href="https://toddlerya.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://toddlerya.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+     fancybox: true, 
+    motion: true
+  };
+</script>
 </head>
-<body class="body body-right-sidebar">
-	<div class="container container-outer">
-		<header class="header">
-			<div class="container container-inner">
-				<div class="logo" role="banner">
-					<a class="logo__link" href="/" title="不期速成日拱一卒" rel="home">
-						<div class="logo__title">不期速成日拱一卒</div>
-						<div class="logo__tagline">但行好事，莫问前程。</div>
-					</a>
-				</div>
-			</div>
-			<div class="divider"></div>
-		</header>
-		<div class="wrapper clearfix">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left page-home  ">
+    <div class="headband"></div>
 
-<main class="main content">
-	<article class="post">
-		<header class="post__header">
-			<h1 class="post__title">当开发团队开始用Docker，测试团队应该做什么？</h1><div class="post__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2019-03-01T20:29:16">March 01, 2019</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
-</span></div>
-		</header>
-<div class="post__toc toc">
-	<div class="toc__title">Page content</div>
-	<div class="toc__menu">
-		<nav id="TableOfContents">
-<ul>
-<li><a href="#docker带来了什么-改变了什么">Docker带来了什么？改变了什么？</a>
-<ul>
-<li><a href="#一-传统软件开发流程有几大痛点">一、传统软件开发流程有几大痛点：</a></li>
-<li><a href="#二-当前测试技术面临的几大挑战">二、当前测试技术面临的几大挑战：</a></li>
-<li><a href="#三-docker对测试技术的革命性影响">三、Docker对测试技术的革命性影响</a>
-<ul>
-<li><a href="#通过docker的软件环境快速部署能力-促进了测试时间的再分配">通过Docker的软件环境快速部署能力，促进了测试时间的再分配</a></li>
-<li><a href="#通过docker的软件环境一致性能力-有效降低了偶然复杂度">通过Docker的软件环境一致性能力，有效降低了偶然复杂度</a></li>
-<li><a href="#通过docker的环境隔离管理能力-提高了测试资源的自由度">通过Docker的环境隔离管理能力，提高了测试资源的自由度</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#测试团队如何顺势而为">测试团队如何顺势而为？</a></li>
-</ul>
-</nav>
-	</div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
+
+  <div class="custom-logo-site-title">
+    <a href="https://toddlerya.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">不期速成日拱一卒</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">但行好事，莫问前程。</p>
 </div>
-<div class="post__content clearfix">
-			
 
-<p>在之前的<a href="/post/hello-docker/">《Hello Docker》</a>中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。</p>
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://toddlerya.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://toddlerya.github.io/post/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-expand">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/" itemprop="url">
+        当开发团队开始用Docker，测试团队应该做什么？
+        </a>
+      </h1>
+      <div class="post-meta">
+      <span class="post-time">
+<span class="post-meta-item-icon">
+    <i class="fa fa-calendar-o"></i>
+</span>
+<span class="post-meta-item-text">时间：</span>
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2019-03-01">
+    2019-03-01
+</time>
+</span> 
+      
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://toddlerya.github.io/categories/%E7%AC%94%E8%AE%B0" itemprop="url" rel="index">
+        <span itemprop="name">笔记</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
+       <span>
+&nbsp; | &nbsp;
+<span class="post-meta-item-icon">
+    <i class="fa fa-eye"></i>
+</span>
+<span class="post-meta-item-text">阅读：</span>
+<span class="leancloud-visitors-count">2255 字 ~5分钟</span>
+</span>
+      </div>
+    </header>
+    <div class="post-body" itemprop="articleBody">
+    
+
+<p>在之前的<a href="https://toddlerya.github.io/post/hello-docker/">《Hello Docker》</a>中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。</p>
 
 <h1 id="docker带来了什么-改变了什么">Docker带来了什么？改变了什么？</h1>
 
@@ -196,126 +224,199 @@ GitHub"/>
 <a href="toddlerya@qq.com">Email</a><br />
 <a href="https://github.com/toddlerya">GitHub</a></p>
 
-		</div>
-		
-<div class="post__tags tags clearfix">
-	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 16 16"><path d="M16 9.5c0 .373-.24.74-.5 1l-5 5c-.275.26-.634.5-1 .5-.373 0-.74-.24-1-.5L1 8a2.853 2.853 0 0 1-.7-1C.113 6.55 0 5.973 0 5.6V1.4C0 1.034.134.669.401.401.67.134 1.034 0 1.4 0h4.2c.373 0 .95.113 1.4.3.45.187.732.432 1 .7l7.5 7.502c.26.274.5.632.5.998zM3.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
-	<ul class="tags__list">
-		<li class="tags__item"><a class="tags__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/" rel="tag">软件测试</a></li>
-		<li class="tags__item"><a class="tags__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/" rel="tag">测试开发</a></li>
-		<li class="tags__item"><a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a></li>
-	</ul>
+    </div>
+    <footer class="post-footer">
+     
+ 
+<div class="post-tags">     
+     
+    <a href="https://toddlerya.github.io/tags/%e8%bd%af%e4%bb%b6%e6%b5%8b%e8%af%95" rel="tag" title="软件测试">#软件测试#</a>
+    
+    <a href="https://toddlerya.github.io/tags/%e6%b5%8b%e8%af%95%e5%bc%80%e5%8f%91" rel="tag" title="测试开发">#测试开发#</a>
+    
+    <a href="https://toddlerya.github.io/tags/docker" rel="tag" title="docker">#docker#</a>
+    
 </div>
-	</article>
-	
-<div class="authorbox clearfix">
-	<figure class="authorbox__avatar">
-		<img alt="toddlerya avatar" src="/img/dog.jpg" class="avatar" height="90" width="90">
-	</figure>
-	<div class="authorbox__header">
-		<span class="authorbox__name">About toddlerya</span>
-	</div>
-	<div class="authorbox__description">
-		witness me.
-	</div>
+
+
+
+     <div class="post-nav">
+    <div class="post-nav-next post-nav-item">
+    
+        <a href="https://toddlerya.github.io/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/" rel="next" title="程序员的自我修养">
+        <i class="fa fa-chevron-left"></i> 程序员的自我修养
+        </a>
+    
+    </div>
+
+    <div class="post-nav-prev post-nav-item">
+    
+        <a href="https://toddlerya.github.io/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/" rel="prev" title="robotframework字符转译之坑">
+        robotframework字符转译之坑 <i class="fa fa-chevron-right"></i>
+        </a>
+    
+    </div>
 </div>
-	
-<nav class="post-nav row clearfix">
-	<div class="post-nav__item post-nav__item--prev col-1-2">
-		<a class="post-nav__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">程序员的自我修养</p></a>
-	</div>
-	<div class="post-nav__item post-nav__item--next col-1-2">
-		<a class="post-nav__link" href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">robotframework字符转译之坑</p></a>
-	</div>
+      
+     
+     
+     
+
+
+
+
+    </footer>
+  </article>
+</section>
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://toddlerya.github.io/img/dog.jpg"
+        alt="toddlerya" />
+    <p class="site-author-name" itemprop="name">toddlerya</p>
+    <p class="site-description motion-element" itemprop="description"> 
+        witness me.</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://toddlerya.github.io/post/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://toddlerya.github.io/categories/">      
+         
+        <span class="site-state-item-count">9</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://toddlerya.github.io/tags/">
+         
+        <span class="site-state-item-count">17</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
 </nav>
-	
-</main>
+      
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya/" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="toddlerya@qq.com" target="_blank" title="邮箱">
+            <i class="fa fa-fw fa-email"></i>
+            邮箱
+        </a>
+        </span>
+    
+</div>
 
-<aside class="sidebar">
-	
-	
-<div class="widget-recent widget">
-	<h4 class="widget__title">Recent Posts</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/limit%E5%92%8Cifnull%E7%9A%84%E4%BD%BF%E7%94%A8leetcode-sqlno.176/">LIMIT和IFNULL的使用：LeetCode No.176</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/">robotframework字符转译之坑</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/">当开发团队开始用Docker，测试团队应该做什么？</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/">程序员的自我修养</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
-		</ul>
-	</div>
+
+      
+
+      <div class="links-of-blogroll motion-element inline">
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5b4f2ucxar6&amp;m=0&amp;s=220&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33&amp;bv=35" async="async"></script>
 </div>
-	
-<div class="widget-categories widget">
-	<h4 class="widget__title">Categories</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ac%94%e8%ae%b0">笔记</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
-		</ul>
-	</div>
-</div>
-	
-<div class="widget-social widget">
-	<h4 class="widget-social__title widget__title">Social</h4>
-	<div class="widget-social__content widget__content">
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
-				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
-				<span>GitHub</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
-				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
-				<span>toddlerya@qq.com</span>
-			</a>
-		</div>
-	</div>
-</div>
-	
-<div class="widget-taglist widget">
-	<h4 class="widget__title">Tags</h4>
-	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/leetcode" title="Leetcode">Leetcode (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (6)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/robotframework" title="Robotframework">Robotframework (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%91%98%e6%8a%84" title="摘抄">摘抄 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b5%8b%e8%af%95%e5%bc%80%e5%8f%91" title="测试开发">测试开发 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%bd%af%e4%bb%b6%e6%b5%8b%e8%af%95" title="软件测试">软件测试 (1)</a>
-	</div>
-</div>
+
+    </section>
+    
+  </div>
 </aside>
-	</div>
-		<footer class="footer">
-			<div class="container container-inner">
-				<div class="footer__copyright">&copy; 2019 不期速成日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
-			</div>
-		</footer>
-	</div>
 
-<script>
-	var navigation = responsiveNav(".menu", {
-		navClass: "menu--collapse",
-	});
-</script></body>
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span itemprop="copyrightYear">  &copy; 
+  2009 - 2019</span>
+  <span class="with-love"><i class="fa fa-heart"></i></span>
+  <span class="author" itemprop="copyrightHolder">不期速成日拱一卒</span>
+</div>
+<div class="powered-by">
+  Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.53</a>
+</div>
+<div class="theme-info">
+  Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+  </a>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="https://toddlerya.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script src="https://toddlerya.github.io/js/vendor/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/scrollspy.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/post-details.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/toc.js"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
 </html>

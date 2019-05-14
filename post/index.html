@@ -1,396 +1,581 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Posts</title>
-	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
-	<meta property="og:title" content="Posts" />
-<meta property="og:description" content="不期速成日拱一卒" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://toddlerya.github.io/post/" />
-<meta property="og:updated_time" content="2019-05-12T09:37:20&#43;08:00"/>
-
-	<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content="不期速成日拱一卒"/>
-
-	<link rel="dns-prefetch" href="//fonts.googleapis.com">
-	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss&#43;xml" href="/post/index.xml">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
-	<link rel="stylesheet" href="/css/style.css">
-	<script type="text/javascript" src="/js/scripts.js"></script>
-	<link rel="shortcut icon" href="/favicon.ico">
-	
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>Posts - 不期速成日拱一卒</title>
+    <meta name="keywords" content="不期速成日拱一卒,独立,博客,程序员,个人,思考,读书,笔记,技术,分享,Golang">
+    
+    <meta property="og:title" content="Posts">
+    <meta property="og:site_name" content="不期速成日拱一卒">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="Posts - 不期速成日拱一卒" />
+    <meta name="description" content="不期速成日拱一卒 | 博客 | 软件 | 测试 | Python | Golang"> 
+    <link rel="shortcut icon" href="https://toddlerya.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://toddlerya.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://toddlerya.github.io/img/apple-touch-icon.png" />
+    <link href="https://toddlerya.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    
+    <link href="https://toddlerya.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://toddlerya.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: false, 
+    motion: true
+  };
+</script>
 </head>
-<body class="body body-right-sidebar">
-	<div class="container container-outer">
-		<header class="header">
-			<div class="container container-inner">
-				<div class="logo" role="banner">
-					<a class="logo__link" href="/" title="不期速成日拱一卒" rel="home">
-						<div class="logo__title">不期速成日拱一卒</div>
-						<div class="logo__tagline">但行好事，莫问前程。</div>
-					</a>
-				</div>
-			</div>
-			<div class="divider"></div>
-		</header>
-		<div class="wrapper clearfix">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left   ">
+    <div class="headband"></div>
 
-	<main class="main list content" role="main">
-		<header class="page-header">
-			<h1 class="page-header__title">Posts</h1>
-		</header><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/limit%E5%92%8Cifnull%E7%9A%84%E4%BD%BF%E7%94%A8leetcode-sqlno.176/" rel="bookmark">LIMIT和IFNULL的使用：LeetCode No.176</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2019-05-12T09:37:20">May 12, 2019</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			​ 下班在家无聊打开力扣（LeetCode国内版）随便逛逛，突然发现还有SQL题目，随便点开一道简单的题目，平常一般也就用用普通的CURD、分组、排序，多表关联查询什么的，这道题我是没做出来！各位小伙伴看看这道题，大家会不会做～这道题是这样子的：
-看起来普普通通哦，第一反应，排个序嘛～
-SELECT DISTINCT(Salary) AS SecondHighestSalary FROM Employee ORDER BY Salary DESC;  再然后就发现卡壳了，触发了我的知识盲区！
- 如何只取出第2行数据？ 如何判断是否有第二高的薪水（有可能所有人薪水都一样或空表的情况）？ 如何返回null？  开始补习功课！
-各种数据库的SQL有一定差异，我们以使用较多的MySQL数据库的SQL语法为例。
-一、回顾LIMIT子句知识细节 首先我们回顾下如何限制只返回查询结果的前两行？
-SELECT some_col FROM some_table LIMIT 2;  上述代码使用SELECT语言检索单独的一列数据。LIMIT 2指示MySQL数据库返回不超过2行的数据，其实这就是我们平时最常用的LIMIT子句，但这不是完整的LIMIT子句。
-知识点来了！
-1. LIMIT子句的完整形态是这样子的： LIMIT return_rows_number OFFSET start_index  2. OFFSET默认值为0： 我们上面语句的LIMIT 2其实是LIMIT 2 OFFSET 0的默认简写形式，不显式声明OFFSET值，则OFFSET默认为0。
-3. 简化版的LIMIT子句： LIMIT start_index, return_rows_number  接下来我们实战下看看效果，加深下理解：
-对于这道题，我们要获取第二行数据，应该这样写
-SELECT DISTINCT(Salary) FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1;  二、回顾IFNULL函数的细节 MySQL的IFNULL函数其实就是个if else语句，函数语法规则如下
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/" rel="bookmark">robotframework字符转译之坑</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2019-04-08T23:19:16">April 08, 2019</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			去年在公司推广了robotframework自动化框架，基于此框架我们设计开发了HTTPTestLibrary关键字库开展接口测试，效果挺好。我们部门测试开发的统一Python版本为python2.7，因为在我来公司前就在用这个版本，虽然2020年社区不再提供支持，但我们目前还没有迁移Python3的计划，这是前提。
-有点别致的JSON 说到接口测试，必然要支持解析处理各种请求体，其中，我们的研发在某些项目的接口中使用了这样的请求体，我举个例子：
-{&quot;key1&quot;: 123, &quot;trouble&quot;: &quot;{\&quot;inner\&quot;: \&quot;hehe\&quot;}&quot;}  JSON里嵌套一个JSON对象，还是个字符串型的，这是个标准的JSON类型嘛？？？google得知如下知识
-我们用Python测试下：
-In [8]: json_str = r'''{&quot;key1&quot;: 123, &quot;trouble&quot;: &quot;{\&quot;inner\&quot;: \&quot;hehe\&quot;}&quot;}''' In [9]: json_str Out[9]: '{&quot;key1&quot;: 123, &quot;trouble&quot;: &quot;{\\&quot;inner\\&quot;: \\&quot;hehe\\&quot;}&quot;}' In [10]: print(json_str) {&quot;key1&quot;: 123, &quot;trouble&quot;: &quot;{\&quot;inner\&quot;: \&quot;hehe\&quot;}&quot;} In [11]: import json In [12]: json.loads(json_str) Out[12]: {'key1': 123, 'trouble': '{&quot;inner&quot;: &quot;hehe&quot;}'} In [13]: type(json.loads(json_str)) Out[13]: dict  研发定义的请求体没毛病，接下来看看我们的Python2的robotframework遇到什么问题了。
-robotframework测试用例 我们的robotframework测试用例如下：
-基于我们对robotframework的了解，robotframework会读取文本格式的robot测试用例，经过解析加载为内存对象，构建测试用例，我们先分别使用Python2和Python3读取测试用例，看看效果是什么样子：
-可以看到，虽然python2和python3对字符串的类型处理方式不同，但是对于我们的测试用例文本，都只进行了转译加上了一个\。
-为了方便定位问题，便于观察，我们统一修改了robotframework的源码，增加了文本用例解析的输出
-Python2版本的robotframework同学登场 先看下robotframework的测试执行结果，看起来没毛病。
-再看看测试用例的debug输出：
-WTF！为神马变成了四个\???，这就是导致我们的请求体异常，接口响应错误的根本原因啊！
-可是在上面的的Python2直接读取测试用例表现的不是这样啊！
-稳住，我们不能冤枉Python2同学，我们看看Python3的表现。
-Python3版本的robot framework同学低调入场  Python3版本我们使用pipenv创建了一个虚拟环境，同样也修改了robotframework的源码，输出repr
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/" rel="bookmark">当开发团队开始用Docker，测试团队应该做什么？</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2019-03-01T20:29:16">March 01, 2019</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			在之前的《Hello Docker》中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。
-Docker带来了什么？改变了什么？ 一、传统软件开发流程有几大痛点：  开发、测试、发布环境不统一
- 配置测试环境过程冗长又复杂
- 自动化测试环境不稳定，容易受到污染，隔离不足
- 无法准确获得客户的软件环境
- 开发团队无法复现测试团队报出的软件缺陷，导致两个团队出现相互推诿的现象
-  二、当前测试技术面临的几大挑战：  配置一致的测试环境 快速部署软件 并行执行测试，在并行的同时还要保证测试任务各自的环境不被污染 成功的复现软件缺陷 创建干净的可信的测试环境 快速部署多个测试主机 快速导入测试数据 快速清理测试环境 快速保留、复制、恢复测试环境 正确配置测试工具。快速将测试环境在不同操作系统（类Unix）  三、Docker对测试技术的革命性影响 软件开发交付速度上不去，很大一个问题是软件运行环境这个环节存在瓶颈，Docker解决了这个瓶颈，促进了软件开发的DevOps模式推广，这对所有的软件行业从业者都是巨大利好。
-软件测试的几个重要方面：测试策略、测试设计、测试方法、测试数据、测试环境，前三个是方法论思想层面的，后两个是需要技术突破的。测试数据因具体细分行业不同，各有各的痛点也各有各的解决方案，但是对于测试环境来说，Docker是个近乎接近“银弹”的技术解决方案。
-通过Docker的软件环境快速部署能力，促进了测试时间的再分配 一个小小的Dockerfile明确声明了软件部署的所有细节和流程，从此忘记冗长的安装部署文档吧！无论是从研发自测、功能测试、集成测试等哪个环节来讲，测试环境的部署时间成倍缩短，能给工程师更多的时间做更多有意义的事情，开发工程师可以有更多时间完善优化设计，修复缺陷，测试工程师可以有跟多时间拓宽测试的广度和提高测试的深度，运维工程师有更多的时间专注于改进软件监控分析系统，这和有效的自动化测试的价值可以相提并论。
-通过Docker的软件环境一致性能力，有效降低了偶然复杂度 Docker的镜像发布，容器编排运行等设计实现，保证了开发环境、测试环境、生产发布环境以及不同操作系统发行版的高度一致可信，几乎避免了测试团队发现的缺陷在开发环境无法复现、线上生产环境的缺陷在线下无法复现且不便线上调试等问题带来的一些列人力成本、时间成本、心智成本的无谓消耗。
-通过Docker的环境隔离管理能力，提高了测试资源的自由度 以往虽然有各种虚拟化技术，可以一台服务器虚拟化为多台虚拟机，可以对虚拟机进行快照，随时恢复软件环境，但是终究太笨重，资源损耗太高，利用率太低，无法实现测试资源自由。现在有了Docker的资源隔离管理能力，我们可以按照测试需求，启动多个不同版本的服务，随时创建，随时销毁；我们甚至可以在一台服务器给每个测试人员启动一套独立的测试环境，大家并行测试，互不干扰，避免了互相踩踏。同时这种环境资源的自由度，对于自动化测试的执行过程是有很大帮助的，大大提高了自动化测试的成功率，进而提高自动化测试的ROI。
-测试团队如何顺势而为？ 上一小节总结的三点革命性影响，对于整个开发流程来说，已经为CI/CD提供了道路基石，势必将进一步缩短迭代周期，提高交付速度（虽然还是有需求变更，开发延期等软件开发管理上不可避免的问题和人的不可靠性等因素等debuff）
-效率提高了，交付速度提高了，迭代速度更快了，单纯的手工测试已经跟不上DevOps的软件开发模式了（其实在很多年前就跟不上现代软件开发节奏了），对测试的要求更高了，应当思考下省下来的时间如何更好的利用，如何跟上研发提测的速度。对于我现在所在的这种相对传统的行业软件服务企业来说，测试团队必须尽快适应这种DevOps开发模式了，不然就会被历史的车轮碾死在尘埃里。
-测试团队的核心职责是质量保障，围绕质量保障，我们可以将测试能力向前向后输出，输出的最好形式就是自动化。
- 自动化测试环境资源不再是自动化实施的绊脚石，接下来需要考验的是我们的自动化框架、自动化工具是否真的可靠、可用。 测试驱动开发的模式虽然很好，但是推广落地却不是那么容易的😊。测试团队还可以将测试用例封装为自动化测试服务，提供给研发自测，而不是等研发一次次快速提测再被打回，冲击消耗测试工程师的激情和精力。更近一步可以考虑通过感知镜像仓库中镜像的变化，动态触发自动化测试。当然长远看来还是要与开发团队共同实现CI/CD，需要各个研发部门通力合作。 软件运行环境的高度一致性，理论上线上发现的缺陷可以等价于测试团队漏测，这对测试团队的可信度和口碑是一个挑战，需要进一步提高测试质量和标准 上线后的软件运行状态检测，虽然按照传统分工应当是运维团队来做的，但是测试团队在这方面也有自己得天独厚的优势，对产品的深刻理解，测试角度，可以将内测测试用例调整转为适配线上数据环境的在线自动化测试用例，实现线上测试，在第一时间发现由于线上环境测试数据的多样性和量级带来的问题，及时收集触发线上自动化用例失败的测试数据来完善测试用例库，提高测试覆盖度。  总而言之，核心就是进一步提高自动化测试技术的深度和广度。
-暂时想到这些，有新的想法再补充。
- Reference
-https://www.infoq.cn/article/docker-lead-test-innovation
- 2019年03月01日 于 西安
-Email
-GitHub
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/" rel="bookmark">程序员的自我修养</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2019-02-28T22:08:32">February 28, 2019</time></div>
-		</header>
-		<div class="list__excerpt post__content">
-			程序员的自我修养  摘自“隔壁王校长”的《Go语言框架：Beego vs Gin》
- 原则一： 一切语言、技术或者框架，本质都是工具，工具的价值在于为使用者提供竞争优势。
-原则二： 如果真的有一种语言或者框架很牛逼，那么荣耀或者赞誉也应该属于创造它的人，与使用者没有半毛钱关系；使用者的荣耀应该来自：针对恰当的需求使用恰当的语言或框架，并且做到按时交付以及高质量。
-原则三： 大部分人并不是天生具有选择恐惧症，也不是天生的杠精，在我看来所有关于选择的迷惑或者争吵，大都因为：
- 没有设定清晰的标准 标准不唯一 标准之间没有优先级或者权重  2019年02月28日 于 西安
-Email
-GitHub
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/hello-docker/" rel="bookmark">Hello Docker</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2019-01-05T12:08:32">January 05, 2019</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ac%94%e8%ae%b0" rel="category">笔记</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			说起来Docker，大家都或多或少有耳闻，但是我的公司因为业务场景，长尾效应，至今为止Docker只在小部分项目轻度使用。但是这不妨碍我们主动学习，应用Docker，因此，从2018年开始，我就推动Docker在测试部应用。我们的测试平台，GitLab、JIRA、Confluence等都是通过Docker部署的。
-团队内部做算法测试的同学搭建开发测试环境需要安装各种第三方库，因为工作环境是内网，无法连接互联网进行安装，痛苦不堪，使用Docker将相关环境在外网构建好传入内网使用是比较方便的方式；还有工具链建设、测试平台建设用到的各种基础设施MySQL、Nginx等快速部署，使用Docker都是最佳方案。为了方便团队同学了解Docker，团队老大让我来进行一次内部Docker入门分享。
-没有Docker的从前 为了提高服务器利用效率，我们将一台高性能的服务器通过vSphere虚拟化，创建多台虚拟机，提供相对独立环境隔离的操作系统环境和计算资源，我们可以对每一台虚拟机灵活分配计算资源、存储资源等，还可以对每一台虚拟机创建多个快照，看起来很棒！是的，在传统的软件开发模式下，这种方式挺好，但是这并没有解决软件的部署效率低，交付困难，开发环境与测试环境不一致，测试环境与生产环境不一致等问题，这也是为什么我们有了持续集成，却没有做好持续交付的一大根本问题。
-有了Docker的现在 各大互联网厂商都在使用Docker，通过Docker结合微服务等技术他们将DevOps这一理念落地了，真正做到了持续集成、持续部署、持续交付，快速迭代，可以实现一天多次版本上线发布！回头看有了Docker我们在日常工作中能做什么，举个最简单的例子：
-以往我们想部署三套环境（一套Dev环境、一套Test环境、一套Release环境），需要三个MySQL数据库，需要怎么做呢？
- 方案1：准备三台服务器，分别安装MySQL，干干净净，互不干扰，但是浪费资源啊； 方案2：一台服务器部署三个MySQL实例，分别配置不同的MySQL数据存储路径、配置文件路径、端口，操作复杂，维护困难，想想都头疼；  用Docker以后呢，我们可以这样做：
-docker run --name release-mysql -p 3306:3306 -d mysql:5.7 docker run --name dev-mysql -p 3307:3306 -d mysql:5.7 docker run --name test-mysql -p 3308:3306 -d mysql:5.7  这样我们就有了三个独立的MySQL数据库服务！当然这是个示例，没有做数据卷映射等配置，但那些配置相比于传统方案来说，复杂度不值一提。
-Docker到底是什么 Docker 是世界领先的软件容器平台。开发人员利用 Docker 可以消除协作编码时“在我的机器上可正常工作”的问题。运维人员利用 Docker 可以在隔离容器中并行运行和管理应用，获得更好的计算密度。企业利用 Docker 可以构建敏捷的软件交付管道，以更快的速度、更高的安全性和可靠的信誉为 Linux 和 Windows Server 应用发布新功能。
-什么是容器呢？  将软件打包成标准化单元，以用于开发、交付和部署  容器镜像是轻量的、可执行的独立软件包，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。容器化软件适用于基于 Linux 和 Windows 的应用，在任何环境中都能够始终如一地运行。容器赋予了软件独立性，使其免受外在环境差异（例如，开发和预演环境的差异）的影响，从而有助于减少团队间在相同基础设施上运行不同软件时的冲突。
-容器的优势特点 轻量 在一台机器上运行的多个 Docker 容器可以共享这台机器的操作系统内核；它们能够迅速启动，只需占用很少的计算和内存资源。镜像是通过文件系统层进行构造的，并共享一些公共文件。这样就能尽量降低磁盘用量，并能更快地下载镜像。
-标准 Docker 容器基于开放式标准，能够在所有主流 Linux 版本、Microsoft Windows 以及包括 VM、裸机服务器和云在内的任何基础设施上运行。
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/" rel="bookmark">无序大数组的中位数算法</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2018-05-25T21:29:10">May 25, 2018</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e7%ae%97%e6%b3%95" rel="category">算法</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			题目要求 最近做了一道题，题目是这样的：
-找到一个巨大数组的中位数。 # demo：[1,100,2,5,12,44,88,77,54,932,61]  解题方法 巨大的数组，排序肯定不是最优解了，解题思路可以借鉴快排算法那种分而治之的思想。
-详情直接看代码实现吧。
-#!/usr/bin/env python # -*- coding:utf-8 -*- # author: toddler import random import statistics import time import sys sys.setrecursionlimit(1000000) def find_mid(mid_index, __list): &quot;&quot;&quot; 寻找中位数算法 :param mid_index: 中位数索引 :param __list: 目标数组 :return: 中位数数值 &quot;&quot;&quot; # 随机取一个数作为分割元素, 以分割元素为界限，将数组分割大小两部分 random_num = random.choice(__list) small_list = [i for i in __list if i &lt; random_num] # 若小数组的右端索引大于中位数索引, 则继续缩小小数组的区间长度, 这样可以直接舍弃比中位数大的元素, 减少计算量 if len(small_list) &gt; mid_index: return find_mid(mid_index, small_list) # 分割点左边的元素没有价值, 被舍弃, 相应的中位数索引左移对应长度, 保证相对原始数据索引长度不变 mid_index -= len(small_list) # 判断分割点有几个, 若分割点所占空间长度大于新的中位数索引, 则分割点就是中位数 same_mid_num = __list.
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/" rel="bookmark">微信跳一跳之线性回归算法优化</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2018-01-07T12:24:53">January 07, 2018</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" rel="category">机器学习</a>, <a class="meta-categories__link" href="/categories/%e6%b8%b8%e6%88%8f" rel="category">游戏</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			最近微信上线了一款小应用&mdash;“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派+步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。
-今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000+ 新增AI模块，机器人自主学习生成跳跃公式，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。
-这个pull request介绍如下： &gt; 机器人精确采集跳跃结果并自主学习，使用线性回归方法 &gt; 拟合出最优 [按压时间]-&gt;[弹跳距离] 线性公式 Y =kX + b &gt; 本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可 &gt; 模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。 &gt; 理论上只要目标点获取无误，会一直跳下去。
-工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。 下面来动手试一下，找出下岗多年的MX3，充电开机。
-第一次调试  安装好adb，配置好环境变量。 手机打开开发者模式，连接PC。 命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。 测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。 通过virtualenv建立虚拟环境，安装项目所需的第三方库。 手机微信打开跳一跳，点击开始游戏。 运行wechat_jump_auto_ai.py，报错T_T&hellip; 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行 将 Python screenshot = screenshot.replace(b'\r\n', b'\n')  修改为 Python screenshot = screenshot.replace(b'\r\r\n', b'\n')   第二次调试 按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了&hellip; 查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.sleep(0.2)。
-# 在跳跃落下的瞬间 摄像机移动前截图 这个参数要自己校调 time.sleep(0.2) pull_screenshot_temp() im_temp = Image.open('./autojump_temp.png') temp_piece_x, temp_piece_y = find_piece(im_temp) debug.
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/golang%E5%AD%A6%E4%B9%A0%E4%BA%8C/" rel="bookmark">Golang学习（二）</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2017-12-31T16:13:51">December 31, 2017</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90" rel="category">造轮子</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			闲扯 2017年的最后一天啦！今天是最后一批90后（1999年12月31日出生）的18岁生日，祝他们生日快乐！明天就是2018年啦，意味着90后已经全部成年，逐步成为社会的中流砥柱啦！ 顺便吐槽下，被朋友圈的18岁照片刷屏啦，岁月是把杀猪刀，18岁的少年们都去哪啦！小伙伴们不要只顾着工作，也注意下身体啊，要变强不要变秃啊！不要变成油腻的中年胖子啊！
-祝自己在2018年能更加努力，锻炼好身体！还有很多很多事情等我去做！Fight！
-言归正传，在Golang学习（一）那篇博客中我们写了一个小工具，当时还没学习到并发，正好元旦假期学习了下并发，来实践改进下我们的工具。
-正文 遗留Bug修复 文件复制过程中异常报错，程序没有退出的问题已经修复，创建文件和打开文件时加入了panic
-srcFile, err := os.Open(src) if err != nil { fmt.Println(err) panic(&quot;打开文件错误!&quot;) } defer srcFile.Close() desFile, err := os.Create(des) if err != nil { fmt.Println(err) panic(&quot;创建文件错误!&quot;) } defer desFile.Close()  使用Golang的gorutine来并发，提高性能 创建一个容量与期望生成文件个数大小相当的布尔型的chan，然后循环执行任务，每次向chan写入一个值，并通过读取chan来阻塞main函数的结束，伪代码如下
-func main() { c := make(chan bool, *generateFileNumber) for count := 0; count &lt; *generateFileNumber; count++ { dosomething(c) } &lt;-c } func dosomething(c) { do c &lt;- true }  代码 /* * User: toddlerya * Date: 2017/12/23 * Update: 2017/12/31 * ds接入模块加压工具 */ package main import ( &quot;flag&quot; &quot;fmt&quot; &quot;io&quot; &quot;math/rand&quot; &quot;os&quot; &quot;runtime&quot; &quot;strconv&quot; &quot;strings&quot; &quot;time&quot; ) func judgeExists(name string) bool { if _, err := os.
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E9%9B%86-%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95/" rel="bookmark">开源工具集--备忘清单</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2017-12-30T21:37:25">December 30, 2017</time></div>
-		</header>
-		<div class="list__excerpt post__content">
-			经常看到一些有趣的开源工具，没机会去尝试，时间久了就忘记还有这些轮子啦，开个坑做个备忘录，记录下。
-监控系统  open-falcon Prometheus Cockpit  数据分析/BI  Metabase  数据库  时间序列数据库influxdb  2017年10月22日 于 南京
-Email
-GitHub
-		</div>
-	</div>
-</article><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/inode%E8%80%97%E5%B0%BD%E5%AF%BC%E8%87%B4%E7%9A%84no-space-left-on-device%E6%8A%A5%E9%94%99/" rel="bookmark">探究inode耗尽导致的no space left on device报错原因</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2017-12-24T13:57:10">December 24, 2017</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95" rel="category">踩坑记录</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			在Golang学习（一）那篇博客中，我们提到了由于inode被耗尽导致的磁盘存储空间不足的报错，现在我们就来深入了解下inode。
-什么是inode？ 理解inode，要从文件储存说起。 文件储存在硬盘上，硬盘的最小存储单位叫做&rdquo;扇区&rdquo;（Sector）。每个扇区储存512字节（相当于0.5KB）。 操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个&rdquo;块&rdquo;（block）。这种由多个扇区组成的&rdquo;块&rdquo;，是文件存取的最小单位。&rdquo;块&rdquo;的大小，最常见的是4KB，即连续八个 sector组成一个 block。 文件数据都储存在&rdquo;块&rdquo;中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为&rdquo;索引节点&rdquo;。
-inode记录了什么信息？ inode包含文件的元信息，具体来说有以下内容： + 文件的字节数 + 文件拥有者的User ID + 文件的Group ID + 文件的读、写、执行权限 + 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。 + 链接数，即有多少文件名指向这个inode + 文件数据block的位置
-可以用stat命令，查看某个文件的inode信息：stat example.txt 总之，除了文件名以外的所有文件信息，都存在inode之中。
-inode的大小 inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。 每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，一般是每1KB或每2KB就设置一个inode。假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。
-查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。df -i
-查看每个inode节点的大小，可以用如下命令sudo dumpe2fs -h /dev/vdb | grep &quot;inode size&quot;
-由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。
-inode号码 每个inode都有一个号码，操作系统用inode号码来识别不同的文件。
-这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。 对于系统来说，文件名只是inode号码便于识别的别称或者绰号。 表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。 使用ls -i命令，可以看到文件名对应的inode号码：ls -i example.txt
-目录文件 Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。
-目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。
-ls命令只列出目录文件中的所有文件名：ls /etc ls -i命令列出整个目录文件，即文件名和inode号码：ls -i /etc 如果要查看文件的详细信息，就必须根据inode号码，访问inode节点，读取信息。ls -l命令列出文件的详细信息：ls -l /etc
-硬链接 一般情况下，文件名和inode号码是&rdquo;一一对应&rdquo;关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为&rdquo;硬链接&rdquo;（hard link）。 ln命令可以创建硬链接：ln 源文件 目标文件
-		</div>
-	</div>
-</article>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
 
-		
-<div class="pagination">
-	<span class="pagination__item pagination__item--current">1/2</span>
-	<a class="pagination__item pagination__item--next btn" href="/post/page/2/">»</a>
+  <div class="custom-logo-site-title">
+    <a href="https://toddlerya.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">不期速成日拱一卒</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">但行好事，莫问前程。</p>
 </div>
 
-	</main>
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
 
-<aside class="sidebar">
-	
-	
-<div class="widget-recent widget">
-	<h4 class="widget__title">Recent Posts</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/limit%E5%92%8Cifnull%E7%9A%84%E4%BD%BF%E7%94%A8leetcode-sqlno.176/">LIMIT和IFNULL的使用：LeetCode No.176</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/">robotframework字符转译之坑</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/">当开发团队开始用Docker，测试团队应该做什么？</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/">程序员的自我修养</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
-		</ul>
-	</div>
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://toddlerya.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item menu-item-active">
+          <a href="https://toddlerya.github.io/post/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
 </div>
-	
-<div class="widget-categories widget">
-	<h4 class="widget__title">Categories</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ac%94%e8%ae%b0">笔记</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
-		</ul>
-	</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+    <span class="archive-page-counter">
+   目前共计 17 篇日志。 继续努力。
+    </span>
+
+<div class="collection-title">
+  <h2 class="archive-year motion-element" id="archive-year-2019">2019</h2>
 </div>
-	
-<div class="widget-social widget">
-	<h4 class="widget-social__title widget__title">Social</h4>
-	<div class="widget-social__content widget__content">
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
-				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
-				<span>GitHub</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
-				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
-				<span>toddlerya@qq.com</span>
-			</a>
-		</div>
-	</div>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/limit%e5%92%8cifnull%e7%9a%84%e4%bd%bf%e7%94%a8leetcode-sqlno.176/" itemprop="url">
+            <span itemprop="name">LIMIT和IFNULL的使用：LeetCode No.176</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-05-12"
+              content="05-12" >
+          05-12
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/robotframework%e5%ad%97%e7%ac%a6%e8%bd%ac%e8%af%91%e4%b9%8b%e5%9d%91/" itemprop="url">
+            <span itemprop="name">robotframework字符转译之坑</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-04-08"
+              content="04-08" >
+          04-08
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e5%bd%93%e5%bc%80%e5%8f%91%e5%9b%a2%e9%98%9f%e5%bc%80%e5%a7%8b%e7%94%a8docker%e6%b5%8b%e8%af%95%e5%9b%a2%e9%98%9f%e5%ba%94%e8%af%a5%e5%81%9a%e4%bb%80%e4%b9%88/" itemprop="url">
+            <span itemprop="name">当开发团队开始用Docker，测试团队应该做什么？</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-03-01"
+              content="03-01" >
+          03-01
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e7%a8%8b%e5%ba%8f%e5%91%98%e7%9a%84%e8%87%aa%e6%88%91%e4%bf%ae%e5%85%bb/" itemprop="url">
+            <span itemprop="name">程序员的自我修养</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-02-28"
+              content="02-28" >
+          02-28
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/hello-docker/" itemprop="url">
+            <span itemprop="name">Hello Docker</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-01-05"
+              content="01-05" >
+          01-05
+        </time>
+      </div>
+    </header>
+  </article>
+
+
+<div class="collection-title">
+  <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
 </div>
-	
-<div class="widget-taglist widget">
-	<h4 class="widget__title">Tags</h4>
-	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/leetcode" title="Leetcode">Leetcode (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (6)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/robotframework" title="Robotframework">Robotframework (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%91%98%e6%8a%84" title="摘抄">摘抄 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b5%8b%e8%af%95%e5%bc%80%e5%8f%91" title="测试开发">测试开发 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%bd%af%e4%bb%b6%e6%b5%8b%e8%af%95" title="软件测试">软件测试 (1)</a>
-	</div>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e6%97%a0%e5%ba%8f%e5%a4%a7%e6%95%b0%e7%bb%84%e7%9a%84%e4%b8%ad%e4%bd%8d%e6%95%b0%e7%ae%97%e6%b3%95/" itemprop="url">
+            <span itemprop="name">无序大数组的中位数算法</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-05-25"
+              content="05-25" >
+          05-25
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e5%be%ae%e4%bf%a1%e8%b7%b3%e4%b8%80%e8%b7%b3%e4%b9%8b%e7%ba%bf%e6%80%a7%e5%9b%9e%e5%bd%92%e7%ae%97%e6%b3%95%e4%bc%98%e5%8c%96/" itemprop="url">
+            <span itemprop="name">微信跳一跳之线性回归算法优化</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-01-07"
+              content="01-07" >
+          01-07
+        </time>
+      </div>
+    </header>
+  </article>
+
+
+<div class="collection-title">
+  <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
 </div>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/golang%e5%ad%a6%e4%b9%a0%e4%ba%8c/" itemprop="url">
+            <span itemprop="name">Golang学习（二）</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-12-31"
+              content="12-31" >
+          12-31
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e5%bc%80%e6%ba%90%e5%b7%a5%e5%85%b7%e9%9b%86-%e5%a4%87%e5%bf%98%e6%b8%85%e5%8d%95/" itemprop="url">
+            <span itemprop="name">开源工具集--备忘清单</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-12-30"
+              content="12-30" >
+          12-30
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/inode%e8%80%97%e5%b0%bd%e5%af%bc%e8%87%b4%e7%9a%84no-space-left-on-device%e6%8a%a5%e9%94%99/" itemprop="url">
+            <span itemprop="name">探究inode耗尽导致的no space left on device报错原因</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-12-24"
+              content="12-24" >
+          12-24
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/golang%e5%ad%a6%e4%b9%a0%e4%b8%80/" itemprop="url">
+            <span itemprop="name">Golang学习（一）</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-12-24"
+              content="12-24" >
+          12-24
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/50%e4%b8%87coding%e7%94%a8%e6%88%b7%e5%85%b3%e7%b3%bb%e7%88%ac%e7%88%ac%e7%88%ac%e7%88%ac/" itemprop="url">
+            <span itemprop="name">50万Coding用户关系爬爬爬爬</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-10-29"
+              content="10-29" >
+          10-29
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e5%88%a9%e7%94%a8python%e8%a7%a3%e8%af%bb%e5%8d%81%e4%b9%9d%e5%a4%a7%e5%b7%a5%e4%bd%9c%e6%8a%a5%e5%91%8a/" itemprop="url">
+            <span itemprop="name">利用Python解读十九大工作报告</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-10-22"
+              content="10-22" >
+          10-22
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/pythoner%e7%9a%84vim/" itemprop="url">
+            <span itemprop="name">Pythoner的vim</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-09-08"
+              content="09-08" >
+          09-08
+        </time>
+      </div>
+    </header>
+  </article>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/%e5%85%b3%e4%ba%8enebulasolardash/" itemprop="url">
+            <span itemprop="name">关于NebulaSolarDash</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-05-10"
+              content="05-10" >
+          05-10
+        </time>
+      </div>
+    </header>
+  </article>
+
+
+ </section>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+<nav class="pagination">
+    
+    
+        
+        
+          <span class="page-number current">1</span>
+        
+        
+    
+        
+        
+          <a class="page-number" href="https://toddlerya.github.io/post/p/2/">2</a>
+        
+        
+    
+    <a class="extend next" rel="next" href="https://toddlerya.github.io/post/p/2/"><i class="fa fa-angle-right"></i></a>
+</nav>
+
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://toddlerya.github.io/img/dog.jpg"
+        alt="toddlerya" />
+    <p class="site-author-name" itemprop="name">toddlerya</p>
+    <p class="site-description motion-element" itemprop="description"> 
+        witness me.</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://toddlerya.github.io/post/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://toddlerya.github.io/categories/">      
+         
+        <span class="site-state-item-count">9</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://toddlerya.github.io/tags/">
+         
+        <span class="site-state-item-count">17</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+<div class="feed-link motion-element">
+<a href="https://toddlerya.github.io/post/index.xml" rel="alternate" type="application/rss+xml" target="_blank">
+    <i class="fa fa-rss"></i>
+    RSS 订阅
+</a>
+</div>
+
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya/" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="toddlerya@qq.com" target="_blank" title="邮箱">
+            <i class="fa fa-fw fa-email"></i>
+            邮箱
+        </a>
+        </span>
+    
+</div>
+
+
+      
+
+      <div class="links-of-blogroll motion-element inline">
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5b4f2ucxar6&amp;m=0&amp;s=220&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33&amp;bv=35" async="async"></script>
+</div>
+
+    </section>
+    
+  </div>
 </aside>
-	</div>
-		<footer class="footer">
-			<div class="container container-inner">
-				<div class="footer__copyright">&copy; 2019 不期速成日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
-			</div>
-		</footer>
-	</div>
 
-<script>
-	var navigation = responsiveNav(".menu", {
-		navClass: "menu--collapse",
-	});
-</script></body>
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span itemprop="copyrightYear">  &copy; 
+  2009 - 2019</span>
+  <span class="with-love"><i class="fa fa-heart"></i></span>
+  <span class="author" itemprop="copyrightHolder">不期速成日拱一卒</span>
+</div>
+<div class="powered-by">
+  Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.53</a>
+</div>
+<div class="theme-info">
+  Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+  </a>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="https://toddlerya.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" id="motion.page.archive">
+  $('.archive-year').velocity('transition.slideLeftIn');
+</script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
 </html>

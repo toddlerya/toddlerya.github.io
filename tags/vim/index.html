@@ -1,166 +1,314 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Vim</title>
-	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.53" />
-	<meta property="og:title" content="Vim" />
-<meta property="og:description" content="不期速成日拱一卒" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://toddlerya.github.io/tags/vim/" />
-<meta property="og:updated_time" content="2017-09-08T23:08:23&#43;00:00"/>
-
-	<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Vim"/>
-<meta name="twitter:description" content="不期速成日拱一卒"/>
-
-	<link rel="dns-prefetch" href="//fonts.googleapis.com">
-	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss&#43;xml" href="/tags/vim/index.xml">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
-	<link rel="stylesheet" href="/css/style.css">
-	<script type="text/javascript" src="/js/scripts.js"></script>
-	<link rel="shortcut icon" href="/favicon.ico">
-	
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>Vim - 不期速成日拱一卒</title>
+    <meta name="keywords" content="不期速成日拱一卒,独立,博客,程序员,个人,思考,读书,笔记,技术,分享,Golang">
+    
+    <meta property="og:title" content="Vim">
+    <meta property="og:site_name" content="不期速成日拱一卒">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="Vim - 不期速成日拱一卒" />
+    <meta name="description" content="不期速成日拱一卒 | 博客 | 软件 | 测试 | Python | Golang"> 
+    <link rel="shortcut icon" href="https://toddlerya.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://toddlerya.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://toddlerya.github.io/img/apple-touch-icon.png" />
+    <link href="https://toddlerya.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    
+    <link href="https://toddlerya.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://toddlerya.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: false, 
+    motion: true
+  };
+</script>
 </head>
-<body class="body body-right-sidebar">
-	<div class="container container-outer">
-		<header class="header">
-			<div class="container container-inner">
-				<div class="logo" role="banner">
-					<a class="logo__link" href="/" title="不期速成日拱一卒" rel="home">
-						<div class="logo__title">不期速成日拱一卒</div>
-						<div class="logo__tagline">但行好事，莫问前程。</div>
-					</a>
-				</div>
-			</div>
-			<div class="divider"></div>
-		</header>
-		<div class="wrapper clearfix">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left   ">
+    <div class="headband"></div>
 
-	<main class="main list content" role="main">
-		<header class="page-header">
-			<h1 class="page-header__title">Vim</h1>
-		</header><article class="list__item post">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/pythoner%E7%9A%84vim/" rel="bookmark">Pythoner的vim</a>
-			</h3><div class="list__meta meta">
-<svg class="icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-<time class="post__meta-date meta-date" datetime="2017-09-08T23:08:23">September 08, 2017</time>
-<span class="post__meta-categories meta-categories">
-	<svg class="icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta-categories__list"><a class="meta-categories__link" href="/categories/%e5%b7%a5%e5%85%b7" rel="category">工具</a></span>
-</span></div>
-		</header>
-		<div class="list__excerpt post__content">
-			去年申请的免费aws上个月底到期了（ss梯子没有了T_T），这个月搞了个半年免费的阿里云VPS。 国内的VPS网速果然好快，决定好好利用起来~
-正好最近在学Scrapy，感觉用vim写代码，不能自动补全好难受，在公司的内网环境用vim不好折腾插件也就罢了，自己的服务器还是要搞的顺手点，磨刀不误砍柴工嘛。
-为了一劳永逸，决定开个坑，维护自己的vim配置，以后换个环境就能开箱使用啦！
-先上个项目地址：https://github.com/toddlerya/awesome-vim/
-自动补全主要用了jedi-vim插件，这插件太给力了，自动补全方法，还能提示参数，查看文档。
-还有一部分配置参考了k-vim-server，这位同学的vim配置很给力，他还有一个完全版的vim插件配置k-vim，大家可以去看看~
-使用效果如下： 部署步骤： 1. 备份你的vimrc配置(如果有的话) cp ~/.vimrc ~/.vimrc_bak  2. 安装Vundle git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim  3. 安装jedi-vim pip install jedi-vim  4. 下载并设置vimrc git clone https://github.com/toddlerya/awesome-vim.git &amp;&amp; ln -s awesome-vim/vimrc ~/.vimrc  5. 安装Vundle插件 打开vim，运行命令
-:PluginInstall  等显示Done后，退出vim就好啦，时间长短看网速，耐心等待。 此过程会安装这几个插件：
-davidhalter/jedi-vim tmhedberg/SimpylFold vim-scripts/indentpython.vim jnurmine/Zenburn Lokaltog/powerline  6. 到此就完成啦，享受生活吧！ 2017年09月8日 于 南京
-Email
-GitHub
-		</div>
-	</div>
-</article>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
 
-		
-	</main>
+  <div class="custom-logo-site-title">
+    <a href="https://toddlerya.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">不期速成日拱一卒</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">但行好事，莫问前程。</p>
+</div>
 
-<aside class="sidebar">
-	
-	
-<div class="widget-recent widget">
-	<h4 class="widget__title">Recent Posts</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/limit%E5%92%8Cifnull%E7%9A%84%E4%BD%BF%E7%94%A8leetcode-sqlno.176/">LIMIT和IFNULL的使用：LeetCode No.176</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/">robotframework字符转译之坑</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8docker%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88/">当开发团队开始用Docker，测试团队应该做什么？</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/">程序员的自我修养</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/hello-docker/">Hello Docker</a></li>
-		</ul>
-	</div>
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
 </div>
-	
-<div class="widget-categories widget">
-	<h4 class="widget__title">Categories</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/categories/%e5%b7%a5%e5%85%b7">工具</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90">数据分析</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0">机器学习</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e6%b8%b8%e6%88%8f">游戏</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%88%ac%e8%99%ab">爬虫</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ac%94%e8%ae%b0">笔记</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95">踩坑记录</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e9%80%a0%e8%bd%ae%e5%ad%90">造轮子</a></li>
-		</ul>
-	</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://toddlerya.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://toddlerya.github.io/post/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
 </div>
-	
-<div class="widget-social widget">
-	<h4 class="widget-social__title widget__title">Social</h4>
-	<div class="widget-social__content widget__content">
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/toddlerya" target="_blank">
-				<svg class="widget-social__link-icon icon-github" viewBox="0 0 384 374" width="24" height="24" fill="#fff"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
-				<span>GitHub</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="Email" href="mailto:toddlerya@qq.com">
-				<svg class="widget-social__link-icon icon-mail" viewBox="0 0 416 288" width="24" height="24" fill="#fff"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
-				<span>toddlerya@qq.com</span>
-			</a>
-		</div>
-	</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-collapse">
+<div class="collection-title">
+    <h2 >Vim
+    <small>标签</small>
+    </h2>
 </div>
-	
-<div class="widget-taglist widget">
-	<h4 class="widget__title">Tags</h4>
-	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/leetcode" title="Leetcode">Leetcode (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (6)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/robotframework" title="Robotframework">Robotframework (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b7%a5%e5%85%b7" title="工具">工具 (5)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%91%98%e6%8a%84" title="摘抄">摘抄 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0" title="机器学习">机器学习 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b5%8b%e8%af%95%e5%bc%80%e5%8f%91" title="测试开发">测试开发 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b8%b8%e6%88%8f" title="游戏">游戏 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%88%ac%e8%99%ab" title="爬虫">爬虫 (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b5%84%e6%ba%90%e7%9b%91%e6%8e%a7" title="资源监控">资源监控 (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%bd%af%e4%bb%b6%e6%b5%8b%e8%af%95" title="软件测试">软件测试 (1)</a>
-	</div>
+
+<div class="collection-title">
+  <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
 </div>
+
+  <article class="post post-type-normal }}" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-title-link" href="https://toddlerya.github.io/post/pythoner%e7%9a%84vim/" itemprop="url">
+            <span itemprop="name">Pythoner的vim</span>
+        </a>
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-09-08"
+              content="09-08" >
+          09-08
+        </time>
+      </div>
+    </header>
+  </article>
+
+
+ </section>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+<nav class="pagination">
+    
+    
+        
+        
+          <span class="page-number current">1</span>
+        
+        
+    
+    
+</nav>
+
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://toddlerya.github.io/img/dog.jpg"
+        alt="toddlerya" />
+    <p class="site-author-name" itemprop="name">toddlerya</p>
+    <p class="site-description motion-element" itemprop="description"> 
+        witness me.</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://toddlerya.github.io/post/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://toddlerya.github.io/categories/">      
+         
+        <span class="site-state-item-count">9</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://toddlerya.github.io/tags/">
+         
+        <span class="site-state-item-count">17</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+<div class="feed-link motion-element">
+<a href="https://toddlerya.github.io/tags/vim/index.xml" rel="alternate" type="application/rss+xml" target="_blank">
+    <i class="fa fa-rss"></i>
+    RSS 订阅
+</a>
+</div>
+
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya/" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="toddlerya@qq.com" target="_blank" title="邮箱">
+            <i class="fa fa-fw fa-email"></i>
+            邮箱
+        </a>
+        </span>
+    
+</div>
+
+
+      
+
+      <div class="links-of-blogroll motion-element inline">
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5b4f2ucxar6&amp;m=0&amp;s=220&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33&amp;bv=35" async="async"></script>
+</div>
+
+    </section>
+    
+  </div>
 </aside>
-	</div>
-		<footer class="footer">
-			<div class="container container-inner">
-				<div class="footer__copyright">&copy; 2019 不期速成日拱一卒. <span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span></div>
-			</div>
-		</footer>
-	</div>
 
-<script>
-	var navigation = responsiveNav(".menu", {
-		navClass: "menu--collapse",
-	});
-</script></body>
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span itemprop="copyrightYear">  &copy; 
+  2009 - 2019</span>
+  <span class="with-love"><i class="fa fa-heart"></i></span>
+  <span class="author" itemprop="copyrightHolder">不期速成日拱一卒</span>
+</div>
+<div class="powered-by">
+  Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.53</a>
+</div>
+<div class="theme-info">
+  Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+  </a>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="https://toddlerya.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://toddlerya.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" id="motion.page.archive">
+  $('.archive-year').velocity('transition.slideLeftIn');
+</script>
+
+<script type="text/javascript" src="https://toddlerya.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
 </html>

@@ -5,7 +5,7 @@
     <link>https://toddlerya.github.io/tags/%E7%AE%97%E6%B3%95/</link>
     <description>Recent content in 算法 on 不期速成日拱一卒</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-CN</language>
     <lastBuildDate>Fri, 25 May 2018 21:29:10 +0000</lastBuildDate>
     
 	<atom:link href="https://toddlerya.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
@@ -17,10 +17,7 @@
       <pubDate>Fri, 25 May 2018 21:29:10 +0000</pubDate>
       
       <guid>https://toddlerya.github.io/post/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/</guid>
-      <description>题目要求 最近做了一道题，题目是这样的：
-找到一个巨大数组的中位数。 # demo：[1,100,2,5,12,44,88,77,54,932,61]  解题方法 巨大的数组，排序肯定不是最优解了，解题思路可以借鉴快排算法那种分而治之的思想。
-详情直接看代码实现吧。
-#!/usr/bin/env python # -*- coding:utf-8 -*- # author: toddler import random import statistics import time import sys sys.setrecursionlimit(1000000) def find_mid(mid_index, __list): &amp;quot;&amp;quot;&amp;quot; 寻找中位数算法 :param mid_index: 中位数索引 :param __list: 目标数组 :return: 中位数数值 &amp;quot;&amp;quot;&amp;quot; # 随机取一个数作为分割元素, 以分割元素为界限，将数组分割大小两部分 random_num = random.choice(__list) small_list = [i for i in __list if i &amp;lt; random_num] # 若小数组的右端索引大于中位数索引, 则继续缩小小数组的区间长度, 这样可以直接舍弃比中位数大的元素, 减少计算量 if len(small_list) &amp;gt; mid_index: return find_mid(mid_index, small_list) # 分割点左边的元素没有价值, 被舍弃, 相应的中位数索引左移对应长度, 保证相对原始数据索引长度不变 mid_index -= len(small_list) # 判断分割点有几个, 若分割点所占空间长度大于新的中位数索引, 则分割点就是中位数 same_mid_num = __list.</description>
+      <description>题目要求 最近做了一道题，题目是这样的： 找到一个巨大数组的中位数。 # demo：[1,100,2,5,12,44,88,77,54,932,61</description>
     </item>
     
   </channel>

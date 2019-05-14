@@ -5,7 +5,7 @@
     <link>https://toddlerya.github.io/categories/%E7%88%AC%E8%99%AB/</link>
     <description>Recent content in 爬虫 on 不期速成日拱一卒</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-CN</language>
     <lastBuildDate>Sun, 29 Oct 2017 13:05:54 +0000</lastBuildDate>
     
 	<atom:link href="https://toddlerya.github.io/categories/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml" />
@@ -17,36 +17,7 @@
       <pubDate>Sun, 29 Oct 2017 13:05:54 +0000</pubDate>
       
       <guid>https://toddlerya.github.io/post/50%E4%B8%87coding%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E7%88%AC%E7%88%AC%E7%88%AC%E7%88%AC/</guid>
-      <description>今天我们继续来搞Coding数据~
-从官方给出的数据我们知道目前Coding大概有50万注册用户
-然后我们还能看到冒泡广场有很多热门用户
-那么这些用户之间的关系是什么样子滴？
-哪些用户是高冷吸粉狂人？
-哪些用户是社交达人？
-哪些用户是万年潜水独行侠？
-50万Coding小伙伴的社交网络核心是哪位？
-是否真的有50万用户？
-带着这些疑问，我们开始撸代码！
-先把项目地址贴下：https://github.com/toddlerya/AnalyzeCoding
-爬虫算法分析设计： 如何获取全部用户信息 通过分析Coding网站, 我们发现有3个地方可以获取到用户数据信息：  冒泡广场: 每一条冒泡都有发布人，有些还有点赞人、打赏人、评论人
- 热门用户：冒泡广场首页右侧有20个热门用户，这些用户是当前最活跃的用户，这些用户拥有比较多的粉丝和朋友。
- 个人主页：用户的个人主页有一个标签页：关注，这里可以看到此用户关注了哪些人，被哪些人关注。
-  现在就是开脑洞的时候啦！ 用户之间的关系分为三种：
- A关注B: A--&amp;gt;B A被B关注：A&amp;lt;--B A与B互相关注：A&amp;lt;--&amp;gt;B  这就是个有向图嘛！
-六度分隔理论:
-1967年，哈佛大学的心理学教授Stanley Milgram(1933-1984)想要描绘一个连结人与社区的人际连系网。做过一次连锁信实验，结果发现了“六度分隔”现象。简单地说：“你和任何一个陌生人之间所间隔的人不会超过六个，也就是说，最多通过六个人你就能够认识任何一个陌生人。”
-思路渐渐清晰了，我们可以采用深度优先算法（Depth-First Search，简称DFS）
-从A出发，找到A所有的好友（A1,A2,A3）记录为{A: [A1, A2, A3]}
-从A1出发，找到A1所有的好友（A,A2-1,A3-1）记录为{A1: [A, A2-1, A3-1]}
-从A2-1出发，找到A2-1所有的好友（A2-1-1）记录为{A2-1: [A2-1-1]}
-从A3-1出发，找到A3-1所有的好友（A3-1-1）记录为{A3-1: [A3-1-1]}
-从A2出发，找到A2所有的好友（A2-1）记录为{A2: [A2-1]}
-……循环递归……
-直到Z，Z同学没有任何好友，结束本次遍历爬取。
-爬取过程中要注意，已经爬取过的人要跳过，否则会陷入无限循环中。
-相关API  当前热门用户：https://coding.net/api/tweet/best_user 用户的朋友们：https://coding.net/api/user/friends/{用户全局唯一代号}?page=1&amp;amp;pageSize=20 用户的粉丝们：https://coding.net/api/user/followers/{用户全局唯一代号}?page=1&amp;amp;pageSize=20 用户个人信息详情：https://coding.net/api/user/key/{用户全局唯一代号}  代码设计实现 数据库设计 为了程序轻便，数据便于分享，我们决定使用Sqlite数据库。
-上述分析过程中发送，用户的登录帐号是全局唯一的，不会重复的，我们以此字段作为主键且不允许为空， 还可以通过上述API获取用户的朋友、朋友的个数、用户的粉丝、粉丝的个数、用户详细信息，因此用户社交关系表设计如下：
-CREATE TABLE IF NOT EXISTS coding_all_user ( global_key VARCHAR PRIMARY KEY NOT NULL, friends_count INTEGER, friends VARCHAR, followers_count INTEGER, followers VARCHAR )  用户个人信息详情表设计如下：</description>
+      <description>今天我们继续来搞Coding数据~ 从官方给出的数据我们知道目前Coding大概有50万注册用户 然后我们还能看到冒泡广场有很多热门用户 那么这些</description>
     </item>
     
     <item>
@@ -55,19 +26,7 @@ CREATE TABLE IF NOT EXISTS coding_all_user ( global_key VARCHAR PRIMARY KEY NOT 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://toddlerya.github.io/post/scrapy%E7%88%AC%E5%8F%96coding%E5%86%92%E6%B3%A1%E5%B9%BF%E5%9C%BA/</guid>
-      <description>项目地址: https://github.com/toddlerya/learn_scrapy I. Coding的冒泡广场 CODING 是国内专业的一站式云端软件服务平台，Coding.net 为开发者提供了免费的基础服务，包括但不限于 Git 代码托管，项目管理，Pages 服务，代码质量管理。您可以在 Coding.net 一站完成代码及代码质量，项目及项目人员的管理，Coding.net 让开发变得前所未有的敏捷和简单。
-其中Coding有一个冒泡的社交功能&amp;ndash; 冒泡广场，比较像微博，会有很多程序员的日常吐槽，分享等，比如这样：
-这里面的数据属性非常丰富，每一条冒泡都具有如下属性：
-1. 爬虫分析 爬虫的基本原则是能使用API接口，绝不解析html页面，恰巧这个网站的API很好用。
-+ 对这个网站的API进行了基本的分析：html https://coding.net/api/tweet/public_tweets?size=20&amp;amp;sort=time&amp;amp;filter=true&amp;amp;last_time=1504876265000
- 分析发现只需提交size和filter参数即可：
- filter=true为只获取精华冒泡，false为获取全量，当然是全量啦！ size为最近发表的多少条冒泡信息
-  因此最终的get 请求为： https://coding.net/api/tweet/public_tweets?size=20&amp;amp;filter=false
-  2. 这里有两个注意事项  网站的rebots.txt设置了规则，禁止爬取Disallow: /api/*，我们只是做个小实验，不进行大规模的爬取，因此需要修改下Scrapy项目的settings.py配置(不守规矩~):
-# Obey robots.txt rules ROBOTSTXT_OBEY = False  size参数如果太大会导致HTTP访问超时，Scrapy报错中止，需要在请求发起时修改Request.meta的参数，见官方文档：DOWNLOAD_TIMEOUT
-[scrapy.downloadermiddlewares.retry] DEBUG: Retrying &amp;lt;GET https://coding.net/api/tweet/public_tweets?size=100000&amp;amp;filter=false&amp;gt; (failed 1 times): 504 Gateway Time-out   2017年09月11日 于 南京
-Email
-GitHub</description>
+      <description>项目地址: https://github.com/toddlerya/learn_scrapy I. Coding的冒泡广场 CODING 是国内专业的一站式云端软件服务平台，Coding.net 为开发者提供了免费的基础服务，包括但不限于 Git 代</description>
     </item>
     
   </channel>
