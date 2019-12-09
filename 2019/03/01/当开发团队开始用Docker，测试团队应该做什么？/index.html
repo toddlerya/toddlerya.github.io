@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="在之前的《Hello Docker》中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。 Docker带来了什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当开发团队开始用Docker，测试团队应该做什么？">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;03&#x2F;01&#x2F;%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8Docker%EF%BC%8C%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F&#x2F;index.html">
+<meta property="og:site_name" content="不期速成日拱一卒">
+<meta property="og:description" content="在之前的《Hello Docker》中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。 Docker带来了什么">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-01T04:29:16.000Z">
+<meta property="article:modified_time" content="2019-12-09T15:35:36.729Z">
+<meta property="article:author" content="toddlerya">
+<meta property="article:tag" content="软件测试">
+<meta property="article:tag" content="测试开发">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/03/01/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8Docker%EF%BC%8C%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>当开发团队开始用Docker，测试团队应该做什么？ | 不期速成日拱一卒</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="不期速成日拱一卒" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不期速成日拱一卒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">但行好事，莫问前程</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/%E5%BD%93%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%BC%80%E5%A7%8B%E7%94%A8Docker%EF%BC%8C%E6%B5%8B%E8%AF%95%E5%9B%A2%E9%98%9F%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="toddlerya">
+      <meta itemprop="description" content="witness me.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不期速成日拱一卒">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          当开发团队开始用Docker，测试团队应该做什么？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-01 12:29:16" itemprop="dateCreated datePublished" datetime="2019-03-01T12:29:16+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 23:35:36" itemprop="dateModified" datetime="2019-12-09T23:35:36+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在之前的<a href="!--￼0--">《Hello Docker》</a>中，简单介绍过Docker，但仅限于在测试开发团队内部使用，或者说更多的是我个人在使用Orz，等了好久终于公司的研发团队开始正式使用Docker了。这次来西安分公司学习下公司基于Docker和K8S开发的容器云平台，深入了解了下Docker的底层原理，简单学习了下K8S的基本概念和操作，感觉对于研发团队来说，容器化的迁移还是有一定成本的。</p>
+<h1 id="Docker带来了什么？改变了什么？"><a href="#Docker带来了什么？改变了什么？" class="headerlink" title="Docker带来了什么？改变了什么？"></a>Docker带来了什么？改变了什么？</h1><h2 id="一、传统软件开发流程有几大痛点："><a href="#一、传统软件开发流程有几大痛点：" class="headerlink" title="一、传统软件开发流程有几大痛点："></a>一、传统软件开发流程有几大痛点：</h2><ol>
+<li><p>开发、测试、发布环境不统一</p>
+</li>
+<li><p>配置测试环境过程冗长又复杂</p>
+</li>
+<li><p>自动化测试环境不稳定，容易受到污染，隔离不足</p>
+</li>
+<li><p>无法准确获得客户的软件环境</p>
+</li>
+<li><p>开发团队无法复现测试团队报出的软件缺陷，导致两个团队出现相互推诿的现象</p>
+</li>
+</ol>
+<h2 id="二、当前测试技术面临的几大挑战："><a href="#二、当前测试技术面临的几大挑战：" class="headerlink" title="二、当前测试技术面临的几大挑战："></a>二、当前测试技术面临的几大挑战：</h2><ol>
+<li>配置一致的测试环境</li>
+<li>快速部署软件</li>
+<li>并行执行测试，在并行的同时还要保证测试任务各自的环境不被污染</li>
+<li>成功的复现软件缺陷</li>
+<li>创建干净的可信的测试环境</li>
+<li>快速部署多个测试主机</li>
+<li>快速导入测试数据</li>
+<li>快速清理测试环境</li>
+<li>快速保留、复制、恢复测试环境</li>
+<li>正确配置测试工具。快速将测试环境在不同操作系统（类Unix）</li>
+</ol>
+<h2 id="三、Docker对测试技术的革命性影响"><a href="#三、Docker对测试技术的革命性影响" class="headerlink" title="三、Docker对测试技术的革命性影响"></a>三、Docker对测试技术的革命性影响</h2><p>软件开发交付速度上不去，很大一个问题是软件运行环境这个环节存在瓶颈，Docker解决了这个瓶颈，促进了软件开发的DevOps模式推广，这对所有的软件行业从业者都是巨大利好。</p>
+<p>软件测试的几个重要方面：测试策略、测试设计、测试方法、测试数据、测试环境，前三个是方法论思想层面的，后两个是需要技术突破的。测试数据因具体细分行业不同，各有各的痛点也各有各的解决方案，但是对于测试环境来说，Docker是个近乎接近“银弹”的技术解决方案。</p>
+<h3 id="通过Docker的软件环境快速部署能力，促进了测试时间的再分配"><a href="#通过Docker的软件环境快速部署能力，促进了测试时间的再分配" class="headerlink" title="通过Docker的软件环境快速部署能力，促进了测试时间的再分配"></a>通过Docker的软件环境快速部署能力，促进了测试时间的再分配</h3><p>一个小小的Dockerfile明确声明了软件部署的所有细节和流程，从此忘记冗长的安装部署文档吧！无论是从研发自测、功能测试、集成测试等哪个环节来讲，测试环境的部署时间成倍缩短，能给工程师更多的时间做更多有意义的事情，开发工程师可以有更多时间完善优化设计，修复缺陷，测试工程师可以有跟多时间拓宽测试的广度和提高测试的深度，运维工程师有更多的时间专注于改进软件监控分析系统，这和有效的自动化测试的价值可以相提并论。</p>
+<h3 id="通过Docker的软件环境一致性能力，有效降低了偶然复杂度"><a href="#通过Docker的软件环境一致性能力，有效降低了偶然复杂度" class="headerlink" title="通过Docker的软件环境一致性能力，有效降低了偶然复杂度"></a>通过Docker的软件环境一致性能力，有效降低了偶然复杂度</h3><p>Docker的镜像发布，容器编排运行等设计实现，保证了开发环境、测试环境、生产发布环境以及不同操作系统发行版的高度一致可信，几乎避免了测试团队发现的缺陷在开发环境无法复现、线上生产环境的缺陷在线下无法复现且不便线上调试等问题带来的一些列人力成本、时间成本、心智成本的无谓消耗。</p>
+<h3 id="通过Docker的环境隔离管理能力，提高了测试资源的自由度"><a href="#通过Docker的环境隔离管理能力，提高了测试资源的自由度" class="headerlink" title="通过Docker的环境隔离管理能力，提高了测试资源的自由度"></a>通过Docker的环境隔离管理能力，提高了测试资源的自由度</h3><p>以往虽然有各种虚拟化技术，可以一台服务器虚拟化为多台虚拟机，可以对虚拟机进行快照，随时恢复软件环境，但是终究太笨重，资源损耗太高，利用率太低，无法实现测试资源自由。现在有了Docker的资源隔离管理能力，我们可以按照测试需求，启动多个不同版本的服务，随时创建，随时销毁；我们甚至可以在一台服务器给每个测试人员启动一套独立的测试环境，大家并行测试，互不干扰，避免了互相踩踏。同时这种环境资源的自由度，对于自动化测试的执行过程是有很大帮助的，大大提高了自动化测试的成功率，进而提高自动化测试的ROI。</p>
+<h1 id="测试团队如何顺势而为？"><a href="#测试团队如何顺势而为？" class="headerlink" title="测试团队如何顺势而为？"></a>测试团队如何顺势而为？</h1><p>上一小节总结的三点革命性影响，对于整个开发流程来说，已经为CI/CD提供了道路基石，势必将进一步缩短迭代周期，提高交付速度（虽然还是有需求变更，开发延期等软件开发管理上不可避免的问题和人的不可靠性等因素等debuff）</p>
+<p>效率提高了，交付速度提高了，迭代速度更快了，单纯的手工测试已经跟不上DevOps的软件开发模式了（其实在很多年前就跟不上现代软件开发节奏了），对测试的要求更高了，应当思考下省下来的时间如何更好的利用，如何跟上研发提测的速度。对于我现在所在的这种相对传统的行业软件服务企业来说，测试团队必须尽快适应这种DevOps开发模式了，不然就会被历史的车轮碾死在尘埃里。</p>
+<p>测试团队的核心职责是质量保障，围绕质量保障，我们可以将测试能力向前向后输出，输出的最好形式就是自动化。</p>
+<ul>
+<li>自动化测试环境资源不再是自动化实施的绊脚石，接下来需要考验的是我们的自动化框架、自动化工具是否真的可靠、可用。</li>
+<li>测试驱动开发的模式虽然很好，但是推广落地却不是那么容易的😊。<strong>测试团队还可以将测试用例封装为自动化测试服务，提供给研发自测</strong>，而不是等研发一次次快速提测再被打回，冲击消耗测试工程师的激情和精力。更近一步可以考虑通过<strong>感知镜像仓库中镜像的变化，动态触发自动化测试</strong>。当然长远看来还是要与开发团队共同实现CI/CD，需要各个研发部门通力合作。</li>
+<li>软件运行环境的高度一致性，理论上线上发现的缺陷可以等价于测试团队漏测，这对测试团队的可信度和口碑是一个挑战，需要进一步提高测试质量和标准</li>
+<li>上线后的软件运行状态检测，虽然按照传统分工应当是运维团队来做的，但是测试团队在这方面也有自己得天独厚的优势，对产品的深刻理解，测试角度，可以将内测测试用例调整转为适配线上数据环境的在线自动化测试用例，实现线上测试，在第一时间发现由于线上环境测试数据的多样性和量级带来的问题，及时收集触发线上自动化用例失败的测试数据来完善测试用例库，提高测试覆盖度。</li>
+</ul>
+<p>总而言之，核心就是<strong>进一步提高自动化测试技术的深度和广度</strong>。</p>
+<p>暂时想到这些，有新的想法再补充。</p>
+<blockquote>
+<p>Reference<br><a href="https://www.infoq.cn/article/docker-lead-test-innovation" target="_blank" rel="noopener">https://www.infoq.cn/article/docker-lead-test-innovation</a></p>
+</blockquote>
+<hr>
+<p>2019年03月01日 于 西安<br><a href="toddlerya@qq.com">Email</a><br><a href="https://github.com/toddlerya" target="_blank" rel="noopener">GitHub</a>    </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/" rel="tag"># 软件测试</a>
+              <a href="/tags/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91/" rel="tag"># 测试开发</a>
+              <a href="/tags/docker/" rel="tag"># docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/28/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/" rel="prev" title="程序员的自我修养">
+      <i class="fa fa-chevron-left"></i> 程序员的自我修养
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/08/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/" rel="next" title="robotframework字符转译之坑">
+      robotframework字符转译之坑 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker带来了什么？改变了什么？"><span class="nav-number">1.</span> <span class="nav-text">Docker带来了什么？改变了什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、传统软件开发流程有几大痛点："><span class="nav-number">1.1.</span> <span class="nav-text">一、传统软件开发流程有几大痛点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、当前测试技术面临的几大挑战："><span class="nav-number">1.2.</span> <span class="nav-text">二、当前测试技术面临的几大挑战：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Docker对测试技术的革命性影响"><span class="nav-number">1.3.</span> <span class="nav-text">三、Docker对测试技术的革命性影响</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Docker的软件环境快速部署能力，促进了测试时间的再分配"><span class="nav-number">1.3.1.</span> <span class="nav-text">通过Docker的软件环境快速部署能力，促进了测试时间的再分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Docker的软件环境一致性能力，有效降低了偶然复杂度"><span class="nav-number">1.3.2.</span> <span class="nav-text">通过Docker的软件环境一致性能力，有效降低了偶然复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Docker的环境隔离管理能力，提高了测试资源的自由度"><span class="nav-number">1.3.3.</span> <span class="nav-text">通过Docker的环境隔离管理能力，提高了测试资源的自由度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试团队如何顺势而为？"><span class="nav-number">2.</span> <span class="nav-text">测试团队如何顺势而为？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">toddlerya</p>
+  <div class="site-description" itemprop="description">witness me.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toddlerya" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:toddlerya@qq.com" title="E-Mail → mailto:toddlerya@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toddlerya</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

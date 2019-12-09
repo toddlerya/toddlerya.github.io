@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="最近微信上线了一款小应用—“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派+步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。 今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000+ 新增AI模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信跳一跳之线性回归算法优化">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;01&#x2F;07&#x2F;%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96&#x2F;index.html">
+<meta property="og:site_name" content="不期速成日拱一卒">
+<meta property="og:description" content="最近微信上线了一款小应用—“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派+步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。 今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目wechat_jump_game进行优化改造。此项目有个pull request[优化]跑分17000+ 新增AI模块">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;snipaste_20180107_143133.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;snipaste_20180107_132535.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;snipaste_20180107_130834.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;wechat_ai_20180107141219.jpg">
+<meta property="article:published_time" content="2018-01-07T04:24:53.000Z">
+<meta property="article:modified_time" content="2019-12-09T15:35:36.731Z">
+<meta property="article:author" content="toddlerya">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="游戏">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;snipaste_20180107_143133.png">
+
+<link rel="canonical" href="http://yoursite.com/2018/01/07/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>微信跳一跳之线性回归算法优化 | 不期速成日拱一卒</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="不期速成日拱一卒" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不期速成日拱一卒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">但行好事，莫问前程</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/07/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="toddlerya">
+      <meta itemprop="description" content="witness me.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不期速成日拱一卒">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          微信跳一跳之线性回归算法优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-01-07 12:24:53" itemprop="dateCreated datePublished" datetime="2018-01-07T12:24:53+08:00">2018-01-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 23:35:36" itemprop="dateModified" datetime="2019-12-09T23:35:36+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近微信上线了一款小应用—“跳一跳”，这个规则简单，让人上瘾的小游戏和2048一样魔性，朋友圈也是各路小伙伴各显神通：硬件流（树莓派+步进电机）、日天流（篡改http请求）、软件流（adb控制手机模拟点击）。</p>
+<p>今天我们也来实践下，当然选择最顺手的Python来搞咯，直接找到开源项目<a href="https://github.com/wangshub/wechat_jump_game" target="_blank" rel="noopener">wechat_jump_game</a>进行优化改造。此项目有个pull request<a href="https://github.com/wangshub/wechat_jump_game/pull/825" target="_blank" rel="noopener">[优化]跑分17000+ 新增AI模块，机器人自主学习生成跳跃公式</a>，看到AI我们就来了兴趣，只见过理论，还没有实践过，可以拿这个实践下。</p>
+<p>这个pull request介绍如下：</p>
+<blockquote>
+<p>机器人精确采集跳跃结果并自主学习，使用线性回归方法<br>拟合出最优 [按压时间]-&gt;[弹跳距离] 线性公式 Y =kX + b<br>本优化无需修改config文件，可以适配所有手机，经过十次以上跳跃学习，机器人即可<br>模拟出相对稳定的线性公式。随着采集结果越多，跳跃也越精确，后期基本连续命中靶心。<br>理论上只要目标点获取无误，会一直跳下去。</p>
+</blockquote>
+<p>工作两年多，一直在做服务端后台应用相关的测试，没接触过移动端测试呢，正好趁这次机会学习下怎么通过代码自动化控制安卓手机。<br>下面来动手试一下，找出下岗多年的MX3，充电开机。</p>
+<h1 id="第一次调试"><a href="#第一次调试" class="headerlink" title="第一次调试"></a>第一次调试</h1><ol>
+<li>安装好adb，配置好环境变量。</li>
+<li>手机打开开发者模式，连接PC。</li>
+<li>命令行测试是否连接成功: adb devices，手机弹出是否信任窗口，点击确定，已经链接成功。</li>
+<li>测试一些adb命令是否正常: adb shell wm size，返回信息：Physical size: 1080x1800，完美。</li>
+<li>通过virtualenv建立虚拟环境，安装项目所需的第三方库。</li>
+<li>手机微信打开跳一跳，点击开始游戏。</li>
+<li>运行wechat_jump_auto_ai.py，报错T_T…<br> 查看代码发现是截图部分操作不适配MX3，手动修改代码后成功截图运行<br> 将 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">screenshot = screenshot.replace(<span class="string">b'\r\n'</span>, <span class="string">b'\n'</span>)</span></pre></td></tr></table></figure>
+ 修改为 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">screenshot = screenshot.replace(<span class="string">b'\r\r\n'</span>, <span class="string">b'\n'</span>)</span></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="第二次调试"><a href="#第二次调试" class="headerlink" title="第二次调试"></a>第二次调试</h1><p>按照程序逻辑，运行十次之后即可采用线性回归算法学习得到的公式，根据已知距离得出按压时间，但实际结果却和一个弱智一样，2分就挂掉了…<br>查看代码发现有个魔法数字要自己设置，程序根据这个数字进行截图计算误差:time.sleep(0.2)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在跳跃落下的瞬间 摄像机移动前截图 这个参数要自己校调</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">time.sleep(<span class="number">0.2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">pull_screenshot_temp()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">im_temp = Image.open(<span class="string">'./autojump_temp.png'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">temp_piece_x, temp_piece_y = find_piece(im_temp)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">debug.computing_error(press_time, board_x, board_y, piece_x, piece_y, temp_piece_x, temp_piece_y)</span></pre></td></tr></table></figure>
+
+<p>经过debug截图不断调整，得出我的PC和MX3配合的最佳数值是0.04。<br>删除学习数据jump_range.csv，重新开始训练，程序终于能磕磕绊绊达到400分左右，但是大概需要1小时左右，对学习数据通过pandas和matplotlib进行绘图，看到训练采集到的数据离散程度很高，明显学习效果不佳。</p>
+<h1 id="第三次调试（重点）"><a href="#第三次调试（重点）" class="headerlink" title="第三次调试（重点）"></a>第三次调试（重点）</h1><p>再次阅读代码，发现这个AI版本的代码有瑕疵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computing_error</span><span class="params">(last_press_time, target_board_x, target_board_y, last_piece_x, last_piece_y, temp_piece_x, temp_piece_y)</span>:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"""</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="string">	计算跳跃实际误差</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="string">	"""</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	target_distance = math.sqrt(abs(target_board_x - last_piece_x) ** <span class="number">2</span> + abs(target_board_y - last_piece_y) ** <span class="number">2</span>)  <span class="comment"># 上一轮目标跳跃距离</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	actual_distance = math.sqrt(abs(temp_piece_x - last_piece_x) ** <span class="number">2</span> + abs(temp_piece_y - last_piece_y) ** <span class="number">2</span>)  <span class="comment"># 上一轮实际跳跃距离</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	jump_error_value = math.sqrt(abs(target_board_x - temp_piece_x) ** <span class="number">2</span> + abs(target_board_y - temp_piece_y) ** <span class="number">2</span>)  <span class="comment"># 跳跃误差</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">print</span> <span class="string">"目标距离: &#123;0&#125;, 实际距离: &#123;1&#125;, 误差距离: &#123;2&#125;, 蓄力时间: &#123;3&#125;ms"</span>.format(round(target_distance), round(actual_distance), round(jump_error_value), round(last_press_time))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">	<span class="comment"># 将结果采集进学习字典</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> last_piece_x &gt; <span class="number">0</span> <span class="keyword">and</span> last_press_time &gt; <span class="number">0</span> :</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">		ai.add_data(round(actual_distance, <span class="number">2</span>), round(last_press_time))</span></pre></td></tr></table></figure>
+<h2 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h2><p>target_distance与actual_distance有可能会等于0.0或者一个超出实际范围的值，这些值会在游戏失败重新开始时出现，原程序没有进行过滤；</p>
+<h2 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h2><p>jump_error_value作为一个很重要的值，没有进行有效利用。</p>
+<p>上述两个问题会导致数据质量不高，干扰项太多，目标函数拟合速度太慢。</p>
+<p>因此改进数据采集策略：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> jump_error_value &lt; <span class="number">5</span> <span class="keyword">and</span> last_piece_x &gt; <span class="number">0</span> <span class="keyword">and</span> last_press_time &gt; <span class="number">0</span> <span class="keyword">and</span> target_distance &gt; <span class="number">0</span> <span class="keyword">and</span> actual_distance &gt; <span class="number">0</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	ai.add_data(round(actual_distance, <span class="number">2</span>), round(last_press_time))</span></pre></td></tr></table></figure>
+<h2 id="改进1"><a href="#改进1" class="headerlink" title="改进1"></a>改进1</h2><p>要求target_distance与actual_distance必须要大于0才是有效值，剔除干扰项；</p>
+<h2 id="改进2"><a href="#改进2" class="headerlink" title="改进2"></a>改进2</h2><p>jump_error_value合理利用，开始时将此参数放大到50左右，后续根据学习效果，逐步缩小jump_error_value的阈值，提高精确度，加速训练效果。</p>
+<h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><h2 id="训练数据拟合函数"><a href="#训练数据拟合函数" class="headerlink" title="训练数据拟合函数"></a>训练数据拟合函数</h2><p>经过大概四五轮训练，采样到571条数据，拟合出线性回归函数如图<br><img src="/images/snipaste_20180107_143133.png" alt=""> </p>
+<h2 id="debug误差效果"><a href="#debug误差效果" class="headerlink" title="debug误差效果"></a>debug误差效果</h2><ol>
+<li><p>运行debug截图, 基本完美命中目标<br><img src="/images/snipaste_20180107_132535.png" alt=""> </p>
+</li>
+<li><p>运行debug日志，误差基本控制在40以内<br><img src="/images/snipaste_20180107_130834.png" alt=""> </p>
+</li>
+</ol>
+<h2 id="自动运行视频"><a href="#自动运行视频" class="headerlink" title="自动运行视频"></a>自动运行视频</h2><video id="video" controls="controls" preload="auto">
+  <source id="mp4" src="/images/wechat_ai.mp4" type="video/mp4" poster="/images/snipaste_20180107_163211.png">
+</video >
+
+
+<h2 id="成绩"><a href="#成绩" class="headerlink" title="成绩"></a>成绩</h2><p>因为MX3手机硬件有问题，电量低于75%就会出现屏幕抖动，所以目前成绩如此<br><img src="/images/wechat_ai_20180107141219.jpg" alt="AI成绩"> </p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p>优化后的代码以及训练数据： <a href="https://github.com/toddlerya/WechatJumpAI" target="_blank" rel="noopener">https://github.com/toddlerya/WechatJumpAI</a></p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>不得不承认，机器学习在合适的领域使用合适方式，达到的效果非常棒！只用了简单的线性回归算法，最经典最基本的机器学习算法，达到的效果已经秒杀人类上千倍。<br>为了不被这个时代淘汰，一定要跟上节奏，加油~</p>
+<hr>
+<p>2018年01月07日 于 南京<br><a href="toddlerya@qq.com">Email</a><br><a href="https://github.com/toddlerya" target="_blank" rel="noopener">GitHub</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag"># 游戏</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/12/31/Golang%E5%AD%A6%E4%B9%A0(%E4%BA%8C)/" rel="prev" title="Golang学习（二）">
+      <i class="fa fa-chevron-left"></i> Golang学习（二）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/25/%E6%97%A0%E5%BA%8F%E5%A4%A7%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%E7%AE%97%E6%B3%95/" rel="next" title="无序大数组的中位数算法">
+      无序大数组的中位数算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一次调试"><span class="nav-number">1.</span> <span class="nav-text">第一次调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二次调试"><span class="nav-number">2.</span> <span class="nav-text">第二次调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三次调试（重点）"><span class="nav-number">3.</span> <span class="nav-text">第三次调试（重点）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题1"><span class="nav-number">3.1.</span> <span class="nav-text">问题1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题2"><span class="nav-number">3.2.</span> <span class="nav-text">问题2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进1"><span class="nav-number">3.3.</span> <span class="nav-text">改进1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进2"><span class="nav-number">3.4.</span> <span class="nav-text">改进2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#效果展示"><span class="nav-number">4.</span> <span class="nav-text">效果展示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#训练数据拟合函数"><span class="nav-number">4.1.</span> <span class="nav-text">训练数据拟合函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug误差效果"><span class="nav-number">4.2.</span> <span class="nav-text">debug误差效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动运行视频"><span class="nav-number">4.3.</span> <span class="nav-text">自动运行视频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成绩"><span class="nav-number">4.4.</span> <span class="nav-text">成绩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">4.5.</span> <span class="nav-text">项目地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">toddlerya</p>
+  <div class="site-description" itemprop="description">witness me.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toddlerya" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:toddlerya@qq.com" title="E-Mail → mailto:toddlerya@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toddlerya</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

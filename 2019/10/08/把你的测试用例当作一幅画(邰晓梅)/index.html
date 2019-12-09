@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="本篇文章来自《海盗派测试分析MFQ&amp;PPDCS》作者邰晓梅，因原作者博客已经不再维护，现将文章转载记录于此。  ​        Kevin Fjelsted是一个盲人，他曾写了一篇文章《A Brief History of the Accessibility of Computers by Blind People》，收录在《Amplifying Your Effectiveness》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="把你的测试用例当作一幅画(邰晓梅)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;08&#x2F;%E6%8A%8A%E4%BD%A0%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E5%BD%93%E4%BD%9C%E4%B8%80%E5%B9%85%E7%94%BB(%E9%82%B0%E6%99%93%E6%A2%85)&#x2F;index.html">
+<meta property="og:site_name" content="不期速成日拱一卒">
+<meta property="og:description" content="本篇文章来自《海盗派测试分析MFQ&amp;PPDCS》作者邰晓梅，因原作者博客已经不再维护，现将文章转载记录于此。  ​        Kevin Fjelsted是一个盲人，他曾写了一篇文章《A Brief History of the Accessibility of Computers by Blind People》，收录在《Amplifying Your Effectiveness》">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-07T23:20:38.000Z">
+<meta property="article:modified_time" content="2019-12-09T15:35:36.730Z">
+<meta property="article:author" content="toddlerya">
+<meta property="article:tag" content="摘抄">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/10/08/%E6%8A%8A%E4%BD%A0%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E5%BD%93%E4%BD%9C%E4%B8%80%E5%B9%85%E7%94%BB(%E9%82%B0%E6%99%93%E6%A2%85)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>把你的测试用例当作一幅画(邰晓梅) | 不期速成日拱一卒</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="不期速成日拱一卒" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不期速成日拱一卒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">但行好事，莫问前程</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/08/%E6%8A%8A%E4%BD%A0%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E5%BD%93%E4%BD%9C%E4%B8%80%E5%B9%85%E7%94%BB(%E9%82%B0%E6%99%93%E6%A2%85)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="toddlerya">
+      <meta itemprop="description" content="witness me.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不期速成日拱一卒">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          把你的测试用例当作一幅画(邰晓梅)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-08 07:20:38" itemprop="dateCreated datePublished" datetime="2019-10-08T07:20:38+08:00">2019-10-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 23:35:36" itemprop="dateModified" datetime="2019-12-09T23:35:36+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本篇文章来自《海盗派测试分析MFQ&amp;PPDCS》作者邰晓梅，因原作者博客已经不再维护，现将文章转载记录于此。</p>
+</blockquote>
+<p>​        Kevin Fjelsted是一个盲人，他曾写了一篇文章《A Brief History of the Accessibility of Computers by Blind People》，收录在《Amplifying Your Effectiveness》一书中。文中从一个盲人的视角描述了几十年来计算机的演进和变化。</p>
+<p>​          我对Kevin所描述的一个小细节很感兴趣：由于看不见，Kevin经常听别人为他描述一些图画或者画面。他发现，绝大部分人描述一幅画的时候，实际上是在描述一些画的特征，比如“画里有三个人”、“这是一副关于房子的画”。人们很少会描述画的细节部分，这就为听者留下了广泛的思考和遐想空间。</p>
+<p>​          当你用文字表述一件事情或一个事务的时候，不论你用多少文字、多么精雕细琢，当让接收者亲自去体验这件事情的时候，比如亲自用眼睛看这幅画、或者亲自动手去实验一下，接收者总是会有新的感受、会发现一些文字之外的东西。这就是一副图画可能胜过万语千言的道理了。</p>
+<p>​        对照我们的测试，写作测试用例的时候，不就是试图用文字向测试执行人员传达测试设计人员的想法吗？从传递者的角度，也许你期望不同的执行人员拿到这个用例，其执行结果都是一样的，希望测试效果受测试执行人员经验的影响降到最低，因此你试图准确而详细地描述每一个步骤。然而你的测试用例是不可能写得事无巨细的，因为不会有那么多的时间允许你这么做（假如你真的有这么多的时间，我倒建议你多做做探索性测试、多想想更有价值的测试内容）；另外一方面，即使真的给你这么多时间写详尽的测试用例，你仍然无法保证囊括每一个与之相关的细节。从接收者的角度，优秀的测试执行人员阅读测试用例，就要像欣赏一幅画一 样，<strong>不仅仅靠听</strong>－－这样只能接到别人描述的表面特征，<strong>更重要的是靠看</strong>－－用你的眼睛去观察，去想一想设计人员是怎么想的？设计这个用例的目的是什么？为什么要这样设计用例？我怎样测试才能保证最优的测试效果？和用例相关的部分哪些也值得我关注？哪些是我所知道的重要信息但用例却没有提到？我应该以怎样的顺序执行这些用例为佳？我以大概怎样的进度执行这些用例比较合适？<strong>最重要的是靠动手</strong>－－用你的心去思考，当你拿到一份待执行的用例，如果上述问题，你通过审视用例，就基本了然于胸，那很好。如果不是这样，比如你对被测特性还不大了解，也没有关系，你可以在执行用例的过程中进一步思考这些问题，通过动手操作，你得到了被测对象的一些最真实的反馈，你对测试用例有了更深刻的认识，你也在随时调整着自己的测试策略。</p>
+<p>​        所以，传统的脚本化测试（Scripted Testing）方法，即先花一段时间设计测试用例、再依据用例去执行的测试方法，不仅仅对测试设计人员有很高的要求（这里体现了大量的创造性的劳动），同时对测试执行人员也提出了相当高的要求：你得通过测试用例尽可能准确猜测出测试设计人员的心思，还得高于测试设计人员，找到测试用例文字以外的被忽略的但同时也是很重要的信息 －－除非你不想得到更好的测试效果。所以测试执行也是体现了大量的创造性思维的劳动。记得昨日在某一ISTQB-FL课程研讨会上，某位讲师讲到了一页胶片，胶片上赫然把测试执行等之后的环节归为“机械式的活动”，而把之前的一系列测试设计活动归为“创造性活动”，如果你的测试执行都是工具在自动化的做，也许这样分类是说得通的吧。</p>
+<p>​        很多组织都过分地看重测试用例，认为测试用例是测试人员最核心的资产，让最优秀的人专职设计测试用例（他们从不或很少做测试执行了），花大量的时间去创建并维护这些用例，这些前端的活动投入非常大。而在最后一段路程，投入反而不那么大了：请一些缺乏经验的测试人员或者干脆雇佣一些对特性不熟的外包人员，依据用例做测试执行即可。当版本发布，用户反馈一些问题后，开始分析这些问题为什么会漏测，准确地说，应该是分析为什么会漏测试设计，因为鲜有人关注测试执行环节能力的提升。人们开始在测试设计阶段运用更多、更复杂的测试设计方法，开始添加更冗长的测试设计流程，开始采用更为详细要求的测试设计模板。。。</p>
+<p>​        我时常听到来自测试设计人员的求助，希望我告诉他们“如何才能提升测试用例的有效性？”“如何确保我设计的用例漏测率最低？” 在他们心中，很有责任感地认为：测试漏测，首先是我没有设计好的缘故。我常常会告诉这些测试设计人员：单单依靠测试用例没有必要也不可能发现大部分的bug，很多bug要依赖执行人员在测试执行阶段发现，<strong>这是正常的测试现象</strong>－－你不可能要求盲人通过听得来的对一副画的理解和一个正常人通过看对一副画的理解一致；我不建议测试设计人员长期不做测试执行，不建议测试设计和测试执行的分离，如果你的组织还没有办法做到这一点，请你－－测试设计人员－－一定要时常和测试执行人员沟通，向他请教对你的用例的看法，实时收到反馈信息，调整你的设计；过分重视测试设计而忽视测试执行，就如同“行百里者半九十”一样，最终的测试效果很可能会输在“测试的最后一公里”上。</p>
+<p>探索性测试也许就是看中了人在测试中发挥的作用要大于文档在测试中发挥的作用这一点吧。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%91%98%E6%8A%84/" rel="tag"># 摘抄</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/12/LIMIT%E5%92%8CIFNULL%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9ALeetCode-SQL%EF%BC%9ANo.176/" rel="prev" title="LIMIT和IFNULL的使用：LeetCode No.176">
+      <i class="fa fa-chevron-left"></i> LIMIT和IFNULL的使用：LeetCode No.176
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">toddlerya</p>
+  <div class="site-description" itemprop="description">witness me.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toddlerya" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:toddlerya@qq.com" title="E-Mail → mailto:toddlerya@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toddlerya</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

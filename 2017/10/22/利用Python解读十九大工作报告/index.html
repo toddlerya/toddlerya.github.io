@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="关键词: Python、wordcloud、jieba、matplotlib、词云、分词  前几天的召开的十九大，习近平讲了三小时的三万字工作报告究竟讲了些什么内容呢，我们用Python来一次数据分析看看究竟讲了哪些内容。主要思路：  通过jieba分词对工作报告进行切词，清洗，词频统计。 通过wordcloud对切词统计结果进行可视化展示。   jieba分词利器特点 支持三种分词模式： 精确">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Python解读十九大工作报告">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2017&#x2F;10&#x2F;22&#x2F;%E5%88%A9%E7%94%A8Python%E8%A7%A3%E8%AF%BB%E5%8D%81%E4%B9%9D%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A&#x2F;index.html">
+<meta property="og:site_name" content="不期速成日拱一卒">
+<meta property="og:description" content="关键词: Python、wordcloud、jieba、matplotlib、词云、分词  前几天的召开的十九大，习近平讲了三小时的三万字工作报告究竟讲了些什么内容呢，我们用Python来一次数据分析看看究竟讲了哪些内容。主要思路：  通过jieba分词对工作报告进行切词，清洗，词频统计。 通过wordcloud对切词统计结果进行可视化展示。   jieba分词利器特点 支持三种分词模式： 精确">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20171022-ca2e12dc.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20171022-637b8f8f.png">
+<meta property="article:published_time" content="2017-10-22T08:23:44.000Z">
+<meta property="article:modified_time" content="2019-12-09T15:35:36.727Z">
+<meta property="article:author" content="toddlerya">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20171022-ca2e12dc.png">
+
+<link rel="canonical" href="http://yoursite.com/2017/10/22/%E5%88%A9%E7%94%A8Python%E8%A7%A3%E8%AF%BB%E5%8D%81%E4%B9%9D%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>利用Python解读十九大工作报告 | 不期速成日拱一卒</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="不期速成日拱一卒" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不期速成日拱一卒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">但行好事，莫问前程</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/%E5%88%A9%E7%94%A8Python%E8%A7%A3%E8%AF%BB%E5%8D%81%E4%B9%9D%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="toddlerya">
+      <meta itemprop="description" content="witness me.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不期速成日拱一卒">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用Python解读十九大工作报告
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-10-22 16:23:44" itemprop="dateCreated datePublished" datetime="2017-10-22T16:23:44+08:00">2017-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 23:35:36" itemprop="dateModified" datetime="2019-12-09T23:35:36+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
+                    <span itemprop="name">数据分析</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>关键词: Python、wordcloud、jieba、matplotlib、词云、分词</p>
+</blockquote>
+<p>前几天的召开的十九大，习近平讲了三小时的三万字工作报告究竟讲了些什么内容呢，我们用Python来一次数据分析看看究竟讲了哪些内容。<br>主要思路：</p>
+<ul>
+<li>通过<code>jieba</code>分词对工作报告进行切词，清洗，词频统计。</li>
+<li>通过<code>wordcloud</code>对切词统计结果进行可视化展示。</li>
+</ul>
+<hr>
+<h2 id="jieba分词利器"><a href="#jieba分词利器" class="headerlink" title="jieba分词利器"></a>jieba分词利器</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>支持三种分词模式：<ul>
+<li>精确模式，试图将句子最精确地切开，适合文本分析；</li>
+<li>全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义；</li>
+<li>搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。  </li>
+</ul>
+</li>
+</ul>
+<p>jieba项目地址：<a href="https://github.com/fxsjy/jieba" target="_blank" rel="noopener">https://github.com/fxsjy/jieba</a></p>
+<h3 id="遇到的问题以及解决办法："><a href="#遇到的问题以及解决办法：" class="headerlink" title="遇到的问题以及解决办法："></a>遇到的问题以及解决办法：</h3><h4 id="1-无法匹配最新的词汇"><a href="#1-无法匹配最新的词汇" class="headerlink" title="1. 无法匹配最新的词汇"></a>1. 无法匹配最新的词汇</h4><p>我们采用精确模式进行分词，但是遇到一些词汇在jieba的默认词库没有，所以要根据十九大进行一些<a href="https://github.com/toddlerya/AnalyzeNPC/blob/master/user_dict/cpc_dictionary.txt" target="_blank" rel="noopener"><code>定制词库</code></a>，加载到<code>jieba</code>词库:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cpc_dict_path = <span class="string">u'user_dict/cpc_dictionary.txt'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">jieba.load_userdict(cpc_dict_path)  <span class="comment"># 加载针对全国人民代表大会的分词词典</span></span></pre></td></tr></table></figure>
+
+<h4 id="2-匹配到了各种符号、空格"><a href="#2-匹配到了各种符号、空格" class="headerlink" title="2. 匹配到了各种符号、空格"></a>2. 匹配到了各种符号、空格</h4><p>切词后统计词频发现有很多标点符号、空格，这些内容我们可以使用正则匹配法进行过滤，<code>u&#39;[\u4e00-\u9fa5]+&#39;</code>匹配所有中文字符，舍弃未命中内容:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">goal_word = <span class="string">''</span>.join(re.findall(<span class="string">u'[\u4e00-\u9fa5]+'</span>, seg)).strip()  <span class="comment"># 过滤所有非中文字符内容</span></span></pre></td></tr></table></figure>
+
+<h4 id="3-匹配到了很多停词"><a href="#3-匹配到了很多停词" class="headerlink" title="3. 匹配到了很多停词"></a>3. 匹配到了很多停词</h4><p>切词后统计词频发现有很多<code>停词</code>，例如：“的”、“和”、“而且”……<br>这种问题肯定不止我遇到了，所以直接去找前人整理好的<a href="https://github.com/toddlerya/AnalyzeNPC/blob/master/user_dict/stopword.txt" target="_blank" rel="noopener"><code>停词词库</code></a>即可，通过匹配停词来进行过滤：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">stop_words_path = <span class="string">u'user_dict/stopword.txt'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(stop_words_path) <span class="keyword">as</span> sf:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    st_content = sf.readlines()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">stop_words = [line.strip().decode(<span class="string">'utf-8'</span>) <span class="keyword">for</span> line <span class="keyword">in</span> st_content]  <span class="comment"># 将读取的数据都转为unicode处理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> len(goal_word) != <span class="number">0</span> <span class="keyword">and</span> <span class="keyword">not</span> stop_words.__contains__(goal_word):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    ......</span></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="wordcloud词云神器"><a href="#wordcloud词云神器" class="headerlink" title="wordcloud词云神器"></a>wordcloud词云神器</h2><p>使用<code>wordcloud</code>生成词云，支持进行各种个性化设置，很好很强大。<br>项目地址：<a href="https://github.com/amueller/word_cloud" target="_blank" rel="noopener">https://github.com/amueller/word_cloud</a></p>
+<h3 id="遇到的问题及解决办法："><a href="#遇到的问题及解决办法：" class="headerlink" title="遇到的问题及解决办法："></a>遇到的问题及解决办法：</h3><h4 id="1-wordcloud默认不支持显示中文"><a href="#1-wordcloud默认不支持显示中文" class="headerlink" title="1. wordcloud默认不支持显示中文"></a>1. wordcloud默认不支持显示中文</h4><p>不进行处理，直接使用<code>wordcloud</code>绘制词云，显示效果如下，中文都是小方框：<br><img src="/images/20171022-ca2e12dc.png" alt=""> </p>
+<p>善用搜索引擎，查到问题原因根本在于<font color=red><b>wordcloud的默认字体不支持中文</b></font>。<br>解决方案基本分为两种：</p>
+<ul>
+<li>方案1：修改<code>wordcloud</code>库文件，增加字体环境变量：<a href="https://zhuanlan.zhihu.com/p/20436581" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20436581</a></li>
+<li>方案2：在每个项目代码中创建<code>WordCloud</code>对象时指定字体文件：<a href="http://blog.csdn.net/xiemanr/article/details/72796739" target="_blank" rel="noopener">http://blog.csdn.net/xiemanr/article/details/72796739</a>  </li>
+</ul>
+<p>个人认为<code>方案2</code>更好一些，提高了代码的可移植性，同时避免了升级<code>wordcloud</code>库导致代码失效的风险。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">font = os.path.abspath(<span class="string">'assets/msyh.ttf'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">wc = WordCloud(collocations=<span class="literal">False</span>, font_path=font, width=<span class="number">3600</span>, height=<span class="number">3600</span>, margin=<span class="number">2</span>)</span></pre></td></tr></table></figure>
+<p>设置好字体后显示效果如下，已经基本实现了我们的目标：<br><img src="/images/20171022-637b8f8f.png" alt=""> </p>
+<hr>
+<p>项目地址：<a href="https://github.com/toddlerya/AnalyzeNPC" target="_blank" rel="noopener">AnalyzeNPC</a><br>核心代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># author: toddler</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cut_analyze</span><span class="params">(input_file)</span>:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"""</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="string">    :param input_file: 输入带切词分析的文本路径</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="string">    :return: (list1, list2) list1切词处理后的列表结果, list2输出切词处理排序后的词频结果, 列表-元祖嵌套结果</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="string">    """</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    cpc_dict_path = <span class="string">u'user_dict/cpc_dictionary.txt'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    stop_words_path = <span class="string">u'user_dict/stopword.txt'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">with</span> open(input_file) <span class="keyword">as</span> f:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        content = f.read()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">with</span> open(stop_words_path) <span class="keyword">as</span> sf:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        st_content = sf.readlines()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    jieba.load_userdict(cpc_dict_path)  <span class="comment"># 加载针对全国人民代表大会的分词词典</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">    stop_words = [line.strip().decode(<span class="string">'utf-8'</span>) <span class="keyword">for</span> line <span class="keyword">in</span> st_content]  <span class="comment"># 将读取的数据都转为unicode处理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">    seg_list = jieba.cut(content, cut_all=<span class="literal">False</span>)  <span class="comment"># 精确模式</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">    filter_seg_list = list()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span> seg <span class="keyword">in</span> seg_list:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">        goal_word = <span class="string">''</span>.join(re.findall(<span class="string">u'[\u4e00-\u9fa5]+'</span>, seg)).strip()  <span class="comment"># 过滤所有非中文字符内容</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> len(goal_word) != <span class="number">0</span> <span class="keyword">and</span> <span class="keyword">not</span> stop_words.__contains__(goal_word):  <span class="comment"># 过滤分词结果中的停词内容</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">            <span class="comment"># filter_seg_list.append(goal_word.encode('utf-8'))  # 将unicode的文本转为utf-8保存到列表以备后续处理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">            filter_seg_list.append(goal_word)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">    seg_counter_all = Counter(filter_seg_list).most_common()  <span class="comment"># 对切词结果按照词频排序</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">    <span class="comment"># for item in seg_counter_all:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">#     print "词语: &#123;0&#125; - 频数: &#123;1&#125;".format(item[0].encode('utf-8'), item[1])</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> filter_seg_list, seg_counter_all</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">    input_file_path = <span class="string">u'input_file/nighteen-cpc.txt'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line">    cut_data, sort_data = cut_analyze(input_file=input_file_path)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line">    font = <span class="string">r'E:\Codes\National_Congress_of_ CPC\assets\msyh.ttf'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line">    wc = WordCloud(collocations=<span class="literal">False</span>, font_path=font, width=<span class="number">3600</span>, height=<span class="number">3600</span>, margin=<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line">    wc.generate_from_frequencies(dict(sort_data))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line">    plt.figure()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line">    plt.imshow(wc)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line">    plt.axis(<span class="string">'off'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line">    plt.show()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">58</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">59</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">60</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">61</span></pre></td><td class="code"><pre><span class="line">    main()</span></pre></td></tr></table></figure>
+<hr>
+<p>2017年10月22日 于 南京<br><a href="toddlerya@qq.com">Email</a><br><a href="https://github.com/toddlerya" target="_blank" rel="noopener">GitHub</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/11/Scrapy%E7%88%AC%E5%8F%96Coding%E5%86%92%E6%B3%A1%E5%B9%BF%E5%9C%BA/" rel="prev" title="Scrapy爬取Coding冒泡广场">
+      <i class="fa fa-chevron-left"></i> Scrapy爬取Coding冒泡广场
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/10/29/50%E4%B8%87Coding%E7%94%A8%E6%88%B7%E5%85%B3%E7%B3%BB%E7%88%AC%E7%88%AC%E7%88%AC%E7%88%AC/" rel="next" title="50万Coding用户关系爬爬爬爬">
+      50万Coding用户关系爬爬爬爬 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jieba分词利器"><span class="nav-number">1.</span> <span class="nav-text">jieba分词利器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的问题以及解决办法："><span class="nav-number">1.2.</span> <span class="nav-text">遇到的问题以及解决办法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-无法匹配最新的词汇"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 无法匹配最新的词汇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-匹配到了各种符号、空格"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 匹配到了各种符号、空格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-匹配到了很多停词"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 匹配到了很多停词</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wordcloud词云神器"><span class="nav-number">2.</span> <span class="nav-text">wordcloud词云神器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的问题及解决办法："><span class="nav-number">2.1.</span> <span class="nav-text">遇到的问题及解决办法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-wordcloud默认不支持显示中文"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. wordcloud默认不支持显示中文</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">toddlerya</p>
+  <div class="site-description" itemprop="description">witness me.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toddlerya" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:toddlerya@qq.com" title="E-Mail → mailto:toddlerya@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toddlerya</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

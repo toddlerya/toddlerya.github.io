@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="​        下班在家无聊打开力扣（LeetCode国内版）随便逛逛，突然发现还有SQL题目，随便点开一道简单的题目，平常一般也就用用普通的CURD、分组、排序，多表关联查询什么的，这道题我是没做出来！各位小伙伴看看这道题，大家会不会做～这道题是这样子的：  看起来普普通通哦，第一反应，排个序嘛～ 1SELECT DISTINCT(Salary) AS SecondHighestSalary">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LIMIT和IFNULL的使用：LeetCode No.176">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;05&#x2F;12&#x2F;LIMIT%E5%92%8CIFNULL%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9ALeetCode-SQL%EF%BC%9ANo.176&#x2F;index.html">
+<meta property="og:site_name" content="不期速成日拱一卒">
+<meta property="og:description" content="​        下班在家无聊打开力扣（LeetCode国内版）随便逛逛，突然发现还有SQL题目，随便点开一道简单的题目，平常一般也就用用普通的CURD、分组、排序，多表关联查询什么的，这道题我是没做出来！各位小伙伴看看这道题，大家会不会做～这道题是这样子的：  看起来普普通通哦，第一反应，排个序嘛～ 1SELECT DISTINCT(Salary) AS SecondHighestSalary">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512094504177.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512095326845.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512095828594.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512100622340.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512100717179.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512100808599.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512100927779.png">
+<meta property="article:published_time" content="2019-05-11T17:37:20.000Z">
+<meta property="article:modified_time" content="2019-12-09T15:35:36.723Z">
+<meta property="article:author" content="toddlerya">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;image-20190512094504177.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/05/12/LIMIT%E5%92%8CIFNULL%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9ALeetCode-SQL%EF%BC%9ANo.176/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>LIMIT和IFNULL的使用：LeetCode No.176 | 不期速成日拱一卒</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="不期速成日拱一卒" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不期速成日拱一卒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">但行好事，莫问前程</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/12/LIMIT%E5%92%8CIFNULL%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9ALeetCode-SQL%EF%BC%9ANo.176/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="toddlerya">
+      <meta itemprop="description" content="witness me.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不期速成日拱一卒">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LIMIT和IFNULL的使用：LeetCode No.176
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-12 01:37:20" itemprop="dateCreated datePublished" datetime="2019-05-12T01:37:20+08:00">2019-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 23:35:36" itemprop="dateModified" datetime="2019-12-09T23:35:36+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​        下班在家无聊打开力扣（LeetCode国内版）随便逛逛，突然发现还有SQL题目，随便点开一道简单的题目，平常一般也就用用普通的CURD、分组、排序，多表关联查询什么的，这道题我是没做出来！各位小伙伴看看这道题，大家会不会做～这道题是这样子的：</p>
+<p><img src="/images/image-20190512094504177.png" alt="leetcode-sql-176-desc"></p>
+<p>看起来普普通通哦，第一反应，排个序嘛～</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(Salary) <span class="keyword">AS</span> SecondHighestSalary <span class="keyword">FROM</span> Employee <span class="keyword">ORDER</span> <span class="keyword">BY</span> Salary <span class="keyword">DESC</span>;</span></pre></td></tr></table></figure>
+
+<p>再然后就发现卡壳了，触发了我的知识盲区！</p>
+<ol>
+<li>如何只取出第2行数据？</li>
+<li>如何判断是否有第二高的薪水（有可能所有人薪水都一样或空表的情况）？</li>
+<li>如何返回null？</li>
+</ol>
+<p>开始补习功课！</p>
+<hr>
+<p><em>各种数据库的SQL有一定差异，我们以使用较多的MySQL数据库的SQL语法为例。</em></p>
+<h2 id="一、回顾LIMIT子句知识细节"><a href="#一、回顾LIMIT子句知识细节" class="headerlink" title="一、回顾LIMIT子句知识细节"></a>一、回顾LIMIT子句知识细节</h2><p>首先我们回顾下如何限制只返回查询结果的前两行？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> some_col <span class="keyword">FROM</span> some_table <span class="keyword">LIMIT</span> <span class="number">2</span>;</span></pre></td></tr></table></figure>
+
+<p>上述代码使用SELECT语言检索单独的一列数据。LIMIT 2指示MySQL数据库返回不超过2行的数据，其实这就是我们平时最常用的LIMIT子句，但这不是完整的LIMIT子句。</p>
+<p>知识点来了！</p>
+<h4 id="1-LIMIT子句的完整形态是这样子的："><a href="#1-LIMIT子句的完整形态是这样子的：" class="headerlink" title="1. LIMIT子句的完整形态是这样子的："></a>1. LIMIT子句的完整形态是这样子的：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">LIMIT return_rows_number OFFSET start_index</span></pre></td></tr></table></figure>
+
+<h4 id="2-OFFSET默认值为0："><a href="#2-OFFSET默认值为0：" class="headerlink" title="2. OFFSET默认值为0："></a>2. OFFSET默认值为0：</h4><p>我们上面语句的LIMIT 2其实是LIMIT 2 OFFSET 0的默认简写形式，不显式声明OFFSET值，则OFFSET默认为0。</p>
+<h4 id="3-简化版的LIMIT子句："><a href="#3-简化版的LIMIT子句：" class="headerlink" title="3. 简化版的LIMIT子句："></a>3. 简化版的LIMIT子句：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">LIMIT start_index, return_rows_number</span></pre></td></tr></table></figure>
+
+<p>接下来我们实战下看看效果，加深下理解：</p>
+<p><img src="/images/image-20190512095326845.png" alt="limit-2-sql-demo-image-20190512095326845"></p>
+<p><strong>对于这道题，我们要获取第二行数据，应该这样写</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(Salary) <span class="keyword">FROM</span> Employee <span class="keyword">ORDER</span> <span class="keyword">BY</span> Salary <span class="keyword">DESC</span> <span class="keyword">LIMIT</span> <span class="number">1</span> <span class="keyword">OFFSET</span> <span class="number">1</span>;</span></pre></td></tr></table></figure>
+
+<h2 id="二、回顾IFNULL函数的细节"><a href="#二、回顾IFNULL函数的细节" class="headerlink" title="二、回顾IFNULL函数的细节"></a>二、回顾IFNULL函数的细节</h2><p>MySQL的IFNULL函数其实就是个if else语句，函数语法规则如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">IFNULL(expr1, expr2)</span></pre></td></tr></table></figure>
+
+<p>伪代码逻辑如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> expr1 == null:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="keyword">return</span> expr2;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   <span class="keyword">return</span> expr1;</span></pre></td></tr></table></figure>
+
+<p>执行两条SQL语句实践下更有助于理解：</p>
+<p><img src="/images/image-20190512095828594.png" alt="ifnull-sql-demo-image-20190512095828594"></p>
+<p>对于我们这道题SQL应该这样写：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">IFNULL</span>((<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(Salary) <span class="keyword">FROM</span> Employee <span class="keyword">ORDER</span> <span class="keyword">BY</span> Salary <span class="keyword">DESC</span> <span class="keyword">LIMIT</span> <span class="number">1</span> <span class="keyword">OFFSET</span> <span class="number">1</span>), <span class="literal">null</span>) <span class="keyword">AS</span> SecondHighestSalary;</span></pre></td></tr></table></figure>
+
+<p>我们来测试下：</p>
+<p>1 - 正常的数据，有各种薪资：</p>
+<p><img src="/images/image-20190512100622340.png" alt="image-20190512100622340"></p>
+<p>2 - 所有人薪水都相同的情况：</p>
+<p><img src="/images/image-20190512100717179.png" alt="image-20190512100717179"></p>
+<p>3 - 空表的情况：</p>
+<p><img src="/images/image-20190512100808599.png" alt="image-20190512100808599"></p>
+<p>所有测试通过～</p>
+<hr>
+<p>这道题虽然标记为简单题目，但是提交通过率却不高，仅有1/3。</p>
+<p><img src="/images/image-20190512100927779.png" alt="image-20190512100927779"></p>
+<p>说明还是有不少同学和我一样对SQL对掌握不够呀，还是要找时间好好学习使用下。</p>
+<p>题目链接在这里：<a href="https://leetcode-cn.com/problems/second-highest-salary/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/second-highest-salary/</a></p>
+<p>有兴趣对小伙伴可以试试其他数据库的SQL语句怎么写，欢迎交流讨论。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/08/robotframework%E5%AD%97%E7%AC%A6%E8%BD%AC%E8%AF%91%E4%B9%8B%E5%9D%91/" rel="prev" title="robotframework字符转译之坑">
+      <i class="fa fa-chevron-left"></i> robotframework字符转译之坑
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/08/%E6%8A%8A%E4%BD%A0%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E5%BD%93%E4%BD%9C%E4%B8%80%E5%B9%85%E7%94%BB(%E9%82%B0%E6%99%93%E6%A2%85)/" rel="next" title="把你的测试用例当作一幅画(邰晓梅)">
+      把你的测试用例当作一幅画(邰晓梅) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、回顾LIMIT子句知识细节"><span class="nav-number">1.</span> <span class="nav-text">一、回顾LIMIT子句知识细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-LIMIT子句的完整形态是这样子的："><span class="nav-number">1.0.1.</span> <span class="nav-text">1. LIMIT子句的完整形态是这样子的：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-OFFSET默认值为0："><span class="nav-number">1.0.2.</span> <span class="nav-text">2. OFFSET默认值为0：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-简化版的LIMIT子句："><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 简化版的LIMIT子句：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、回顾IFNULL函数的细节"><span class="nav-number">2.</span> <span class="nav-text">二、回顾IFNULL函数的细节</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">toddlerya</p>
+  <div class="site-description" itemprop="description">witness me.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toddlerya" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toddlerya" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:toddlerya@qq.com" title="E-Mail → mailto:toddlerya@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">toddlerya</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
