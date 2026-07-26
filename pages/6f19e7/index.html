@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Docker网桥导致网络故障分析</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.e4d8b86b.css" as="style"><link rel="preload" href="/assets/js/app.e939b80d.js" as="script"><link rel="preload" href="/assets/js/2.592a5c23.js" as="script"><link rel="preload" href="/assets/js/12.5ce87fa3.js" as="script"><link rel="prefetch" href="/assets/js/10.b0048048.js"><link rel="prefetch" href="/assets/js/11.fbdb8f3a.js"><link rel="prefetch" href="/assets/js/13.63a46ec7.js"><link rel="prefetch" href="/assets/js/14.92eb68c0.js"><link rel="prefetch" href="/assets/js/15.1a5e4227.js"><link rel="prefetch" href="/assets/js/16.838a3548.js"><link rel="prefetch" href="/assets/js/17.78051799.js"><link rel="prefetch" href="/assets/js/18.03acb563.js"><link rel="prefetch" href="/assets/js/19.581869d3.js"><link rel="prefetch" href="/assets/js/20.0002bb24.js"><link rel="prefetch" href="/assets/js/21.d37f07bf.js"><link rel="prefetch" href="/assets/js/22.e0b6aafe.js"><link rel="prefetch" href="/assets/js/23.6de77273.js"><link rel="prefetch" href="/assets/js/24.5c2ab7a9.js"><link rel="prefetch" href="/assets/js/25.be513cc0.js"><link rel="prefetch" href="/assets/js/26.2983738b.js"><link rel="prefetch" href="/assets/js/27.6210b677.js"><link rel="prefetch" href="/assets/js/28.f90f5f9d.js"><link rel="prefetch" href="/assets/js/29.14e8dae9.js"><link rel="prefetch" href="/assets/js/3.b53076be.js"><link rel="prefetch" href="/assets/js/30.25109394.js"><link rel="prefetch" href="/assets/js/31.05cfdc8d.js"><link rel="prefetch" href="/assets/js/32.23f5a754.js"><link rel="prefetch" href="/assets/js/33.b85d2360.js"><link rel="prefetch" href="/assets/js/34.439a146f.js"><link rel="prefetch" href="/assets/js/35.801747db.js"><link rel="prefetch" href="/assets/js/36.db43cce9.js"><link rel="prefetch" href="/assets/js/37.1a8b542d.js"><link rel="prefetch" href="/assets/js/38.f24e4862.js"><link rel="prefetch" href="/assets/js/39.258f2863.js"><link rel="prefetch" href="/assets/js/4.9686c1c3.js"><link rel="prefetch" href="/assets/js/40.b864857a.js"><link rel="prefetch" href="/assets/js/41.29617041.js"><link rel="prefetch" href="/assets/js/42.44f441ff.js"><link rel="prefetch" href="/assets/js/43.44193785.js"><link rel="prefetch" href="/assets/js/44.590b69b5.js"><link rel="prefetch" href="/assets/js/45.1722565b.js"><link rel="prefetch" href="/assets/js/46.3fdfb089.js"><link rel="prefetch" href="/assets/js/47.0f252be2.js"><link rel="prefetch" href="/assets/js/48.3df8c297.js"><link rel="prefetch" href="/assets/js/49.e21fbc0c.js"><link rel="prefetch" href="/assets/js/5.e9756155.js"><link rel="prefetch" href="/assets/js/50.433b8b1b.js"><link rel="prefetch" href="/assets/js/51.0567caa7.js"><link rel="prefetch" href="/assets/js/52.9024d2e6.js"><link rel="prefetch" href="/assets/js/53.733503d0.js"><link rel="prefetch" href="/assets/js/54.68d3a8fe.js"><link rel="prefetch" href="/assets/js/55.d97a8913.js"><link rel="prefetch" href="/assets/js/56.317eb8fa.js"><link rel="prefetch" href="/assets/js/57.d6744e2e.js"><link rel="prefetch" href="/assets/js/58.3f9787e8.js"><link rel="prefetch" href="/assets/js/59.e3819b53.js"><link rel="prefetch" href="/assets/js/6.05f8d813.js"><link rel="prefetch" href="/assets/js/60.d92380ca.js"><link rel="prefetch" href="/assets/js/61.60a2f7fc.js"><link rel="prefetch" href="/assets/js/62.f4eedc25.js"><link rel="prefetch" href="/assets/js/63.c6c3f1fc.js"><link rel="prefetch" href="/assets/js/64.9cea11bd.js"><link rel="prefetch" href="/assets/js/65.e70f2711.js"><link rel="prefetch" href="/assets/js/66.c4f8ef1b.js"><link rel="prefetch" href="/assets/js/67.4af48a3d.js"><link rel="prefetch" href="/assets/js/68.3549d0a3.js"><link rel="prefetch" href="/assets/js/69.590fc41f.js"><link rel="prefetch" href="/assets/js/7.847b9964.js"><link rel="prefetch" href="/assets/js/70.9eb9d80f.js"><link rel="prefetch" href="/assets/js/8.c40db4c9.js"><link rel="prefetch" href="/assets/js/9.e448cfe6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4d8b86b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><p>::: center
+两台服务器为什么ping不通？Docker容器应用创建的网桥在搞鬼！
+:::</p> <h2 id="一、故事背景"><a href="#一、故事背景" class="header-anchor">#</a> 一、故事背景</h2> <p>VSS项目在使用FHTP自动化用例平台进行接口自动化用例编写，结果却发现一直在报错：<br> <img src="/blog_assets/images/Clipboard_2020-08-21-14-37-03.png" alt=""></p> <p>是一个熟悉的错误，网络连接超时了，原因很多，但是在PC环境执行此用例却是成功的，被测服务肯定是OK的，问题一定出在FHTP的测试用例执行环境上。</p> <p>测开同学一通定位分析了解到，执行此测试用例的服务器ip为：172.17.xx.xx，登陆此服务器尝试ping被测接口服务的ip（172.16.24.3）发现网络不通：
+<img src="/blog_assets/images/Clipboard_2020-08-21-14-33-00.png" alt=""></p> <p>由此开始了一次解谜游戏......</p> <p>在开始解谜之前，我们先交代下被研究的对象</p> <table><thead><tr><th>服务器角色</th> <th>服务器IP</th></tr></thead> <tbody><tr><td>FHTP自动化用例平台测试执行节点（后续我们用worker代指）</td> <td>172.17.xx.xx</td></tr> <tr><td>被测对象VSS服务接口服务器</td> <td>172.16.24.3</td></tr></tbody></table> <p>好了，记住这一点，我们出发了。</p> <h2 id="二、寻找蛛丝马迹"><a href="#二、寻找蛛丝马迹" class="header-anchor">#</a> 二、寻找蛛丝马迹</h2> <p>常规思路开始对<code>172.16.24.3</code>服务器进行问题分析排查：</p> <ol><li>把服务器防火墙关闭，依然不通；</li> <li>网络连接信息检查，发现了问题的踪迹：
+<img src="/blog_assets/images/Clipboard_2020-08-21-14-57-03.png" alt=""><br>
+与Docker有关，有个<code>172.17</code>的IP出现了！
+查看服务器网络配置，找到了一个网络，<code>br-xxxxx</code> <img src="/blog_assets/images/Clipboard_2020-08-21-15-02-52.png" alt=""></li></ol> <p>这是Docker容器应用创建的网桥，之前遇到过类似的问题：
+<img src="/blog_assets/images/Clipboard_2020-08-21-15-05-52.png" alt=""></p> <h2 id="三、真相大白"><a href="#三、真相大白" class="header-anchor">#</a> 三、真相大白</h2> <p><code>br-1fa4179c4771</code>这是哪个容器应用创建的网络？</p> <p><img src="/blog_assets/images/Clipboard_2020-08-21-15-24-30.png" alt=""></p> <p>找到了，这个<code>172.17.0.1</code>的网桥是<code>vss</code>创建的，我们在这个网络的配置中看到了两个容器的名称：</p> <ul><li>milvus-gpu-0.10.0</li> <li>rabbitmq</li></ul> <p>顺藤摸瓜我们继续找，这是哪个配置文件定义的容器名称。</p> <p>我们在<code>/home/vss</code>目录下，我们找到了<code>base_enviroment.yml</code>这个配置文件，来看看其内容：</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> rabbitmq<span class="token punctuation">:</span>3.8.5<span class="token punctuation">-</span>management
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> rabbitmq
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">RABBITMQ_DEFAULT_USER</span><span class="token punctuation">:</span> <span class="token string">&quot;admin&quot;</span>
+      <span class="token key atrule">RABBITMQ_DEFAULT_PASS</span><span class="token punctuation">:</span> <span class="token string">&quot;admin&quot;</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /home/vss/mqdata<span class="token punctuation">:</span>/var/lib/rabbitmq
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 15672<span class="token punctuation">:</span><span class="token number">15672</span>
+      <span class="token punctuation">-</span> 4369<span class="token punctuation">:</span><span class="token number">4369</span>
+      <span class="token punctuation">-</span> 5672<span class="token punctuation">:</span><span class="token number">5672</span>
+      <span class="token punctuation">-</span> 25672<span class="token punctuation">:</span><span class="token number">25672</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+
+  <span class="token key atrule">milvus</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> milvusdb/milvus<span class="token punctuation">:</span>0.10.0<span class="token punctuation">-</span>gpu<span class="token punctuation">-</span>d061620<span class="token punctuation">-</span>5f3c00
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> milvus<span class="token punctuation">-</span>gpu<span class="token punctuation">-</span>0.10.0
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /home/vss/milvusdata<span class="token punctuation">:</span>/var/lib/milvus/db
+      <span class="token punctuation">-</span> /home/vss/conf<span class="token punctuation">:</span>/var/lib/milvus/conf
+      <span class="token punctuation">-</span> /home/vss/logs/milvus<span class="token punctuation">:</span>/var/lib/milvus/logs
+      <span class="token punctuation">-</span> /home/vss/wal<span class="token punctuation">:</span>/var/lib/milvus/wal
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 19533<span class="token punctuation">:</span><span class="token number">19530</span>
+      <span class="token punctuation">-</span> 19123<span class="token punctuation">:</span><span class="token number">19121</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> on<span class="token punctuation">-</span>failure
+
+  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>pg<span class="token punctuation">:</span>1.0.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> <span class="token string">&quot;host&quot;</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> PG_IP_PORT=172.16.24.3<span class="token punctuation">:</span><span class="token number">5432</span>
+      <span class="token punctuation">-</span> PG_DB_NAME=nacos
+      <span class="token punctuation">-</span> PG_USER_NAME=nacos
+      <span class="token punctuation">-</span> PG_PWD=nacos
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./logs/nacos<span class="token punctuation">:</span>/home/nacos/logs
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8848<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token punctuation">-</span> 9555<span class="token punctuation">:</span><span class="token number">9555</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> on<span class="token punctuation">-</span>failure
+</code></pre></div><p>嗯，就是这个了，证据确凿。</p> <p><img src="/blog_assets/images/Clipboard_2020-08-21-15-32-50.png" alt=""></p> <p>官方网站告诉我们一切：</p> <p><img src="/blog_assets/images/Clipboard_2020-08-21-14-28-10.png" alt=""></p> <p>我们在<code>vss</code>目录下，通过<code>docker-compose</code>编排启动了一组Docker容器，会默认创建一个<code>vss_default</code>的网络，一切都对上了。</p> <h2 id="四、分析复盘"><a href="#四、分析复盘" class="header-anchor">#</a> 四、分析复盘</h2> <p>通过<code>docker-compose</code>编排启动的一组容器，若没有声明网络配置，则会默认创建一个新的网桥（且IP网段是随机的，会选取一个没有使用的IP网段）。</p> <p>我们通过试验证明下，现在新的网络IP网段为<code>172.21.0.1</code>了</p> <p><img src="/blog_assets/images/Clipboard_2020-08-21-15-38-18.png" alt=""> <img src="/blog_assets/images/Clipboard_2020-08-21-15-44-45.png" alt=""></p> <p>此时若局域网内有一台服务器的IP为<code>172.21.xx.xx</code>，访问我们的测试服务器，则会出现上述的网络不通的情况！</p> <p>基本情况我们已经知道了，但还有一个疑问，通过docker-compose，<code>base_enviroment.yml</code>明明编排了三个容器，为什么有<code>nacos-server</code>没有使用新创建<code>vss_default</code>的网络呢？</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token punctuation">...</span><span class="token punctuation">...</span>
+<span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>pg<span class="token punctuation">:</span>1.0.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> <span class="token string">&quot;host&quot;</span>
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+</code></pre></div><p>因为配置了<code>network_mode: &quot;host&quot;</code>，默认使用宿主机的IP，而不是新建网络。</p> <p><img src="/blog_assets/images/Clipboard_2020-08-21-14-29-13.png" alt=""></p> <h2 id="五、总结反思"><a href="#五、总结反思" class="header-anchor">#</a> <strong>五、总结反思</strong></h2> <p>考虑到我们公司的产品，部署在客户环境，且当前基本没有提供DNS服务，<strong>我们务必重识这种容器IP网段与宿主机冲突导致网络故障的问题，这应该纳入我们的Docker应用测试标准规范中，在安装测试环节进行检查，增加测试用例</strong>。</p> <p>解决这个问题有两种办法：</p> <ul><li>显示的为容器配置网桥</li> <li>为容器绑定宿主机网段</li></ul> <p>上策为安装程序自动检测宿主机的IP网段和已经被其他容器使用的IP网段，自适应创建本容器的网桥网络的IP网段；</p> <p>中策为在安装文档着重提示安装人员检查宿主机的IP地址，选择未被占用的合理的IP网段，配置本容器的网桥网络的IP网段；</p> <p>下策为粗暴的绑定宿主机网段，这种最简单，但使用起来有诸多限制；</p> <h3 id="一-显示的为容器配置网桥"><a href="#一-显示的为容器配置网桥" class="header-anchor">#</a> （一）显示的为容器配置网桥</h3> <p>配置示例如下图所示，避免和宿主机在同一网段：</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">&quot;3&quot;</span>
+
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">py_env</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qguo/py_env<span class="token punctuation">:</span>3.7.7<span class="token punctuation">-</span>buster_v1
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> AITestDBManager<span class="token punctuation">-</span>Release
+    <span class="token key atrule">stdin_open</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">tty</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> unless<span class="token punctuation">-</span>stopped
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token key atrule">ait_release_net</span><span class="token punctuation">:</span>
+        <span class="token key atrule">ipv4_address</span><span class="token punctuation">:</span> 192.167.1.2
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">&quot;3344:5000&quot;</span>
+      <span class="token punctuation">-</span> <span class="token string">&quot;2555:22&quot;</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /etc/localtime<span class="token punctuation">:</span>/etc/localtime<span class="token punctuation">:</span>ro
+      <span class="token punctuation">-</span> ./AITestDBManager<span class="token punctuation">:</span>/home/AITestDBManager
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> db
+      <span class="token punctuation">-</span> nginx
+
+  <span class="token key atrule">nginx</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> AITNginx<span class="token punctuation">-</span>Release
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">&quot;12345:80&quot;</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> unless<span class="token punctuation">-</span>stopped
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token key atrule">ait_release_net</span><span class="token punctuation">:</span>
+        <span class="token key atrule">ipv4_address</span><span class="token punctuation">:</span> 192.167.1.3
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /etc/localtime<span class="token punctuation">:</span>/etc/localtime<span class="token punctuation">:</span>ro
+      <span class="token punctuation">-</span> ./AITNginx/nginx_conf/aitest_data.conf<span class="token punctuation">:</span>/etc/nginx/nginx.conf
+      <span class="token punctuation">-</span> ./AITNginx/logs<span class="token punctuation">:</span>/var/log/nginx
+      <span class="token punctuation">-</span> ./AITestDBManager/output_data/images<span class="token punctuation">:</span>/store/images
+      <span class="token punctuation">-</span> ./AITestDBManager/output_data/audios<span class="token punctuation">:</span>/store/audios
+
+<span class="token key atrule">networks</span><span class="token punctuation">:</span>
+  <span class="token key atrule">ait_release_net</span><span class="token punctuation">:</span>
+    <span class="token key atrule">driver</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">ipam</span><span class="token punctuation">:</span>
+      <span class="token key atrule">config</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">subnet</span><span class="token punctuation">:</span> 192.167.1.0/16
+</code></pre></div><h3 id="二-为容器绑定宿主机网段"><a href="#二-为容器绑定宿主机网段" class="header-anchor">#</a> （二）为容器绑定宿主机网段</h3> <p>将每个容器的网络都配置为<code>network_mode: &quot;host&quot;</code>，绑定到宿主机（<strong>但需要注意，这样的话，容器内部的端口在宿主机映射就不能自定义了</strong>）。</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>pg<span class="token punctuation">:</span>1.0.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> <span class="token string">&quot;host&quot;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e939b80d.js" defer></script><script src="/assets/js/2.592a5c23.js" defer></script><script src="/assets/js/12.5ce87fa3.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>NLU（自然语言理解）智能算法测试从1到N的改进</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.e4d8b86b.css" as="style"><link rel="preload" href="/assets/js/app.e939b80d.js" as="script"><link rel="preload" href="/assets/js/2.592a5c23.js" as="script"><link rel="preload" href="/assets/js/48.3df8c297.js" as="script"><link rel="prefetch" href="/assets/js/10.b0048048.js"><link rel="prefetch" href="/assets/js/11.fbdb8f3a.js"><link rel="prefetch" href="/assets/js/12.5ce87fa3.js"><link rel="prefetch" href="/assets/js/13.63a46ec7.js"><link rel="prefetch" href="/assets/js/14.92eb68c0.js"><link rel="prefetch" href="/assets/js/15.1a5e4227.js"><link rel="prefetch" href="/assets/js/16.838a3548.js"><link rel="prefetch" href="/assets/js/17.78051799.js"><link rel="prefetch" href="/assets/js/18.03acb563.js"><link rel="prefetch" href="/assets/js/19.581869d3.js"><link rel="prefetch" href="/assets/js/20.0002bb24.js"><link rel="prefetch" href="/assets/js/21.d37f07bf.js"><link rel="prefetch" href="/assets/js/22.e0b6aafe.js"><link rel="prefetch" href="/assets/js/23.6de77273.js"><link rel="prefetch" href="/assets/js/24.5c2ab7a9.js"><link rel="prefetch" href="/assets/js/25.be513cc0.js"><link rel="prefetch" href="/assets/js/26.2983738b.js"><link rel="prefetch" href="/assets/js/27.6210b677.js"><link rel="prefetch" href="/assets/js/28.f90f5f9d.js"><link rel="prefetch" href="/assets/js/29.14e8dae9.js"><link rel="prefetch" href="/assets/js/3.b53076be.js"><link rel="prefetch" href="/assets/js/30.25109394.js"><link rel="prefetch" href="/assets/js/31.05cfdc8d.js"><link rel="prefetch" href="/assets/js/32.23f5a754.js"><link rel="prefetch" href="/assets/js/33.b85d2360.js"><link rel="prefetch" href="/assets/js/34.439a146f.js"><link rel="prefetch" href="/assets/js/35.801747db.js"><link rel="prefetch" href="/assets/js/36.db43cce9.js"><link rel="prefetch" href="/assets/js/37.1a8b542d.js"><link rel="prefetch" href="/assets/js/38.f24e4862.js"><link rel="prefetch" href="/assets/js/39.258f2863.js"><link rel="prefetch" href="/assets/js/4.9686c1c3.js"><link rel="prefetch" href="/assets/js/40.b864857a.js"><link rel="prefetch" href="/assets/js/41.29617041.js"><link rel="prefetch" href="/assets/js/42.44f441ff.js"><link rel="prefetch" href="/assets/js/43.44193785.js"><link rel="prefetch" href="/assets/js/44.590b69b5.js"><link rel="prefetch" href="/assets/js/45.1722565b.js"><link rel="prefetch" href="/assets/js/46.3fdfb089.js"><link rel="prefetch" href="/assets/js/47.0f252be2.js"><link rel="prefetch" href="/assets/js/49.e21fbc0c.js"><link rel="prefetch" href="/assets/js/5.e9756155.js"><link rel="prefetch" href="/assets/js/50.433b8b1b.js"><link rel="prefetch" href="/assets/js/51.0567caa7.js"><link rel="prefetch" href="/assets/js/52.9024d2e6.js"><link rel="prefetch" href="/assets/js/53.733503d0.js"><link rel="prefetch" href="/assets/js/54.68d3a8fe.js"><link rel="prefetch" href="/assets/js/55.d97a8913.js"><link rel="prefetch" href="/assets/js/56.317eb8fa.js"><link rel="prefetch" href="/assets/js/57.d6744e2e.js"><link rel="prefetch" href="/assets/js/58.3f9787e8.js"><link rel="prefetch" href="/assets/js/59.e3819b53.js"><link rel="prefetch" href="/assets/js/6.05f8d813.js"><link rel="prefetch" href="/assets/js/60.d92380ca.js"><link rel="prefetch" href="/assets/js/61.60a2f7fc.js"><link rel="prefetch" href="/assets/js/62.f4eedc25.js"><link rel="prefetch" href="/assets/js/63.c6c3f1fc.js"><link rel="prefetch" href="/assets/js/64.9cea11bd.js"><link rel="prefetch" href="/assets/js/65.e70f2711.js"><link rel="prefetch" href="/assets/js/66.c4f8ef1b.js"><link rel="prefetch" href="/assets/js/67.4af48a3d.js"><link rel="prefetch" href="/assets/js/68.3549d0a3.js"><link rel="prefetch" href="/assets/js/69.590fc41f.js"><link rel="prefetch" href="/assets/js/7.847b9964.js"><link rel="prefetch" href="/assets/js/70.9eb9d80f.js"><link rel="prefetch" href="/assets/js/8.c40db4c9.js"><link rel="prefetch" href="/assets/js/9.e448cfe6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4d8b86b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><blockquote><p>From  智能化产品测试团队</p></blockquote> <h2 id="_1-前言"><a href="#_1-前言" class="header-anchor">#</a> 1 前言</h2> <h3 id="_1-1-什么是nlp"><a href="#_1-1-什么是nlp" class="header-anchor">#</a> 1.1 什么是NLP</h3> <div align="center"><img src="/blog_assets/images/image-20201228091024423.png"></div> <p>在人工智能出现之前，机器只能处理结构化的数据（例如有明确的字段关系表格数据），但互联网中大部分数据都是非结构化的，例如：文章、图片、音频、视频......其中很多信息都是以文本为载体存在的，为了能够利用和分析这些文本信息，我们就需要利用NLP技术，让机器理解这些文本信息，并加以利用。</p> <p>NLP（Natural Language Process ） ---- 自然语言处理就是人类和机器之间沟通的桥梁。</p> <p>自然语言就是大家平时在生活中常用的表达方式，大家平时说的“讲人话”就是这个意思。</p> <p>NLP是个很大的体系，其包含的内容如下图所示：</p> <div align="center"><img src="/blog_assets/images/image-20201228103536972.png"></div> <h3 id="_1-2-什么是nlu"><a href="#_1-2-什么是nlu" class="header-anchor">#</a> 1.2 什么是NLU</h3> <p>我们用一个具体的案例来说明下什么是NLU。</p> <p>对话系统这个事情在2015年开始突然火起来了，主要是因为一个技术的普及：机器学习特别是深度学习带来的语音识别（ASR）和NLU（自然语言理解）--- 主要解决的是识别人讲的话。这个技术的普及让很多团队都掌握了一组关键技能：意图识别和实体提取。</p> <p>这意味着什么？我们来看一个例子。</p> <p>在生活中，如果想要订机票，人们会有很多种自然的表达：</p> <blockquote><p>&quot;订一张去北京的机票&quot;；</p> <p>“有去北京的航班吗？”；</p> <p>“看看航班，下周二出发去北京”；</p> <p>“要去北京出差，帮我查下机票”；</p> <p>……</p></blockquote> <p>可以说“自然的表达”有无穷多的组合（自然语言）都在代表“订机票”这个意图，而听到这些表达的人，可以准确理解这些表达指的是“订机票”这件事。</p> <p>而要理解这么多不同的表达，对机器是个挑战。在过去，机器只能处理“结构化的数据”（比如关键词），也就是说如果要听懂人在说什么，必须要用户输入精确的指令。所以，无论你说“我要出差”还是“帮我看看去北京的航班”，只要这些字里面没有包含提前设定的关键词“订机票”，系统都无法处理。而且，只要出现了关键词，比如“我要退订机票”里也有这三个关键词，也会被处理成用户想要订机票。</p> <p>我们本文将要分享的内容即为NLU（Natural Language Understanding）--- 自然语言理解的智能算法测试方法的改进思考和实践。</p> <div align="center"><img src="/blog_assets/images/image-20201228105057263.png"></div> <p>自然语言理解这个技能出现后，可以让机器从各种自然语言的表达中，区分出来，那些话归于这个意图，而哪些表达不是归于这一类的，而不再依赖那么死板的关键词。比如经过训练后，机器能够识别“帮我推荐一家附近的餐厅”，就不属于“订机票”这个意图的表达。</p> <p>并且，通过训练，机器还能够在句子当中自动提取出来“北京”，这两个字指的是目的地这个概念（即实体），“下周二”指的是出发时间。</p> <p>这样一来，看上去机器就能听懂人话了。</p> <div align="center"><img src="/blog_assets/images/image-20201228105118709.png"></div> <h4 id="_1-2-1-烽火在公安领域nlu相关的概念"><a href="#_1-2-1-烽火在公安领域nlu相关的概念" class="header-anchor">#</a> 1.2.1 烽火在公安领域NLU相关的概念</h4> <p>我司在NLU领域探索开拓的有两个团队，IAO和KG，两个团队的NLU体系标准和定义有所区别，我们以较为复杂的烽火IAO-NLU体系为例进行讲解阐述。</p> <p>对于”查询13301791708的酒店同房间人员“这个测试语料，其NLU算法服务处理返回结果为：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;code&quot;</span><span class="token operator">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;data&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;apps&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;app_op_seq&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;content&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;des&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">&quot;phone_number&quot;</span><span class="token operator">:</span> <span class="token string">&quot;13301791708&quot;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token string">&quot;SIM_Card&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;rel&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token property">&quot;des&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token string">&quot;SIM_Card&quot;</span><span class="token punctuation">,</span>
+                            <span class="token string">&quot;Person&quot;</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;rel&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token punctuation">{</span>
+                                <span class="token property">&quot;behavior&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token punctuation">{</span>
+                                        <span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;伴随分析&quot;</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;location&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;modifiers&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;number&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;target&quot;</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;time&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;traffic&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+                                    <span class="token punctuation">}</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;des&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                                    <span class="token property">&quot;intent&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                        <span class="token string">&quot;full&quot;</span>
+                                    <span class="token punctuation">]</span>
+                                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;intentPro&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token string">&quot;entity&quot;</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token string">&quot;Person&quot;</span><span class="token punctuation">,</span>
+                                    <span class="token string">&quot;Person&quot;</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;relIdx&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token number">0</span><span class="token punctuation">,</span>
+                                    <span class="token string">&quot;14-19&quot;</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;relName&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店同房间同宿&quot;</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;segs&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token string">&quot;查询13301791708的酒店同房间人员&quot;</span>
+                                <span class="token punctuation">]</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;relIdx&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token number">0</span><span class="token punctuation">,</span>
+                            <span class="token string">&quot;13-19&quot;</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;relName&quot;</span><span class="token operator">:</span> <span class="token string">&quot;使用人&quot;</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;segs&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token string">&quot;查询13301791708的酒店同房间人员&quot;</span>
+                        <span class="token punctuation">]</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;segs&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                    <span class="token string">&quot;查询13301791708的酒店同房间人员&quot;</span>
+                <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;content_op&quot;</span><span class="token operator">:</span> <span class="token string">&quot;查询&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;data_op&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;data_rel&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token string">&quot;&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;data_rel_property&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;msg&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;unknown&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;keyword&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token string">&quot;unknown&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>结合NLU的业界标准，以及我司在公安领域的深耕和应用场景，我们对NLU的识别结果分为以下几个类别。</p> <h5 id="_1-2-1-1-本体"><a href="#_1-2-1-1-本体" class="header-anchor">#</a> 1.2.1.1 本体</h5> <p>本体（ontology，缩写为ont），在计算机科学与信息学领域，理论上，本体是指一种”形式化的，对于共享概念体系的明确而又详细的说明“，</p> <p>我们可以简化的理解为自然语言中的诸多对象。</p> <p>举个例子，对于”查询13301791708的酒店同房间人员“这句话，其中的本体为：</p> <ul><li>SIM_Card</li> <li>['SIM_Card', 'Person']</li> <li>['Person', 'Person']</li></ul> <h5 id="_1-2-1-2-属性"><a href="#_1-2-1-2-属性" class="header-anchor">#</a> 1.2.1.2 属性</h5> <p>属性（ontology_attribute），即指的是各个本体的属性。</p> <p>举个例子，对于”查询13301791708的酒店同房间人员“这句话，其中的属性为：</p> <ul><li>phone_number，其属性值为”13301791708“</li></ul> <h5 id="_1-2-1-3-关系"><a href="#_1-2-1-3-关系" class="header-anchor">#</a> 1.2.1.3 关系</h5> <p>关系（relname），是指多个本体之间的关系名词。</p> <p>举个例子，对于”查询13301791708的酒店同房间人员“，其中的关系为：</p> <ul><li>酒店同房间同宿</li></ul> <h4 id="_1-2-1-4-行为"><a href="#_1-2-1-4-行为" class="header-anchor">#</a> 1.2.1.4 行为</h4> <p>行为（behavior），此为我们公司结合公安领域的特性定义的识别结果分类</p> <p>举个例子，对于”查询13301791708的酒店同房间人员“，其中的行为类别为：</p> <ul><li>category，其值为”伴随分析“</li></ul> <h5 id="_1-2-1-5-意图"><a href="#_1-2-1-5-意图" class="header-anchor">#</a> 1.2.1.5 意图</h5> <p>意图（intention），即为一句话或一段话的目的是什么，烽火IAO-NLU体系对其定义为几个有限集合，便于上层业务查询使用。</p> <p>举个例子，对于”查询13301791708的酒店同房间人员“，其中的意图为：</p> <ul><li>['full']</li></ul> <h2 id="_2-如何度量其质量-nlu评估指标"><a href="#_2-如何度量其质量-nlu评估指标" class="header-anchor">#</a> 2 如何度量其质量---NLU评估指标</h2> <p>首先，我们需要明确从哪些维度去客观、严谨、全面的评估NLU算法质量。这里我们通过对NLU实现过程的深入了解，以及对标行业内在相关领域的实践经验，<strong>结合我司网安领域的业务场景</strong>，对IAO-NLU体系的NLU能力确定了如下维度的评估指标。</p> <h3 id="_2-1-评估指标"><a href="#_2-1-评估指标" class="header-anchor">#</a> 2.1 评估指标</h3> <h4 id="_2-1-1-本体识别"><a href="#_2-1-1-本体识别" class="header-anchor">#</a> 2.1.1 本体识别</h4> <p>$$
+本体识别精确率 = \frac {识别正确的本体个数} {识别出来的本体个数} \times 100%
+$$</p> <p>$$
+本体识别召回率 = \frac {识别正确的本体个数} {期望识别出来的本体个数} \times 100%
+$$</p> <p>$$
+本体识别错误率 = \frac {识别错误的本体个数} {识别出来的本体个数} \times 100%
+$$</p> <p>举例说明：</p> <blockquote><p>100条测试问句中，覆盖Person本体50个</p> <ul><li>识别出40个Person本体；</li> <li>识别正确的38个Person本体；</li> <li>识别错误的2个Person本体；</li></ul> <p>Person本体识别精确率=38 / 40</p> <p>Person本体识召回率=38 / 50</p> <p>Person本体识错误率=2 / 40</p></blockquote> <h4 id="_2-1-2-属性识别"><a href="#_2-1-2-属性识别" class="header-anchor">#</a> 2.1.2 属性识别</h4> <p>$$
+属性识别精确率 = \frac {识别正确的属性个数} {识别出来的属性个数} \times 100%
+$$</p> <p>$$
+属性识别召回率 = \frac {识别正确的属性个数} {期望识别出来的属性个数} \times 100%
+$$</p> <p>$$
+属性识别错误率 = \frac {识别错误的属性个数} {识别出来的属性个数} \times 100%
+$$</p> <p>举例说明：</p> <blockquote><p>100条测试问句中，覆盖person_name属性50个（假设其中1个元素重复了5次）</p> <ul><li><p>识别出person_name属性共计40个；</p></li> <li><p>识别正确的的38个（重复元素正确识别3次）；</p></li> <li><p>识别错误的2个（重复元素错误识别1次，重复元素漏识别1次）；</p></li></ul> <p>person_name属性识别精确率=38 / 40</p> <p>person_name属性识别召回率=38 / 50</p> <p>person_name属性识别错误率=2 / 40</p></blockquote> <h4 id="_2-1-3-关系识别"><a href="#_2-1-3-关系识别" class="header-anchor">#</a> 2.1.3 关系识别</h4> <p>解释说明：</p> <blockquote><p>关系所在层级及关系值均正确，即视为正确。</p></blockquote> <p>$$
+关系识别精确率 = \frac {识别正确的关系个数} {识别出来的关系个数} \times 100%
+$$</p> <p>$$
+关系识别召回率 = \frac {识别正确的关系个数} {期望识别出来的关系个数} \times 100%
+$$</p> <p>$$
+关系识别错误率 = \frac {识别错误的关系个数} {识别出来的关系个数} \times 100%
+$$</p> <h4 id="_2-1-4-行为识别"><a href="#_2-1-4-行为识别" class="header-anchor">#</a> 2.1.4 行为识别</h4> <p>解释说明：</p> <blockquote><p>行为包括：category、location、modifiers、number、target、time、traffic；</p> <p>当行为中的category、location、modifiers、traffic均正确时，即认为一个行为正确。</p></blockquote> <p>$$
+行为识别精确率 = \frac {识别正确的行为个数} {识别出来的行为个数} \times 100%
+$$</p> <p>$$
+行为识别召回率 = \frac {识别正确的行为个数} {期望识别出来的行为个数} \times 100%
+$$</p> <p>$$
+行为识别错误率 = \frac {识别错误的行为个数} {识别出来的行为个数} \times 100%
+$$</p> <h4 id="_2-1-5-意图识别"><a href="#_2-1-5-意图识别" class="header-anchor">#</a> 2.1.5 意图识别</h4> <p>解释说明：</p> <blockquote><p>一句话中同时出现Apps、Content、Content_op、data_rel时，需全部正确才判断为一个意图正确：</p> <ul><li><p>Apps：多组{action、module_name、module_type}均正确即认为意图正确；</p></li> <li><p>Content：intentPro、des.intent、behavior中的target所在层级及内容均正确即认为意图正确；</p></li> <li><p>Content_op：内容正确即认为正确；</p></li> <li><p>data_rel：data_rel正确即认为正确；</p></li></ul></blockquote> <p>$$
+意图识别正确率 = \frac {意图识别正确的问句个数} {测试问句总数} \times 100%
+$$</p> <h4 id="_2-1-6-场景识别正确率"><a href="#_2-1-6-场景识别正确率" class="header-anchor">#</a> 2.1.6 场景识别正确率</h4> <p>根据业务使用场景，对各场景下的测试语料测试结果分别统计其正确率，可以更清晰的体现NLU能力对上层业务的价值。
+$$
+核心业务场景正确率 = \frac {识别正确的核心业务场景问句条数} {核心业务场景问句条数} \times 100%
+$$</p> <p>$$
+非核心业务场景正确率 = \frac {识别正确的非核心业务场景问句条数} {非核心业务场景问句条数} \times 100%
+$$</p> <p>$$
+多实体关系分析识别正确率 = \frac {多实体关系分析识别正确的问句数} {多实体关系分析测试问句总数} \times 100%
+$$</p> <h2 id="_3-如何实现上述维度的客观、高效度量"><a href="#_3-如何实现上述维度的客观、高效度量" class="header-anchor">#</a> 3 如何实现上述维度的客观、高效度量</h2> <p>在2019年，我们已经进行了NLU智能算法测试的探索，<strong>实现了从0到1的突破，积累了一批测试语料，也实现了一定程度上的各指标维度的分析计算</strong>。</p> <p>但随着NLU智能算法服务能力的丰富，其识别结果的数据结构愈发的复杂，需要对已有的测试方法和工具进行优化改进：</p> <ul><li><p>降低测试语料准备工作的复杂度，</p></li> <li><p>降低测试语料标注的成本，</p></li> <li><p>提高测试语料标注的效率，</p></li> <li><p>降低测试结果分析、统计和指标计算的代码难度，</p></li></ul> <p>我们需要实现从1到N的优化。</p> <h3 id="_3-1-我们需要解决的问题"><a href="#_3-1-我们需要解决的问题" class="header-anchor">#</a> 3.1 我们需要解决的问题</h3> <p>我们主要面临三个大方向的问题：</p> <p>一、由于我司NLU的应用领域为公安领域，相关语料的获取渠道极为受限，无法从互联网采集，也难以从现有的线上业务系统中获取（对应的业务应用处于刚刚起步阶段，线上用户量很少，从用户使用日志中能获取的信息少）。</p> <p>二、获取到所需的语料文本后，我们还需要根据我司的NLU体系定义进行（本体、属性、关系、意图、行为、业务场景等维度）语料标注（且我司目前有两套NLU体系定义：IAO和KG）。</p> <p>三、我们需要对大量的语料测试结果进行各个维度的分析统计，进行各类指标的计算，并且快速的分析其各个指标维度下的失效原因，提供样例用于研发定位和改进NLU算法服务。</p> <h4 id="_3-1-1-克服高效简单语料生成和语料标注难题"><a href="#_3-1-1-克服高效简单语料生成和语料标注难题" class="header-anchor">#</a> 3.1.1 克服高效简单语料生成和语料标注难题</h4> <h5 id="_3-1-1-1-语料生成的局限性"><a href="#_3-1-1-1-语料生成的局限性" class="header-anchor">#</a> 3.1.1.1 语料生成的局限性</h5> <p>语料生成的基本原理为通过语料模板和语料素材的组合生成问句。</p> <p>举个例子，通过以下语料模板和语料素材：</p> <div class="language- extra-class"><pre class="language-text"><code>【模板】查询{中文姓名}和手机号为{手机号码}，{长时间段}的住宿记录，{酒店名称}
+【素材】中文姓名 ['赵刚', '刘芳', '李白']
+【素材】长时间段 ['一九九七年', '2020年1月', '2018年三月之后', '2020年2月份之后']
+【素材】手机号码 ['13033918279', '13612349005', '8613368366846', '+8613532340976']
+【素材】酒店名称 ['珠江路汉庭酒店', '珠江路如家酒店', '新模范马路香格里拉', '新城科技园桔子水晶']
+</code></pre></div><p>我们可以生成以下语料</p> <div class="language- extra-class"><pre class="language-text"><code>查询赵刚和手机号为13033918279，一九九七年的住宿记录，珠江路汉庭酒店
+查询刘芳和手机号为13612349005，2020年1月的住宿记录，珠江路如家酒店
+查询李白和手机号为8613368366846，2018年三月之后的住宿记录，新模范马路香格里拉
+查询赵刚和手机号为+8613532340976，2020年2月份之后的住宿记录，新城科技园桔子水晶
+</code></pre></div><p>在2019年的方案中，我们的语料素材存储方式为“文件夹+txt文本”，但语料素材有分类，有标签，有根据项目不同的归一化内容等诸多附加信息，使用“文件夹+txt文本”的存储方式有如下困难需要克服：</p> <ul><li>不利于表达多层级，多并列的语料素材信息；</li> <li>txt文本缺乏语法校验，手动编辑容易出错，需要通过编写代码对语料素材的导入内容进行预检查、归一化等处理，增加了代码量和维护成本；</li> <li>各类附件信息体现在txt文件名中，通过<code>#</code>等各类自定义的符号进行分隔，程序代码需要按照阅读切分字符串读取信息；</li> <li>随着语料素材的调整修正，维护成本逐步提高；</li></ul> <h5 id="_3-1-1-2-语料标注的局限性"><a href="#_3-1-1-2-语料标注的局限性" class="header-anchor">#</a> 3.1.1.2 语料标注的局限性</h5> <p>在2019年的方案中，通过语料模板和语料素材生成的语料，我们的语料标注方案为自定义的一套语法规则，通过对语料的理解，手动编写标注规则信息</p> <p><img src="/blog_assets/images/image-20201229095348936.png" alt="image-20201229095348936"></p> <p>语料模板对应的标注信息示例：</p> <p><img src="/blog_assets/images/image-20201229102717855.png" alt="image-20201229102717855"></p> <p>从工具维护开发人员的角度来讲，这种标注方式需要有对应的代码将NLU服务的相应体解析为对应的格式进行比对，需要较强的代码能力。</p> <p>从测试工程师使用的角度来讲，有以下事项需要优化改进，提高测试效率降低测试成本：</p> <ul><li>需要对每一条语料模板根据工具定义约定的规则（如上图所示），编写其标注信息，学习成本较高；</li> <li>由于每条模板都需要手动编写，其成本较高，使用这套规则标注效率较低，且<strong>在此方案下，无法实现通过自动化预标注+人工审查的方式来提高标注效率</strong>；</li> <li>标注质量有待提高，因为标注信息全靠手写，导致标注出错概率高；</li> <li><strong>语料内容与其标注信息深度绑定，不可解耦</strong>，同一批语料，随着NLU算法的迭代，以及不同的NLU算法项目，其标注信息是有变化的，需要将语料内容与标注信息进行解耦。</li></ul> <h4 id="_3-1-2-缺乏深度多维的测试结果分析"><a href="#_3-1-2-缺乏深度多维的测试结果分析" class="header-anchor">#</a> 3.1.2 缺乏深度多维的测试结果分析</h4> <p>在2019年的方案中，我们的语料模板和语料素材生成的语料和语料标注信息示例如下：</p> <p><img src="/blog_assets/images/image-20201229103901847.png" alt="image-20201229103901847"></p> <p>可以看到，其语料标注信息是根据语料模板的标注规则回填的，其测试结果也需要将NLU算法服务的返回的<code>json</code>数据解析为对应的节点信息进行比对研判，这就有一定的局限性：</p> <ul><li>测试代码要<strong>递归解析</strong><code>json</code>结构的NLU服务响应体，提取对应的各个NLU识别关键信息，与标注结果进行比对，递归代码的编写维护难度高，不易修改和根据测试需求拓展；</li></ul> <h3 id="_3-2-重难点分析"><a href="#_3-2-重难点分析" class="header-anchor">#</a> 3.2 重难点分析</h3> <h4 id="_3-2-1-重点分析"><a href="#_3-2-1-重点分析" class="header-anchor">#</a> 3.2.1 重点分析</h4> <ul><li>语料素材库的组织方式要更加合理，提高其可维护性；</li> <li>语料标注的成本要降低，效率要提升；</li> <li>对生成的语料数据集进行各维度的分布统计；</li> <li>降低测试结果分析比对的开发难度，降低开发门槛，提高工具的可拓展性和易维护性；</li> <li>给出宏观的NLU各个维度指标的结果；</li> <li>给出每条语料各个指标维度的分析结果；</li></ul> <h4 id="_3-2-2-难点分析"><a href="#_3-2-2-难点分析" class="header-anchor">#</a> 3.2.2 难点分析</h4> <h5 id="_3-2-2-1-如何将语料生成与语料标注解耦"><a href="#_3-2-2-1-如何将语料生成与语料标注解耦" class="header-anchor">#</a> <font color="orange">3.2.2.1 如何将语料生成与语料标注解耦</font></h5> <p>将语料生成和语料标注解耦，可以对同一批语料进行不同标准体系的标注。就像图像类测试样本的标注，图片是不变的，但标注的维度却可以变化，<strong>标注信息与被标注对象可以是多对一的关系</strong>。</p> <p>对每一条语料的标注，是由语料模板、语料素材、语料模板标注信息共同完成的，只需要将该语料的语料模板和语料素材组成一个数据对，与该语料文本进行映射存储，即可方便的完成标注，可以根据标注定义和标注标准的变更实现独立语料标注。</p> <h5 id="_3-2-2-2-如何提供自动化的预标注能力"><a href="#_3-2-2-2-如何提供自动化的预标注能力" class="header-anchor">#</a> <font color="orange">3.2.2.2 如何提供自动化的预标注能力</font></h5> <p><strong>NLU智能算法经过几个版本的迭代，其能力与质量已经得到了一定的提升，具备了相当的使用价值</strong>。大胆设想，我们是否可以根据NLU算法服务的输出结果，自动回填各个维度（本体、属性、关系、意图、行为）的标注信息？再辅以人工对标注结果审核查验，进行修正确认，即可快速高效的完成文本标注工作。</p> <p>这种<strong>自动化的标注的效率会随着NLU能力的逐步提升、产品质量的逐步优化，得到很大的提升，人工标注成本逐步降低</strong>。</p> <p>但自动化预标住是把双刃剑，<strong>我们必须考虑风险：基于被测NLU服务进行预标注的正确性，将完全依赖于测试工程师对预标注的结果的严谨仔细审核。</strong></p> <h5 id="_3-2-2-3-如何实现测试结果比对分析的代码难度降低-平铺代码逻辑替代多层递归"><a href="#_3-2-2-3-如何实现测试结果比对分析的代码难度降低-平铺代码逻辑替代多层递归" class="header-anchor">#</a> <font color="orange">3.2.2.3 如何实现测试结果比对分析的代码难度降低（平铺代码逻辑替代多层递归）</font></h5> <p>如何将递归解析NLU服务的响应体<code>json</code>替代掉呢？分析其本质，递归是为了找到对应的各个节点信息，然后基于自定义的规则进行比对分析。</p> <p>如何将层层嵌套的<code>json</code>做一维的展开？可以使用<code>jsonpath</code>。</p> <p>使用<code>jsonpath</code>将层层嵌套结构复杂的<code>json</code>结构展开，然后根据kv结构的节点路径和值进行结果比对，即可将递归逻辑给消解掉，使得代码编写调试更容易（本质上没有消灭递归，不过递归交由<code>jsonpath</code>库来做，降低了代码的维护成本）。</p> <h4 id="_3-2-3-难点总结"><a href="#_3-2-3-难点总结" class="header-anchor">#</a> 3.2.3 难点总结</h4> <p>经过上述三个难点的分析，我们发现了一个主要矛盾：<strong>标注信息的表达形式</strong>。</p> <p>我们可以通过将标注信息用<code>jsonpath</code>来表达，即可与被测NLU服务返回结果形成直接的映射关系，不再需要记忆各种定义，手写各种标注规则关系了，且<code>jsonpath</code>可以通过<code>json</code>数据结构自动生成。</p> <p>IAO和KG两个NLU体系并不互通，公司目前没有统一NLU的标准，因此标注信息只需对应其体系维护即可。</p> <p>从哪些维度评估语音识别的质量，是我们首要解决的问题。</p> <p>其次，智能化算法测试若是依托纯手工测试、亦或是半自动化测试，将面临着在执行效率、结果可靠性方面的局限性。</p> <h2 id="_4-核心改进要点"><a href="#_4-核心改进要点" class="header-anchor">#</a> 4 核心改进要点</h2> <p>经过本次优化，NLU的核心测试流程如下，整个测试过程中大部分环节都实现了自动化</p> <p><img src="/blog_assets/images/image-20201229194344479.png" alt="image-20201229194344479"></p> <h3 id="_4-1-基于yaml的语料构造和jsonpath的语料标注"><a href="#_4-1-基于yaml的语料构造和jsonpath的语料标注" class="header-anchor">#</a> 4.1 基于yaml的语料构造和jsonpath的语料标注</h3> <blockquote><p>当前NLP类智能算法服务测试的测试语料构造均可使用<code>CorpusFactory</code>项目来提供能力，其标注的语料亦可用于ASR类智能算法的音频测试样本录制。</p></blockquote> <h4 id="_4-1-1-语料素材的组织形式"><a href="#_4-1-1-语料素材的组织形式" class="header-anchor">#</a> 4.1.1 语料素材的组织形式</h4> <p>2019年方案的语料素材组织形式，如以下的示例：</p> <p><img src="/blog_assets/images/image-20201229154528899.png" alt="image-20201229154528899"></p> <p>现在我们将“文件夹 + txt文件“形态的语料素材组织形式使用<code>yaml</code>格式文件替代，为什么选择<code>yaml</code>?</p> <ul><li><p>yaml的可读性好、扩展性好；</p></li> <li><p>yaml和脚本语言的交互性好；</p></li> <li><p>yaml使用实现语言的数据类型；</p></li> <li><p>yaml有一个一致的信息模型；</p></li> <li><p>yaml易于实现；</p></li></ul> <p>使用<code>yaml</code>来管理组织语料素材的形态如下示例：</p> <p><img src="/blog_assets/images/image-20201229155109431.png" alt="image-20201229155109431"></p> <p>我们通过<code>yaml</code>实现了以下语料素材组织管理的能力：</p> <ul><li>实现了语料素材的灵活组合复用，避免了重复维护；</li> <li>支撑对语料素材进行优先级的划分；</li> <li>对同一语料素材支持区分不同NLU体系的标准化值；</li></ul> <h5 id="_4-1-1-1-语料素材优先级定义优化"><a href="#_4-1-1-1-语料素材优先级定义优化" class="header-anchor">#</a> 4.1.1.1 语料素材优先级定义优化</h5> <p>M1~M4，从元素的常见程度、复杂程度、解析难度等方面综合判断</p> <p><strong>注：目前对于元素优先级的定义，以测试人员的主观判断为主，待真实用户日志数据累计到一定数量时，可结合数据分析结果进行调整；</strong></p> <h4 id="_4-1-2-语料模板的编写方式优化"><a href="#_4-1-2-语料模板的编写方式优化" class="header-anchor">#</a> 4.1.2 语料模板的编写方式优化</h4> <p>因使用<code>jsonpath</code>来对语料进行标注，所以对语料模板也进行了变更，其变更形式如下：</p> <p><img src="/blog_assets/images/image-20201229160704305.png" alt="image-20201229160704305"></p> <p>核心内容即为语料模板，语料标注模板，其中的语料标注模板可以根据根据自动化预标注生成，我们将在接下来的章节阐述。</p> <p>语料标注模板的编写，其``jsonpath<code>也可以通可视化的方式使用工具从</code>json`数据结构中直接获取</p> <p><img src="/blog_assets/images/image-20201229165143292.png" alt="image-20201229165143292"></p> <h4 id="_4-1-3-支持多种组合策略的全自动化语料生成"><a href="#_4-1-3-支持多种组合策略的全自动化语料生成" class="header-anchor">#</a> 4.1.3 支持多种组合策略的全自动化语料生成</h4> <p>根据语料素材级别和模板等级的组合，控制各类语料的生成数量</p> <p><img src="/blog_assets/images/image-20201229162553971.png" alt="image-20201229162553971"></p> <p>语料生成的方式即为根据模板进行参数化组合，目前支持4种组合策略，默认策略为<code>uniq</code></p> <p><img src="/blog_assets/images/image-20201229191646801.png" alt="image-20201229191646801"></p> <p>下面将语料的生成过程举个例子阐述下：</p> <p>有如下语料模板</p> <div class="language- extra-class"><pre class="language-text"><code>{查询操作}{手机号11位}的{伴随关系}人员
+</code></pre></div><p>其对应的语料素材数据为【这是核心改进内容】</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;查询操作&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;md5_id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;5053080618ac09de144bd37b9568f9a6&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;value&quot;</span><span class="token operator">:</span> <span class="token string">&quot;查询&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;father_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;辅助操作&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;child_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;查询操作&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;level&quot;</span><span class="token operator">:</span> <span class="token string">&quot;M1&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;normalization&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;is_compose&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;compose_object_list&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;yaml_file&quot;</span><span class="token operator">:</span> <span class="token string">&quot;辅助操作.yml&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;手机号11位&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;md5_id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;51a8a32c32aa59a6deeb0d38613e35d9&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;value&quot;</span><span class="token operator">:</span> <span class="token string">&quot;13301791708&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;father_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;手机号&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;child_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;手机号11位&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;level&quot;</span><span class="token operator">:</span> <span class="token string">&quot;M1&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;normalization&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;is_compose&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;compose_object_list&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;yaml_file&quot;</span><span class="token operator">:</span> <span class="token string">&quot;手机号.yml&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;伴随关系&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;md5_id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;6c745dd7853666f83f0609f7e8f151ba&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;value&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店同房间&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;father_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;伴随关系&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;child_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店同宿&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;level&quot;</span><span class="token operator">:</span> <span class="token string">&quot;M1&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;normalization&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;IAO&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店同房间同宿&quot;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;is_compose&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;compose_object_list&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;yaml_file&quot;</span><span class="token operator">:</span> <span class="token string">&quot;伴随关系.yml&quot;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>生成一条语料信息用于预标注</p> <div class="language- extra-class"><pre class="language-text"><code>查询13301791708的酒店同房间人员
+</code></pre></div><p><strong>有了语料模板和语料素材数据结构的绑定，我们即可根据不同的NLU体系标准，实现标注信息的重新生成。</strong></p> <h4 id="_4-1-4-基于jsonpath的自动化语料预标注"><a href="#_4-1-4-基于jsonpath的自动化语料预标注" class="header-anchor">#</a> <font color="orange">4.1.4 基于jsonpath的自动化语料预标注</font></h4> <p>语料标注模板可以使用<code>CorpusFactory</code>自动生成预标住信息，仅需在配置文件中填写对应的配置即可</p> <p><img src="/blog_assets/images/image-20201229161303316.png" alt="image-20201229161303316"></p> <h6 id="_4-1-4-1-实现逻辑"><a href="#_4-1-4-1-实现逻辑" class="header-anchor">#</a> 4.1.4.1 实现逻辑</h6> <p>通过语料模板和语料素材生成一条测试语料，请求NLU被测服务API，获取其API响应体json数据，将其转为jsonpath，根据语料生成的模板和素材，对生成的jsonpath进行变量替换，得到标注模板。</p> <p>举个例子说明：</p> <p>语料生成的示例见4.1.3小节，在生成语料的环节，我们得到了以下三个要素数据：</p> <ul><li>语料模板值</li> <li>语料素材数据结构</li> <li>语料文本实例</li></ul> <p>我们使用生成的语料用户预标注</p> <div class="language- extra-class"><pre class="language-text"><code>查询13301791708的酒店同房间人员
+</code></pre></div><p>该语料请求被测NLU服务API后，得到响应json数据</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;code&quot;</span><span class="token operator">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;data&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;apps&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;app_op_seq&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;content&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;des&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">&quot;phone_number&quot;</span><span class="token operator">:</span> <span class="token string">&quot;13301791708&quot;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token string">&quot;SIM_Card&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;rel&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token property">&quot;des&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token string">&quot;SIM_Card&quot;</span><span class="token punctuation">,</span>
+                            <span class="token string">&quot;Person&quot;</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;rel&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token punctuation">{</span>
+                                <span class="token property">&quot;behavior&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token punctuation">{</span>
+                                        <span class="token property">&quot;category&quot;</span><span class="token operator">:</span> <span class="token string">&quot;伴随分析&quot;</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;location&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;modifiers&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;number&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;target&quot;</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;time&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token property">&quot;traffic&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+                                    <span class="token punctuation">}</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;des&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                                    <span class="token property">&quot;intent&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                        <span class="token string">&quot;full&quot;</span>
+                                    <span class="token punctuation">]</span>
+                                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;intentPro&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token string">&quot;entity&quot;</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token string">&quot;Person&quot;</span><span class="token punctuation">,</span>
+                                    <span class="token string">&quot;Person&quot;</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;relIdx&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token number">0</span><span class="token punctuation">,</span>
+                                    <span class="token string">&quot;14-19&quot;</span>
+                                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;relName&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店同房间同宿&quot;</span><span class="token punctuation">,</span>
+                                <span class="token property">&quot;segs&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                                    <span class="token string">&quot;查询13301791708的酒店同房间人员&quot;</span>
+                                <span class="token punctuation">]</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;relIdx&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token number">0</span><span class="token punctuation">,</span>
+                            <span class="token string">&quot;13-19&quot;</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;relName&quot;</span><span class="token operator">:</span> <span class="token string">&quot;使用人&quot;</span><span class="token punctuation">,</span>
+                        <span class="token property">&quot;segs&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                            <span class="token string">&quot;查询13301791708的酒店同房间人员&quot;</span>
+                        <span class="token punctuation">]</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;segs&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                    <span class="token string">&quot;查询13301791708的酒店同房间人员&quot;</span>
+                <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;content_op&quot;</span><span class="token operator">:</span> <span class="token string">&quot;查询&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;data_op&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;data_rel&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token string">&quot;&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;data_rel_property&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;msg&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;unknown&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;keyword&quot;</span><span class="token operator">:</span> <span class="token string">&quot;酒店&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;ont&quot;</span><span class="token operator">:</span> <span class="token string">&quot;unknown&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>将此响应json文件转为jsonpath结构（根据预标注信息，有些json结构对测试结果的比对是无意义的，已经根据配置规则忽略掉）</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">[</span>
+    <span class="token string">&quot;code=200&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content_op='查询'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.ont='SIM_Card'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.des.phone_number='13301791708'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].ont=['SIM_Card','Person']&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].relName='使用人'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].intentPro=['entity']&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].ont=['Person','Person']&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].relName='酒店同房间同宿'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].behavior.[0].category='伴随分析'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].des.intent=['full']&quot;</span>
+<span class="token punctuation">]</span>
+</code></pre></div><p>此时需要根据语料素材数据和语料模板对其还原为标注模板</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">[</span>
+    <span class="token string">&quot;code=200&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content_op='查询'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.ont='SIM_Card'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.des.phone_number='{手机号11位}'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].ont=['SIM_Card','Person']&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].relName='使用人'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].intentPro=['entity']&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].ont=['Person','Person']&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].relName='{伴随关系}'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].behavior.[0].category='伴随分析'&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;$.data.[0].content.rel.[0].rel.[0].des.intent=['full']&quot;</span>
+<span class="token punctuation">]</span>
+</code></pre></div><p><strong><font color="red">此时需要测试工程师审核其预标注信息是否正确合理！</font></strong></p> <p><strong>通过这种预标注的设计，语料标注工作将是具备”加速度“的，随着NLU能力的提升，标注效率会逐步提高，标注成本逐步降低。</strong></p> <h4 id="_4-1-5-带有标注信息的测试语料输出"><a href="#_4-1-5-带有标注信息的测试语料输出" class="header-anchor">#</a> 4.1.5 带有标注信息的测试语料输出</h4> <p>将生成的海量带有标注信息的语料输出到json line文件，即可用于测试，其输出的标注数据结构示例如下（其中一行语料测试数据）：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;sentence&quot;</span><span class="token operator">:</span> <span class="token string">&quot;进入水晶球&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;template&quot;</span><span class="token operator">:</span> <span class="token string">&quot;{打开操作}{应用名称}&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;level&quot;</span><span class="token operator">:</span> <span class="token string">&quot;S1&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;project&quot;</span><span class="token operator">:</span> <span class="token string">&quot;IAO&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;key_word&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">&quot;应用名称&quot;</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;is_core_scene&quot;</span><span class="token operator">:</span> <span class="token string">&quot;是&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;first_transaction&quot;</span><span class="token operator">:</span> <span class="token string">&quot;操作指令&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;second_transaction&quot;</span><span class="token operator">:</span> <span class="token string">&quot;应用操作&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;third_transaction&quot;</span><span class="token operator">:</span> <span class="token string">&quot;打开应用&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;annotation&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">&quot;code=200&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;$.data.[0].apps.app_op_seq.[0].action='打开'&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;$.data.[0].apps.app_op_seq.[0].module_name='水晶球'&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;$.data.[0].apps.app_op_seq.[0].module_type='app'&quot;</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;material_info_dict_with_variable&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;打开操作&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;md5_id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;e068e68e0344f059aff3ee206334b6fe&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;value&quot;</span><span class="token operator">:</span> <span class="token string">&quot;进入&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;father_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;辅助操作&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;child_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;打开操作&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;level&quot;</span><span class="token operator">:</span> <span class="token string">&quot;M1&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;normalization&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;is_compose&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;compose_object_list&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;yaml_file&quot;</span><span class="token operator">:</span> <span class="token string">&quot;辅助操作.yml&quot;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;应用名称&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;md5_id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;80e6fe6bac09d577b3d36b8871e3c4bf&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;value&quot;</span><span class="token operator">:</span> <span class="token string">&quot;水晶球&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;father_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;应用名称&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;child_tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;应用名称&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;level&quot;</span><span class="token operator">:</span> <span class="token string">&quot;M1&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;normalization&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;IAO&quot;</span><span class="token operator">:</span> <span class="token string">&quot;水晶球&quot;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;is_compose&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;compose_object_list&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;yaml_file&quot;</span><span class="token operator">:</span> <span class="token string">&quot;应用名称.yml&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>输出的json line文件示例：</p> <p><img src="/blog_assets/images/image-20201229170841184.png" alt="image-20201229170841184"></p> <p>此jl文件即可作为NLU测试工具的输入文件，且可以将每一条测试语料的测试结果补充到json line文件中，这样即可对每一条测试数据进行完整的声明周期跟踪和定位，便于结果分析，语料构造策略调整，工具开发debug等。</p> <h4 id="_4-1-6-自动化语料分布统计"><a href="#_4-1-6-自动化语料分布统计" class="header-anchor">#</a> 4.1.6 自动化语料分布统计</h4> <p>为了科学客观的对NLU能力进行评估，需要明确其语料构成分布情况，统计效果如下：</p> <h6 id="_4-1-6-1-素材库概况统计示例"><a href="#_4-1-6-1-素材库概况统计示例" class="header-anchor">#</a> 4.1.6.1 素材库概况统计示例</h6> <p><img src="/blog_assets/images/image-20201229200849841.png" alt="image-20201229200849841"></p> <h6 id="_4-1-6-2-模板生成句子统计示例"><a href="#_4-1-6-2-模板生成句子统计示例" class="header-anchor">#</a> 4.1.6.2 模板生成句子统计示例</h6> <p><img src="/blog_assets/images/image-20201229174403087.png" alt="image-20201229174403087"></p> <h6 id="_4-1-6-3-业务场景维度句子统计示例"><a href="#_4-1-6-3-业务场景维度句子统计示例" class="header-anchor">#</a> 4.1.6.3 业务场景维度句子统计示例</h6> <p><img src="/blog_assets/images/image-20201229200826979.png" alt="image-20201229200826979"></p> <h6 id="_4-1-6-4-iao本体-本体属性覆盖情况统计示例"><a href="#_4-1-6-4-iao本体-本体属性覆盖情况统计示例" class="header-anchor">#</a> 4.1.6.4 IAO本体&amp;本体属性覆盖情况统计示例</h6> <p><img src="/blog_assets/images/image-20201229200715956.png" alt="image-20201229200715956"></p> <h6 id="_4-1-6-5-iao行为属性覆盖情况统计示例"><a href="#_4-1-6-5-iao行为属性覆盖情况统计示例" class="header-anchor">#</a> 4.1.6.5 IAO行为属性覆盖情况统计示例</h6> <p><img src="/blog_assets/images/image-20201229174637105.png" alt="image-20201229174637105"></p> <h6 id="_4-1-6-6-iao操作属性覆盖情况统计示例"><a href="#_4-1-6-6-iao操作属性覆盖情况统计示例" class="header-anchor">#</a> 4.1.6.6 IAO操作属性覆盖情况统计示例</h6> <p><img src="/blog_assets/images/image-20201229174707348.png" alt="image-20201229174707348"></p> <h6 id="_4-1-6-7-iao行为-category-覆盖情况统计示例"><a href="#_4-1-6-7-iao行为-category-覆盖情况统计示例" class="header-anchor">#</a> 4.1.6.7 IAO行为(category)覆盖情况统计示例</h6> <p><img src="/blog_assets/images/image-20201229200644895.png" alt="image-20201229200644895"></p> <h6 id="_4-1-6-8-iao关系-relname-覆盖情况统计示例"><a href="#_4-1-6-8-iao关系-relname-覆盖情况统计示例" class="header-anchor">#</a> 4.1.6.8 IAO关系(relname)覆盖情况统计示例</h6> <p><img src="/blog_assets/images/image-20201229200634506.png" alt="image-20201229200634506"></p> <h3 id="_4-2-算法效果测试改进"><a href="#_4-2-算法效果测试改进" class="header-anchor">#</a> 4.2 算法效果测试改进</h3> <h4 id="_4-2-1-比对规则的设计开发"><a href="#_4-2-1-比对规则的设计开发" class="header-anchor">#</a> 4.2.1 比对规则的设计开发</h4> <ul><li>通过面向对象的设计方法，定义各个指标维度的DataClass</li> <li>设计jsonpath通用比对方法，对各个维度的比对规则进行封装定制，使用不同的函数将各评估所关注个NLU输出结果与标注结果的jsonpath进行比对，替代了晦涩难懂的递归解析比对，便于定位分析debug。</li></ul> <p>此处主要是代码的设计实现，篇幅较大，细节较多，就不展开阐述了，有兴趣可以查阅项目代码：<a href="http://172.16.111.6:10080/AIT/NLP/IAO-TOOLKITS-IntellDialog" target="_blank" rel="noopener noreferrer">IAO-TOOLKITS-IntellDialog<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p><img src="/blog_assets/images/image-20201229173527378.png" alt="image-20201229173527378"></p> <h4 id="_4-2-2-指标统计输出"><a href="#_4-2-2-指标统计输出" class="header-anchor">#</a> 4.2.2 指标统计输出</h4> <h5 id="_4-2-2-1-定义各个指标期望阈值用于自动研判"><a href="#_4-2-2-1-定义各个指标期望阈值用于自动研判" class="header-anchor">#</a> 4.2.2.1 定义各个指标期望阈值用于自动研判</h5> <p>通过配置文件定义各个指标阈值，自动研判指标是否通过</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">indicator_expectation</span><span class="token punctuation">:</span>
+  <span class="token comment"># 冒烟用例正确率</span>
+  <span class="token key atrule">smoke_test_correct_rate</span><span class="token punctuation">:</span> <span class="token number">0.9</span>
+  <span class="token comment"># 核心业务场景正确率</span>
+  <span class="token key atrule">core_scene_correct_rate</span><span class="token punctuation">:</span> <span class="token number">0.8</span>
+  <span class="token comment"># 非核心业务场景正确率</span>
+  <span class="token key atrule">not_core_scene_correct_rate</span><span class="token punctuation">:</span> <span class="token number">0.7</span>
+  <span class="token comment"># 多实体关系分析识别正确率</span>
+  ……
+</code></pre></div><h5 id="_4-2-2-2-宏观指标统计结果示例"><a href="#_4-2-2-2-宏观指标统计结果示例" class="header-anchor">#</a> 4.2.2.2 宏观指标统计结果示例</h5> <p>宏观指标即为NLU各个维度指标统计结果，并展示其各个分子分母的个数，便于分析影响指标的具体因素。</p> <p><img src="/blog_assets/images/image-20201231110324440.png" alt="image-20201231110324440"></p> <h5 id="_4-2-2-3-各语料详情分析结果示例"><a href="#_4-2-2-3-各语料详情分析结果示例" class="header-anchor">#</a> 4.2.2.3 各语料详情分析结果示例</h5> <p>详情分析结果，可以根据各个指标维度的测试结果，进行筛选，分析其失败原因，并且可以看到该语料各个维度的分类标签信息，便于进行深入分析。</p> <p><img src="/blog_assets/images/image-20201229175348476.png" alt="image-20201229175348476"></p> <h5 id="_4-2-2-4-各三级业务场景统计示例"><a href="#_4-2-2-4-各三级业务场景统计示例" class="header-anchor">#</a> 4.2.2.4 各三级业务场景统计示例</h5> <p>各业务场景是与上层业务沟通确认的，基于此维度进行指标分析，可以有效评估其在业务系统的应用情况，对业务侧提供有效的研判情报。</p> <p><img src="/blog_assets/images/image-20201229200527126.png" alt="image-20201229200527126"></p> <h5 id="_4-2-2-5-本体属性识别分析详情统计示例"><a href="#_4-2-2-5-本体属性识别分析详情统计示例" class="header-anchor">#</a> 4.2.2.5 本体属性识别分析详情统计示例</h5> <p><img src="/blog_assets/images/image-20201229200547013.png" alt="image-20201229200547013"></p> <h5 id="_4-2-2-6-关系识别分析详情统计示例"><a href="#_4-2-2-6-关系识别分析详情统计示例" class="header-anchor">#</a> 4.2.2.6 关系识别分析详情统计示例</h5> <p><img src="/blog_assets/images/image-20201229200558046.png" alt="image-20201229200558046"></p> <h5 id="_4-2-2-7-行为识别分析详情统计示例"><a href="#_4-2-2-7-行为识别分析详情统计示例" class="header-anchor">#</a> 4.2.2.7 行为识别分析详情统计示例</h5> <p><img src="/blog_assets/images/image-20201229180122128.png" alt="image-20201229180122128"></p> <h2 id="_5-优化效果评价"><a href="#_5-优化效果评价" class="header-anchor">#</a> 5 优化效果评价</h2> <p>本次优化设计较以往的不同之处</p> <ol><li><p>基于实际结果：使用JSONPATH定义标注数据，代替之前的递归解析JSON响应体，降低结果比对部分的代码复杂度和维护成本；</p></li> <li><p>基于预期结果：使用JSONPATH辅助以路径提取工具，对JSONPATH进行预标注，人工审核修正，提高标注效率和正确率，降低数据标注成本；</p></li> <li><p>基于测试数据：将语料库（测试数据）的管理进行定义和分类优化，结合新的模板定义编写方式，降低编写的复杂度；</p></li> <li><p>基于语料库（测试数据）管理：将语料生成和语料标注解耦开来，建立语料库基线，标注数据随被测项目进行更新迭代，提高NLP语义理解测试样本的可维护性和持续性；</p></li></ol> <p><font color="orange"><strong>整体上，代码可维护性提高30%，测试数据构造成本降低80%</strong></font></p> <p>IAO-TOOLKITS-IntellDialog-V3.2.0.0项目，测试准备了243种约28.7万的测试素材和900条不同优先级的测试语料模板，可在30分钟完成7000+的测试问句生成以及预期标注，1小时内完成算法指标的计算和统计分析（主要耗时为IAO被测服务性能较低，TPS仅为2）。</p> <h2 id="_6-附录"><a href="#_6-附录" class="header-anchor">#</a> 6 附录</h2> <h3 id="_6-1-corpusfactory核心步骤使用流程图"><a href="#_6-1-corpusfactory核心步骤使用流程图" class="header-anchor">#</a> 6.1 CorpusFactory核心步骤使用流程图</h3> <p><img src="/blog_assets/images/CorpusFactory%E6%A0%B8%E5%BF%83%E6%AD%A5%E9%AA%A4%E5%92%8C%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="CorpusFactory核心步骤和使用流程图"></p> <h3 id="_6-2-corpusfactory设计流程图"><a href="#_6-2-corpusfactory设计流程图" class="header-anchor">#</a> 6.2 CorpusFactory设计流程图</h3> <p><img src="/blog_assets/images/CorpusFactory%E8%AE%BE%E8%AE%A1%E5%9B%BE.png" alt="CorpusFactory设计图"></p> <h2 id="_7-致谢"><a href="#_7-致谢" class="header-anchor">#</a> 7 致谢</h2> <p>感谢以下同学，在整体框架设计、优化、应用过程中的努力付出，以及提出的宝贵意见，以下排名不分先后：</p> <p><strong>郭群、姜越、陈岑</strong></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e939b80d.js" defer></script><script src="/assets/js/2.592a5c23.js" defer></script><script src="/assets/js/48.3df8c297.js" defer></script>
+  </body>
+</html>

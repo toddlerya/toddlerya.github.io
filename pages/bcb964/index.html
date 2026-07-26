@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>无序大数组的中位数算法</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.e4d8b86b.css" as="style"><link rel="preload" href="/assets/js/app.e939b80d.js" as="script"><link rel="preload" href="/assets/js/2.592a5c23.js" as="script"><link rel="preload" href="/assets/js/63.c6c3f1fc.js" as="script"><link rel="prefetch" href="/assets/js/10.b0048048.js"><link rel="prefetch" href="/assets/js/11.fbdb8f3a.js"><link rel="prefetch" href="/assets/js/12.5ce87fa3.js"><link rel="prefetch" href="/assets/js/13.63a46ec7.js"><link rel="prefetch" href="/assets/js/14.92eb68c0.js"><link rel="prefetch" href="/assets/js/15.1a5e4227.js"><link rel="prefetch" href="/assets/js/16.838a3548.js"><link rel="prefetch" href="/assets/js/17.78051799.js"><link rel="prefetch" href="/assets/js/18.03acb563.js"><link rel="prefetch" href="/assets/js/19.581869d3.js"><link rel="prefetch" href="/assets/js/20.0002bb24.js"><link rel="prefetch" href="/assets/js/21.d37f07bf.js"><link rel="prefetch" href="/assets/js/22.e0b6aafe.js"><link rel="prefetch" href="/assets/js/23.6de77273.js"><link rel="prefetch" href="/assets/js/24.5c2ab7a9.js"><link rel="prefetch" href="/assets/js/25.be513cc0.js"><link rel="prefetch" href="/assets/js/26.2983738b.js"><link rel="prefetch" href="/assets/js/27.6210b677.js"><link rel="prefetch" href="/assets/js/28.f90f5f9d.js"><link rel="prefetch" href="/assets/js/29.14e8dae9.js"><link rel="prefetch" href="/assets/js/3.b53076be.js"><link rel="prefetch" href="/assets/js/30.25109394.js"><link rel="prefetch" href="/assets/js/31.05cfdc8d.js"><link rel="prefetch" href="/assets/js/32.23f5a754.js"><link rel="prefetch" href="/assets/js/33.b85d2360.js"><link rel="prefetch" href="/assets/js/34.439a146f.js"><link rel="prefetch" href="/assets/js/35.801747db.js"><link rel="prefetch" href="/assets/js/36.db43cce9.js"><link rel="prefetch" href="/assets/js/37.1a8b542d.js"><link rel="prefetch" href="/assets/js/38.f24e4862.js"><link rel="prefetch" href="/assets/js/39.258f2863.js"><link rel="prefetch" href="/assets/js/4.9686c1c3.js"><link rel="prefetch" href="/assets/js/40.b864857a.js"><link rel="prefetch" href="/assets/js/41.29617041.js"><link rel="prefetch" href="/assets/js/42.44f441ff.js"><link rel="prefetch" href="/assets/js/43.44193785.js"><link rel="prefetch" href="/assets/js/44.590b69b5.js"><link rel="prefetch" href="/assets/js/45.1722565b.js"><link rel="prefetch" href="/assets/js/46.3fdfb089.js"><link rel="prefetch" href="/assets/js/47.0f252be2.js"><link rel="prefetch" href="/assets/js/48.3df8c297.js"><link rel="prefetch" href="/assets/js/49.e21fbc0c.js"><link rel="prefetch" href="/assets/js/5.e9756155.js"><link rel="prefetch" href="/assets/js/50.433b8b1b.js"><link rel="prefetch" href="/assets/js/51.0567caa7.js"><link rel="prefetch" href="/assets/js/52.9024d2e6.js"><link rel="prefetch" href="/assets/js/53.733503d0.js"><link rel="prefetch" href="/assets/js/54.68d3a8fe.js"><link rel="prefetch" href="/assets/js/55.d97a8913.js"><link rel="prefetch" href="/assets/js/56.317eb8fa.js"><link rel="prefetch" href="/assets/js/57.d6744e2e.js"><link rel="prefetch" href="/assets/js/58.3f9787e8.js"><link rel="prefetch" href="/assets/js/59.e3819b53.js"><link rel="prefetch" href="/assets/js/6.05f8d813.js"><link rel="prefetch" href="/assets/js/60.d92380ca.js"><link rel="prefetch" href="/assets/js/61.60a2f7fc.js"><link rel="prefetch" href="/assets/js/62.f4eedc25.js"><link rel="prefetch" href="/assets/js/64.9cea11bd.js"><link rel="prefetch" href="/assets/js/65.e70f2711.js"><link rel="prefetch" href="/assets/js/66.c4f8ef1b.js"><link rel="prefetch" href="/assets/js/67.4af48a3d.js"><link rel="prefetch" href="/assets/js/68.3549d0a3.js"><link rel="prefetch" href="/assets/js/69.590fc41f.js"><link rel="prefetch" href="/assets/js/7.847b9964.js"><link rel="prefetch" href="/assets/js/70.9eb9d80f.js"><link rel="prefetch" href="/assets/js/8.c40db4c9.js"><link rel="prefetch" href="/assets/js/9.e448cfe6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4d8b86b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="题目要求"><a href="#题目要求" class="header-anchor">#</a> 题目要求</h1> <p>最近做了一道题，题目是这样的：</p> <div class="language- extra-class"><pre class="language-text"><code>找到一个巨大数组的中位数。
+# demo：[1,100,2,5,12,44,88,77,54,932,61]
+</code></pre></div><h1 id="解题方法"><a href="#解题方法" class="header-anchor">#</a> 解题方法</h1> <p>巨大的数组，排序肯定不是最优解了，解题思路可以借鉴快排算法那种分而治之的思想。</p> <p>详情直接看代码实现吧。</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment">#!/usr/bin/env python</span>
+<span class="token comment"># -*- coding:utf-8 -*-</span>
+<span class="token comment"># author: toddler</span>
+
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> statistics
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> sys
+sys<span class="token punctuation">.</span>setrecursionlimit<span class="token punctuation">(</span><span class="token number">1000000</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">find_mid</span><span class="token punctuation">(</span>mid_index<span class="token punctuation">,</span> __list<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;
+    寻找中位数算法
+    :param mid_index: 中位数索引
+    :param __list: 目标数组
+    :return: 中位数数值
+    &quot;&quot;&quot;</span>
+    <span class="token comment"># 随机取一个数作为分割元素, 以分割元素为界限，将数组分割大小两部分</span>
+    random_num <span class="token operator">=</span> random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>__list<span class="token punctuation">)</span>
+    small_list <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> __list <span class="token keyword">if</span> i <span class="token operator">&lt;</span> random_num<span class="token punctuation">]</span>
+    <span class="token comment"># 若小数组的右端索引大于中位数索引, 则继续缩小小数组的区间长度, 这样可以直接舍弃比中位数大的元素, 减少计算量</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>small_list<span class="token punctuation">)</span> <span class="token operator">&gt;</span> mid_index<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> find_mid<span class="token punctuation">(</span>mid_index<span class="token punctuation">,</span> small_list<span class="token punctuation">)</span>
+    <span class="token comment"># 分割点左边的元素没有价值, 被舍弃, 相应的中位数索引左移对应长度, 保证相对原始数据索引长度不变</span>
+    mid_index <span class="token operator">-=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>small_list<span class="token punctuation">)</span>
+    <span class="token comment"># 判断分割点有几个, 若分割点所占空间长度大于新的中位数索引, 则分割点就是中位数</span>
+    same_mid_num <span class="token operator">=</span> __list<span class="token punctuation">.</span>count<span class="token punctuation">(</span>random_num<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> same_mid_num <span class="token operator">&gt;</span> mid_index<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> random_num
+    <span class="token comment"># 接下来向右计算, 所以切分点所占据的索引区间元素将不在计算, 大数组将舍弃这些值, 因此调整中位数的索引值</span>
+    mid_index <span class="token operator">-=</span> same_mid_num
+    big_list <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> __list <span class="token keyword">if</span> i <span class="token operator">&gt;</span> random_num<span class="token punctuation">]</span>
+    <span class="token keyword">return</span> find_mid<span class="token punctuation">(</span>mid_index<span class="token punctuation">,</span> big_list<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>__list<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;
+    调度处理算法无关的业务逻辑
+    :param __list: 目标数组
+    :return: 中位数数值
+    &quot;&quot;&quot;</span>
+    list_length <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>__list<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> list_length <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token comment"># 判断奇数个还是偶数个</span>
+        <span class="token keyword">if</span> list_length <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">:</span>
+            mid_index <span class="token operator">=</span> list_length <span class="token operator">//</span> <span class="token number">2</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;奇数个数字: {}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>list_length<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> find_mid<span class="token punctuation">(</span>mid_index<span class="token punctuation">,</span> __list<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;偶数个数字: {}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>list_length<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            left_num <span class="token operator">=</span> find_mid<span class="token punctuation">(</span><span class="token punctuation">(</span>list_length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> __list<span class="token punctuation">)</span>
+            right_num <span class="token operator">=</span> find_mid<span class="token punctuation">(</span><span class="token punctuation">(</span>list_length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> __list<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>left_num <span class="token operator">+</span> right_num<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">&quot;输入列表是否为空&quot;</span>
+
+
+<span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span>test_data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;
+    测试验证
+    :param test_data: 待测数组
+    :return:
+    &quot;&quot;&quot;</span>
+    <span class="token comment"># print('原始数据: {}'.format(test_data))</span>
+    stand_s_time <span class="token operator">=</span> time<span class="token punctuation">.</span>clock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    expect_mid <span class="token operator">=</span> statistics<span class="token punctuation">.</span>median<span class="token punctuation">(</span>test_data<span class="token punctuation">)</span>
+    stand_e_time <span class="token operator">=</span> time<span class="token punctuation">.</span>clock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;statistics计算耗时: {}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>stand_e_time <span class="token operator">-</span> stand_s_time<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    start_time <span class="token operator">=</span> time<span class="token punctuation">.</span>clock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    actual_mid <span class="token operator">=</span> run<span class="token punctuation">(</span>test_data<span class="token punctuation">)</span>
+    end_time <span class="token operator">=</span> time<span class="token punctuation">.</span>clock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;我的算法计算耗时: {}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>end_time<span class="token operator">-</span>start_time<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'期望结果: 中位数为{}'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>expect_mid<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'实际结果: 中位数为{}'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>actual_mid<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">assert</span> expect_mid <span class="token operator">==</span> actual_mid<span class="token punctuation">,</span> <span class="token string">'计算错误'</span>
+
+
+demo_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">44</span><span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">,</span> <span class="token number">77</span><span class="token punctuation">,</span> <span class="token number">54</span><span class="token punctuation">,</span> <span class="token number">932</span><span class="token punctuation">,</span> <span class="token number">61</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'样例测试=====&gt;'</span><span class="token punctuation">)</span>
+test<span class="token punctuation">(</span>demo_list<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'\r\n大数据量测试======&gt;'</span><span class="token punctuation">)</span>
+test<span class="token punctuation">(</span><span class="token punctuation">[</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token number">1e6</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token number">1e6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+</code></pre></div><h1 id="测试结果"><a href="#测试结果" class="header-anchor">#</a> 测试结果</h1> <p>测试环境：</p> <table><thead><tr><th style="text-align:center;">硬件</th> <th style="text-align:center;">参数</th></tr></thead> <tbody><tr><td style="text-align:center;">CPU</td> <td style="text-align:center;">Intel(R) Core(TM) i3-4370 CPU @ 3.80GHz</td></tr> <tr><td style="text-align:center;">MEM</td> <td style="text-align:center;">8G DDR3</td></tr></tbody></table> <p>算法表现，稳定性不是很好：</p> <table><thead><tr><th style="text-align:center;">数据量</th> <th style="text-align:center;">排序时间</th></tr></thead> <tbody><tr><td style="text-align:center;">10 ^ 6</td> <td style="text-align:center;">0.5 s</td></tr> <tr><td style="text-align:center;">10 ^ 7</td> <td style="text-align:center;">5 ~ 6 s</td></tr> <tr><td style="text-align:center;">10 ^ 8</td> <td style="text-align:center;">65 ~ 100 s</td></tr></tbody></table> <h1 id="总结分析"><a href="#总结分析" class="header-anchor">#</a> 总结分析</h1> <table><thead><tr><th style="text-align:center;">最差时间分析</th> <th style="text-align:center;">平均时间复杂度</th> <th style="text-align:center;">稳定度</th> <th style="text-align:center;">空间复杂度</th></tr></thead> <tbody><tr><td style="text-align:center;">O(n)</td> <td style="text-align:center;">O(logn)</td> <td style="text-align:center;">不稳定</td> <td style="text-align:center;">O(logn)</td></tr></tbody></table></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e939b80d.js" defer></script><script src="/assets/js/2.592a5c23.js" defer></script><script src="/assets/js/63.c6c3f1fc.js" defer></script>
+  </body>
+</html>

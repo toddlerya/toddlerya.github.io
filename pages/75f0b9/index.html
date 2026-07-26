@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>二进制文件安装Docker指南</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.e4d8b86b.css" as="style"><link rel="preload" href="/assets/js/app.e939b80d.js" as="script"><link rel="preload" href="/assets/js/2.592a5c23.js" as="script"><link rel="preload" href="/assets/js/11.fbdb8f3a.js" as="script"><link rel="prefetch" href="/assets/js/10.b0048048.js"><link rel="prefetch" href="/assets/js/12.5ce87fa3.js"><link rel="prefetch" href="/assets/js/13.63a46ec7.js"><link rel="prefetch" href="/assets/js/14.92eb68c0.js"><link rel="prefetch" href="/assets/js/15.1a5e4227.js"><link rel="prefetch" href="/assets/js/16.838a3548.js"><link rel="prefetch" href="/assets/js/17.78051799.js"><link rel="prefetch" href="/assets/js/18.03acb563.js"><link rel="prefetch" href="/assets/js/19.581869d3.js"><link rel="prefetch" href="/assets/js/20.0002bb24.js"><link rel="prefetch" href="/assets/js/21.d37f07bf.js"><link rel="prefetch" href="/assets/js/22.e0b6aafe.js"><link rel="prefetch" href="/assets/js/23.6de77273.js"><link rel="prefetch" href="/assets/js/24.5c2ab7a9.js"><link rel="prefetch" href="/assets/js/25.be513cc0.js"><link rel="prefetch" href="/assets/js/26.2983738b.js"><link rel="prefetch" href="/assets/js/27.6210b677.js"><link rel="prefetch" href="/assets/js/28.f90f5f9d.js"><link rel="prefetch" href="/assets/js/29.14e8dae9.js"><link rel="prefetch" href="/assets/js/3.b53076be.js"><link rel="prefetch" href="/assets/js/30.25109394.js"><link rel="prefetch" href="/assets/js/31.05cfdc8d.js"><link rel="prefetch" href="/assets/js/32.23f5a754.js"><link rel="prefetch" href="/assets/js/33.b85d2360.js"><link rel="prefetch" href="/assets/js/34.439a146f.js"><link rel="prefetch" href="/assets/js/35.801747db.js"><link rel="prefetch" href="/assets/js/36.db43cce9.js"><link rel="prefetch" href="/assets/js/37.1a8b542d.js"><link rel="prefetch" href="/assets/js/38.f24e4862.js"><link rel="prefetch" href="/assets/js/39.258f2863.js"><link rel="prefetch" href="/assets/js/4.9686c1c3.js"><link rel="prefetch" href="/assets/js/40.b864857a.js"><link rel="prefetch" href="/assets/js/41.29617041.js"><link rel="prefetch" href="/assets/js/42.44f441ff.js"><link rel="prefetch" href="/assets/js/43.44193785.js"><link rel="prefetch" href="/assets/js/44.590b69b5.js"><link rel="prefetch" href="/assets/js/45.1722565b.js"><link rel="prefetch" href="/assets/js/46.3fdfb089.js"><link rel="prefetch" href="/assets/js/47.0f252be2.js"><link rel="prefetch" href="/assets/js/48.3df8c297.js"><link rel="prefetch" href="/assets/js/49.e21fbc0c.js"><link rel="prefetch" href="/assets/js/5.e9756155.js"><link rel="prefetch" href="/assets/js/50.433b8b1b.js"><link rel="prefetch" href="/assets/js/51.0567caa7.js"><link rel="prefetch" href="/assets/js/52.9024d2e6.js"><link rel="prefetch" href="/assets/js/53.733503d0.js"><link rel="prefetch" href="/assets/js/54.68d3a8fe.js"><link rel="prefetch" href="/assets/js/55.d97a8913.js"><link rel="prefetch" href="/assets/js/56.317eb8fa.js"><link rel="prefetch" href="/assets/js/57.d6744e2e.js"><link rel="prefetch" href="/assets/js/58.3f9787e8.js"><link rel="prefetch" href="/assets/js/59.e3819b53.js"><link rel="prefetch" href="/assets/js/6.05f8d813.js"><link rel="prefetch" href="/assets/js/60.d92380ca.js"><link rel="prefetch" href="/assets/js/61.60a2f7fc.js"><link rel="prefetch" href="/assets/js/62.f4eedc25.js"><link rel="prefetch" href="/assets/js/63.c6c3f1fc.js"><link rel="prefetch" href="/assets/js/64.9cea11bd.js"><link rel="prefetch" href="/assets/js/65.e70f2711.js"><link rel="prefetch" href="/assets/js/66.c4f8ef1b.js"><link rel="prefetch" href="/assets/js/67.4af48a3d.js"><link rel="prefetch" href="/assets/js/68.3549d0a3.js"><link rel="prefetch" href="/assets/js/69.590fc41f.js"><link rel="prefetch" href="/assets/js/7.847b9964.js"><link rel="prefetch" href="/assets/js/70.9eb9d80f.js"><link rel="prefetch" href="/assets/js/8.c40db4c9.js"><link rel="prefetch" href="/assets/js/9.e448cfe6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4d8b86b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="二进制文件安装-docker-指南"><a href="#二进制文件安装-docker-指南" class="header-anchor">#</a> 二进制文件安装 Docker 指南</h1> <blockquote><p>郭群 于 2020 年 07 月 16 日</p></blockquote> <h2 id="引言"><a href="#引言" class="header-anchor">#</a> 引言</h2> <p>yum 命令使用 rpm 包离线安装，各种缺少依赖，很是烦躁。
+猛然发现官网还提供了二进制安装包，盘他。</p> <h2 id="环境准备"><a href="#环境准备" class="header-anchor">#</a> 环境准备</h2> <h3 id="一、系统服务版本依赖检查"><a href="#一、系统服务版本依赖检查" class="header-anchor">#</a> 一、系统服务版本依赖检查</h3> <h4 id="一-linux-内核版本"><a href="#一-linux-内核版本" class="header-anchor">#</a> （一）Linux 内核版本</h4> <p>Docker 官网要求内核版本&gt;=3.10，检查一下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># uname -a</span>
+Linux localhost.localdomain <span class="token number">3.10</span>.0-693.el7.x86_64 <span class="token comment">#1 SMP Tue Aug 22 21:09:27 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</span>
+</code></pre></div><h4 id="二-iptables-版本"><a href="#二-iptables-版本" class="header-anchor">#</a> （二）iptables 版本</h4> <p>Docker 官网要求<code>iptables</code>版本&gt;=1.4，检查一下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># iptables -V</span>
+iptables v1.4.21
+</code></pre></div><h4 id="三-git-版本"><a href="#三-git-版本" class="header-anchor">#</a> （三）git 版本</h4> <p>Docker 官网要求<code>git</code>版本&gt;=1.7，检查一下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># git --version</span>
+<span class="token function">git</span> version <span class="token number">1.8</span>.3.1
+</code></pre></div><h4 id="四-ps-命令已安装"><a href="#四-ps-命令已安装" class="header-anchor">#</a> （四）ps 命令已安装</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># ps</span>
+  PID TTY          TIME CMD
+<span class="token number">20375</span> pts/0    00:00:00 <span class="token function">ps</span>
+<span class="token number">50036</span> pts/0    00:00:00 <span class="token function">bash</span>
+</code></pre></div><h4 id="五-xz-utils"><a href="#五-xz-utils" class="header-anchor">#</a> （五）XZ Utils</h4> <p>略</p> <h4 id="六-cgroupfs"><a href="#六-cgroupfs" class="header-anchor">#</a> （六）cgroupfs</h4> <p>略</p> <h3 id="二、环境安全检查"><a href="#二、环境安全检查" class="header-anchor">#</a> 二、环境安全检查</h3> <h4 id="一-操作系统"><a href="#一-操作系统" class="header-anchor">#</a> （一）操作系统</h4> <p>开启 selinux，略，可以先不做。</p> <h4 id="二-docker-守护进程相关"><a href="#二-docker-守护进程相关" class="header-anchor">#</a> （二）Docker 守护进程相关</h4> <h5 id="启用-seccomp-配置"><a href="#启用-seccomp-配置" class="header-anchor">#</a> 启用 seccomp 配置</h5> <p>检查方式</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># grep CONFIG_SECCOMP= /boot/config-$(uname -r)</span>
+<span class="token assign-left variable">CONFIG_SECCOMP</span><span class="token operator">=</span>y
+</code></pre></div><h5 id="启用用户命名空间"><a href="#启用用户命名空间" class="header-anchor">#</a> 启用用户命名空间</h5> <p>略，可以先不做</p> <h2 id="安装静态二进制文件"><a href="#安装静态二进制文件" class="header-anchor">#</a> 安装静态二进制文件</h2> <h3 id="一、下载所需的压缩包"><a href="#一、下载所需的压缩包" class="header-anchor">#</a> 一、下载所需的压缩包</h3> <p>此处准备的安装包是<code>docker-18.09.4</code>版本</p> <p>下载地址： <a href="http://172.16.111.6:40000/share/cOOrMbVd" target="_blank" rel="noopener noreferrer">docker-18.09.4<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>MD5: <code>17a327d2871874892b3b3d7532d7975c</code></p> <h3 id="二、解压"><a href="#二、解压" class="header-anchor">#</a> 二、解压</h3> <p>解压到任意目录了</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># ls</span>
+docker-18.09.4.tgz
+<span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># tar zxvf docker-18.09.4.tgz</span>
+docker/
+docker/ctr
+docker/containerd-shim
+docker/dockerd
+docker/docker-proxy
+docker/runc
+docker/containerd
+docker/docker-init
+docker/docker
+</code></pre></div><h3 id="三、拷贝到-usr-bin目录"><a href="#三、拷贝到-usr-bin目录" class="header-anchor">#</a> 三、拷贝到<code>/usr/bin</code>目录</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost docker-18.09.4-binary<span class="token punctuation">]</span><span class="token comment"># sudo cp docker/* /usr/bin/</span>
+</code></pre></div><h3 id="四、启动-docker-守护进程"><a href="#四、启动-docker-守护进程" class="header-anchor">#</a> 四、启动 Docker 守护进程</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># sudo dockerd &amp;</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token number">23943</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># INFO[2020-07-16T08:18:34.530770919+08:00] libcontainerd: started new containerd process  pid=23972</span>
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.531043082+08:00<span class="token punctuation">]</span> parsed scheme: <span class="token string">&quot;unix&quot;</span>                         <span class="token assign-left variable">module</span><span class="token operator">=</span>grpc
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.531073503+08:00<span class="token punctuation">]</span> scheme <span class="token string">&quot;unix&quot;</span> not registered, fallback to default scheme  <span class="token assign-left variable">module</span><span class="token operator">=</span>grpc
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.531168709+08:00<span class="token punctuation">]</span> ccResolverWrapper: sending new addresses to cc: <span class="token punctuation">[</span><span class="token punctuation">{</span>unix:///var/run/docker/containerd/containerd.sock <span class="token number">0</span>  <span class="token operator">&lt;</span>nil<span class="token operator">&gt;</span><span class="token punctuation">}</span><span class="token punctuation">]</span>  <span class="token assign-left variable">module</span><span class="token operator">=</span>grpc
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.531203331+08:00<span class="token punctuation">]</span> ClientConn switching balancer to <span class="token string">&quot;pick_first&quot;</span>  <span class="token assign-left variable">module</span><span class="token operator">=</span>grpc
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.531344189+08:00<span class="token punctuation">]</span> pickfirstBalancer: HandleSubConnStateChange: 0xc420a5e670, CONNECTING  <span class="token assign-left variable">module</span><span class="token operator">=</span>grpc
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.565914298+08:00<span class="token punctuation">]</span> starting containerd                           <span class="token assign-left variable">revision</span><span class="token operator">=</span>bb71b10fd8f58240ca47fbb579b9d1028eea7c84 <span class="token assign-left variable">version</span><span class="token operator">=</span>v1.2.5
+
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.674048937+08:00<span class="token punctuation">]</span> Loading containers: start.
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:34.892551101+08:00<span class="token punctuation">]</span> Default bridge <span class="token punctuation">(</span>docker0<span class="token punctuation">)</span> is assigned with an IP address <span class="token number">172.17</span>.0.0/16. Daemon option --bip can be used to <span class="token builtin class-name">set</span> a preferred IP address
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:35.017834592+08:00<span class="token punctuation">]</span> Loading containers: done.
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:35.061314596+08:00<span class="token punctuation">]</span> Docker daemon                                 <span class="token assign-left variable">commit</span><span class="token operator">=</span>d14af54 graphdriver<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">=</span>overlay2 <span class="token assign-left variable">version</span><span class="token operator">=</span><span class="token number">18.09</span>.4
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:35.061450799+08:00<span class="token punctuation">]</span> Daemon has completed initialization
+INFO<span class="token punctuation">[</span><span class="token number">2020</span>-07-16T08:18:35.093922279+08:00<span class="token punctuation">]</span> API listen on /var/run/docker.sock
+</code></pre></div><p>新开一个命令行窗口，测试下 docker 是否可用</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># docker images</span>
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># docker ps</span>
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre></div><p>完美~</p> <h3 id="五、修改-docker-服务默认网桥-ip-网段"><a href="#五、修改-docker-服务默认网桥-ip-网段" class="header-anchor">#</a> 五、修改 Docker 服务默认网桥 IP 网段</h3> <p>在上面的日志中可以看到，docker 默认网桥的 IP 网段是 172.17.0.0/16，经常和我们的服务器 IP 网段冲突，
+因此需要修改<code>/etc/docker/daemon.json</code>，若不存在此文件则新建即可：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;bip&quot;</span><span class="token operator">:</span> <span class="token string">&quot;172.31.0.1/16&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>修改后重启 dockerd，检查是否修改成功</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# ip addr | grep docker0 -A 4
+6: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN
+    link/ether 02:42:1c:db:a3:c0 brd ff:ff:ff:ff:ff:ff
+    inet 172.31.0.1/16 brd 172.31.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+</code></pre></div><p>完美，至此静态文件安装 Docker 服务已经成功。</p> <h2 id="docker-注册为-service"><a href="#docker-注册为-service" class="header-anchor">#</a> docker 注册为 service</h2> <p>虽然 docker 服务已经可以使用了，但终究不能像 yum 命令安装的那样通过<code>systemctl</code>命令管理控制，而且不能开机自启动。
+我们还要再做个收尾工作，将 docker 注册为 service，相关知识的详情参见<a href="/pages/17f4fa/">《如何把应用服务注册到 systemd》</a>
+此处给出配置文件和操作说明</p> <h3 id="step-1-新建配置"><a href="#step-1-新建配置" class="header-anchor">#</a> STEP-1 新建配置</h3> <h4 id="docker-service"><a href="#docker-service" class="header-anchor">#</a> docker.service</h4> <p>新建<code>/usr/lib/systemd/system/docker.service</code>文件，写入如下内容</p> <div class="language- extra-class"><pre class="language-text"><code>[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network-online.target docker.socket firewalld.service
+Wants=network-online.target
+Requires=docker.socket
+
+[Service]
+Type=notify
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+ExecStart=/usr/bin/dockerd -H fd://
+ExecReload=/bin/kill -s HUP $MAINPID
+LimitNOFILE=1048576
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNPROC=infinity
+LimitCORE=infinity
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+TasksMax=infinity
+TimeoutStartSec=0
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+# restart the docker process if it exits prematurely
+Restart=on-failure
+StartLimitBurst=3
+StartLimitInterval=60s
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><h4 id="docker-socket"><a href="#docker-socket" class="header-anchor">#</a> docker.socket</h4> <p>新建<code>/lib/systemd/system/docker.socket</code>文件，写入如下内容
+/usr/lib/systemd/system/docker.service</p> <div class="language- extra-class"><pre class="language-text"><code>[Unit]
+Description=Docker Socket for the API
+PartOf=docker.service
+
+[Socket]
+ListenStream=/var/run/docker.sock
+SocketMode=0660
+SocketUser=root
+SocketGroup=docker
+
+[Install]
+WantedBy=sockets.target
+</code></pre></div><h3 id="step-2-杀掉-dockerd-进程"><a href="#step-2-杀掉-dockerd-进程" class="header-anchor">#</a> STEP-2 杀掉 dockerd 进程</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# ps -ef | grep docker
+root     26997 50036  0 08:26 pts/0    00:00:00 sudo dockerd
+root     26998 26997  0 08:26 pts/0    00:00:01 dockerd
+root     27028 26998  0 08:26 ?        00:00:00 containerd --config /var/run/docker/containerd/containerd.toml --log-level info
+root     30175 50036  0 08:35 pts/0    00:00:00 grep --color=auto docker
+[root@localhost ~]# kill -9 26997 26998 27028
+[root@localhost ~]# ps -ef | grep docker
+</code></pre></div><h3 id="step-3-重新加载配置"><a href="#step-3-重新加载配置" class="header-anchor">#</a> STEP-3 重新加载配置</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# systemctl daemon-reload
+[root@localhost ~]#
+</code></pre></div><h3 id="step-4-将-docker-设置为开机启动"><a href="#step-4-将-docker-设置为开机启动" class="header-anchor">#</a> STEP-4 将 Docker 设置为开机启动</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# systemctl enable docker
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+</code></pre></div><h3 id="step-5-启动-docker-服务"><a href="#step-5-启动-docker-服务" class="header-anchor">#</a> STEP-5 启动 Docker 服务</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# systemctl start docker
+</code></pre></div><h3 id="step-6-检查测试-docker-命令"><a href="#step-6-检查测试-docker-命令" class="header-anchor">#</a> STEP-6 检查测试 docker 命令</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# docker version
+Client: Docker Engine - Community
+ Version:           18.09.4
+ API version:       1.39
+ Go version:        go1.10.8
+ Git commit:        d14af54
+ Built:             Wed Mar 27 18:33:40 2019
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          18.09.4
+  API version:      1.39 (minimum version 1.12)
+  Go version:       go1.10.8
+  Git commit:       d14af54
+  Built:            Wed Mar 27 18:41:10 2019
+  OS/Arch:          linux/amd64
+  Experimental:     false
+[root@localhost ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+[root@localhost ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+</code></pre></div><p>圆满了，完美了！</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e939b80d.js" defer></script><script src="/assets/js/2.592a5c23.js" defer></script><script src="/assets/js/11.fbdb8f3a.js" defer></script>
+  </body>
+</html>
